@@ -13,20 +13,20 @@ export function preloadFooterSvg() {
 
 export default function Footer() {
   return (
-    <footer className='mx-auto flex min-h-screen max-w-4xl items-center justify-center px-6'>
+    <footer className='mx-auto flex max-w-4xl items-center justify-center px-6 py-24'>
       <div className='flex flex-col gap-32 md:flex-row'>
         <div className='flex flex-col gap-8'>
-          <h3 className='place-self-center text-4xl font-bold text-gray-800 dark:text-gray-100'>
-            Remix Blog
+          <h3 className='place-self-center text-2xl font-bold text-gray-800 dark:text-gray-100'>
+            myCodings.fly.dev
           </h3>
           <ul className='flex items-center justify-center gap-6'>
-            <Link href='https://github.com/remix-run/remix'>
+            <Link href='https://github.com/cpro95'>
               <Svg>
                 <use href={`${GitHubSvg}#icon-github`} />
               </Svg>
               <span className='sr-only'>GitHub</span>
             </Link>
-            <Link href='https://twitter.com/remix_run'>
+            <Link href='https://twitter.com/cpro95'>
               <Svg>
                 <use href={`${TwitterSvg}#icon-twitter`} />
               </Svg>
