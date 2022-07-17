@@ -68,7 +68,7 @@ async function postJSON({
         })
         res.on('error', err => {
           console.error('Error!', err.message)
-          reject(ree)
+          reject(err)
         })
       })
       req.write(postDataString)
