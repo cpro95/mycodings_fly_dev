@@ -13,24 +13,33 @@ export const action: ActionFunction = async ({ request }) => {
   const ipv6s = await dns.promises.resolve6(address)
 
   const urls = ipv6s.map(ip => `http://[${ip}]:${getRequiredEnvVar('PORT')}`)
-// fdaa:0:57cc:a7b:aa8:1:48a3:2
-// 2a09:8280:1::6:53eb
+
   const queryParams = new URLSearchParams()
   queryParams.set('_data', 'routes/_content/update-content')
 
-  const fetches = urls.map(url =>
-    fetch(`${url}/_content/update-content?${queryParams}`, {
-      method: 'POST',
-      body,
-      headers: {
-        auth: getRequiredEnvVar('REFRESH_TOKEN'),
-        'content-type': 'application/json',
-        'content-length': Buffer.byteLength(body).toString(),
-      },
-    }),
-  )
+  // const fetches = urls.map(url =>
+  //   fetch(`${url}/_content/update-content?${queryParams}`, {
+  //     method: 'POST',
+  //     body,
+  //     headers: {
+  //       auth: getRequiredEnvVar('REFRESH_TOKEN'),
+  //       'content-type': 'application/json',
+  //       'content-length': Buffer.byteLength(body).toString(),
+  //     },
+  //   }),
+  // )
 
-  const response = await Promise.all(fetches)
+  // const response = await Promise.all(fetches)
+
+  const response = await fetch(`https://mycodings.fly.dev/_content/update-content?${queryParams}`, {
+    method: 'POST',
+    body,
+    headers: {
+      auth: getRequiredEnvVar('REFRESH_TOKEN'),
+      'content-type': 'application/json',
+      'content-length': Buffer.byteLength(body).toString(),
+    },
+  })
 
   return json(response)
 }
