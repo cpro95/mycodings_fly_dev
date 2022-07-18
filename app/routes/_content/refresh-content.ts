@@ -12,7 +12,7 @@ export const action: ActionFunction = async ({ request }) => {
   const address = `global.${getRequiredEnvVar('FLY_APP_NAME')}.internal`
   const ipv6s = await dns.promises.resolve6(address)
 
-  const urls = ipv6s.map(ip => `http://[${ip}]:${getRequiredEnvVar('PORT')}`)
+  const urls = ipv6s.map(ip => `https://[${ip}]:${getRequiredEnvVar('PORT')}`)
 
   const queryParams = new URLSearchParams()
   queryParams.set('_data', 'routes/_content/update-content')
