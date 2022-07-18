@@ -31,7 +31,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   // const response = await Promise.all(fetches)
 
-  const response = await fetch(`https://mycodings.fly.dev/_content/update-content?${queryParams}`, {
+  const response = await fetch(`https://${getRequiredEnvVar('FLY_APP_NAME')}.fly.dev/_content/update-content?${queryParams}`, {
     method: 'POST',
     body,
     headers: {
