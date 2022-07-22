@@ -41,13 +41,13 @@ export const loader: LoaderFunction = async () => {
 }
 
 export default function Index() {
-  const { blogList } = useLoaderData<LoaderData>()
+  const { blogList } = useLoaderData()
 
   return (
     <>
       <section className='mx-auto max-w-4xl'>
         {/* <div className='grid h-[calc(100vh-92px)] place-content-center'> */}
-        <div className='grid h-[calc(100vh-300px)] place-content-center'>
+        <div className='grid place-content-center'>
           <h1 className='flex flex-col items-center p-4'>
             <Link to='/'>
               <GradientText>myCodings</GradientText>
