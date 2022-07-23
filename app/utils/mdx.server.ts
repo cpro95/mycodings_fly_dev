@@ -99,8 +99,12 @@ async function updateMdx(mdxToUpdate: Content[], contentDirectory: string) {
 
 export async function getMdxListItems({
   contentDirectory,
+  page,
+  itemsPerPage
 }: {
-  contentDirectory: string
+  contentDirectory: string;
+  page: number;
+  itemsPerPage: number;
 }) {
   const [count, pagesToUpdates] = await Promise.all([
     getMdxCount(contentDirectory),
@@ -113,7 +117,7 @@ export async function getMdxListItems({
   if (pagesToUpdates && pagesToUpdates.length > 0) {
     await updateMdx(pagesToUpdates, contentDirectory)
   }
-  return getContentList()
+  return getContentList(contentDirectory, page, itemsPerPage)
 }
 
 /**

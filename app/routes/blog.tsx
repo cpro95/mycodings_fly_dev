@@ -5,19 +5,24 @@ import type {
   MetaFunction,
 } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useSearchParams } from '@remix-run/react'
 import BlogList from '~/components/blog-list'
 import { getMdxListItems } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
+import { getMdxCount } from '~/model/content.server'
+import MyPagination from '~/components/my-pagination'
 
-type LoaderData = { blogList: Awaited<ReturnType<typeof getMdxListItems>> }
+type LoaderData = {
+  blogList: Awaited<ReturnType<typeof getMdxListItems>>
+  blogCount: Awaited<ReturnType<typeof getMdxCount>>
+}
 
 const [seoMeta, seoLinks] = getSeo({
-  title: 'Blogs',
-  description: 'Awesome blogs!',
+  title: '드리프트의 myCodings.fly.dev',
+  description: '드리프트의 myCodings.fly.dev!',
   twitter: {
-    title: 'Blogs',
-    description: 'Awesome blogs!',
+    title: 'cpro95',
+    description: '드리프트의 myCodings.fly.dev!',
   },
 })
 
@@ -37,11 +42,23 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   }
 }
 
-export const loader: LoaderFunction = async () => {
-  const blogList = await getMdxListItems({ contentDirectory: 'blog' })
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url)
+  let page = Number(url.searchParams.get('page'))
+  let itemsPerPage = Number(url.searchParams.get('itemsPerPage'))
+
+  if (page === 0) page = 1
+  if (itemsPerPage === 0) itemsPerPage = 10
+
+  const blogList = await getMdxListItems({
+    contentDirectory: 'blog',
+    page,
+    itemsPerPage,
+  })
+  const blogCount = await getMdxCount('blog')
 
   return json<LoaderData>(
-    { blogList },
+    { blogList, blogCount },
     {
       headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' },
     },
@@ -49,11 +66,35 @@ export const loader: LoaderFunction = async () => {
 }
 
 export default function Blog() {
-  const { blogList } = useLoaderData<LoaderData>()
+  const [myParams] = useSearchParams()
+  const { blogList, blogCount } = useLoaderData<LoaderData>()
 
+  type paramsType = {
+    [key: string]: string
+  }
+  let paramsArray: paramsType[] = []
+  myParams.forEach((value, name) => paramsArray.push({ [name]: value }))
+
+  let page: number = 1
+  let itemsPerPage: number = 10
+  paramsArray.map(p =>
+    p.hasOwnProperty('page') ? (page = Number(p.page)) : {},
+  )
+  paramsArray.map(p =>
+    p.hasOwnProperty('itemsPerPage')
+      ? (itemsPerPage = Number(p.itemsPerPage))
+      : {},
+  )
+
+  console.log(myParams.get('p'))
   return (
-    <section className='mx-auto min-h-screen max-w-4xl pt-24'>
+    <section className='mx-auto max-w-4xl pt-24'>
       <BlogList blogList={blogList} />
+      <MyPagination
+        page={page}
+        itemsPerPage={itemsPerPage}
+        total_pages={Math.ceil(Number(blogCount) / itemsPerPage)}
+      />
     </section>
   )
 }

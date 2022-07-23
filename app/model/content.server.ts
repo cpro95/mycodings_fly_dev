@@ -27,7 +27,8 @@ export async function requiresUpdate(contentDirectory: string) {
   return requiresUpdate
 }
 
-export async function getContentList(contentDirectory = 'blog') {
+export async function getContentList(contentDirectory = 'blog', page = 1, itemsPerPage = 10) {
+
   const contents = await db.content.findMany({
     where: { published: true, contentDirectory },
     select: {
@@ -38,6 +39,8 @@ export async function getContentList(contentDirectory = 'blog') {
       frontmatter: true,
     },
     orderBy: { timestamp: 'desc' },
+    skip: page === 1 ? 0 : (page - 1) * itemsPerPage,
+    take: itemsPerPage,
   })
 
   return contents

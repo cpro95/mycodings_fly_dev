@@ -32,10 +32,14 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
 }
 
 export const loader: LoaderFunction = async () => {
-  const blogList = await getMdxListItems({ contentDirectory: 'blog' })
+  const blogList = await getMdxListItems({
+    contentDirectory: 'blog',
+    page: 1,
+    itemsPerPage: 10,
+  })
 
   return json<LoaderData>(
-    { blogList: blogList.slice(0, 10) },
+    { blogList: blogList.slice(0, 5) },
     { headers: { 'cache-control': 'private, max-age=60' } },
   )
 }
