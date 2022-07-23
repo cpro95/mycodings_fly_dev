@@ -8,6 +8,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
 } from '@remix-run/react'
 import type { LinksFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
@@ -18,6 +19,8 @@ import { preloadSvg } from './components/theme-toggle'
 import type { Theme } from './utils/theme'
 import { SsrTheme, ThemeMeta, ThemeProvider, useTheme } from './utils/theme'
 import { getThemeSession } from './utils/theme-session.server'
+import * as gtag from '~/utils/gtags.client'
+import { useEffect } from 'react'
 
 type LoaderData = { theme: Theme | null }
 
@@ -52,6 +55,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 function App() {
   const [theme] = useTheme()
+  const location = useLocation()
+  useEffect(() => {
+    gtag.pageview(location.pathname, 'G-711DBPQNDX')
+  }, [location])
 
   return (
     <html lang='en' className={`h-full ${theme ? theme : 'dark'}`}>
@@ -61,6 +68,25 @@ function App() {
         <ThemeMeta />
         <Meta />
         <Links />
+        {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+        <script
+          async
+          src='https://www.googletagmanager.com/gtag/js?id=G-711DBPQNDX'
+        ></script>
+        <script
+          async
+          id='gtag-init'
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-711DBPQNDX', {
+                  page_path: window.location.pathname,
+                });
+              `,
+          }}
+        />
       </head>
       <body className='h-full bg-white dark:bg-slate-800'>
         <SkipNavLink className='bg-gray-700'>Skip to content</SkipNavLink>
