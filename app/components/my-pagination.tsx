@@ -11,22 +11,22 @@ export default function MyPagination({
   itemsPerPage,
   total_pages,
 }: PaginationType) {
-  const leftDoubleArrow = (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      className='h-5 w-5'
-      fill='none'
-      viewBox='0 0 24 24'
-      stroke='currentColor'
-      strokeWidth='2'
-    >
-      <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M11 19l-7-7 7-7m8 14l-7-7 7-7'
-      />
-    </svg>
-  )
+  // const leftDoubleArrow = (
+  //   <svg
+  //     xmlns='http://www.w3.org/2000/svg'
+  //     className='h-5 w-5'
+  //     fill='none'
+  //     viewBox='0 0 24 24'
+  //     stroke='currentColor'
+  //     strokeWidth='2'
+  //   >
+  //     <path
+  //       strokeLinecap='round'
+  //       strokeLinejoin='round'
+  //       d='M11 19l-7-7 7-7m8 14l-7-7 7-7'
+  //     />
+  //   </svg>
+  // )
 
   const leftArrow = (
     <svg
@@ -54,35 +54,38 @@ export default function MyPagination({
     </svg>
   )
 
-  const rightDoubleArrow = (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      className='h-5 w-5'
-      fill='none'
-      viewBox='0 0 24 24'
-      stroke='currentColor'
-      strokeWidth='2'
-    >
-      <path
-        strokeLinecap='round'
-        strokeLinejoin='round'
-        d='M13 5l7 7-7 7M5 5l7 7-7 7'
-      />
-    </svg>
-  )
+  // const rightDoubleArrow = (
+  //   <svg
+  //     xmlns='http://www.w3.org/2000/svg'
+  //     className='h-5 w-5'
+  //     fill='none'
+  //     viewBox='0 0 24 24'
+  //     stroke='currentColor'
+  //     strokeWidth='2'
+  //   >
+  //     <path
+  //       strokeLinecap='round'
+  //       strokeLinejoin='round'
+  //       d='M13 5l7 7-7 7M5 5l7 7-7 7'
+  //     />
+  //   </svg>
+  // )
 
   const linkStyle =
-    'px-2 sm:px-4 py-1 sm:py-2 sm:mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md sm:inline dark:bg-gray-900 dark:text-gray-200 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200'
+    'px-2 sm:px-4 py-1 sm:py-2 mx-1 sm:mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md sm:inline dark:bg-gray-900 dark:text-gray-200 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200'
 
   return (
-    <nav aria-label='Pagination' className='mt-4 mb-8 flex py-4'>
-      <Link
+    <nav
+      aria-label='Pagination'
+      className='mt-4 mb-8 -ml-4 flex justify-evenly sm:justify-start py-4'
+    >
+      {/* <Link
         to={`?page=${1}&itemsPerPage=${itemsPerPage}`}
         className={linkStyle}
       >
         <span className='sr-only'>First</span>
         {leftDoubleArrow}
-      </Link>
+      </Link> */}
 
       <Link
         to={`?page=${page === 1 ? 1 : page - 1}&itemsPerPage=${itemsPerPage}`}
@@ -156,13 +159,13 @@ export default function MyPagination({
         {rightArrow}
       </Link>
 
-      <Link
+      {/* <Link
         to={`?page=${total_pages}&itemsPerPage=${itemsPerPage}`}
         className={linkStyle}
       >
         <span className='sr-only'>Last</span>
         {rightDoubleArrow}
-      </Link>
+      </Link> */}
     </nav>
   )
 }

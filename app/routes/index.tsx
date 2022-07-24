@@ -10,6 +10,7 @@ import { json } from '@remix-run/server-runtime'
 import BlogList from '~/components/blog-list'
 import { getMdxListItems } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
+import LinkOrAnchor from '~/components/link-or-anchor'
 
 type LoaderData = { blogList: Awaited<ReturnType<typeof getMdxListItems>> }
 
@@ -88,6 +89,25 @@ export default function Index() {
               </div>
               <div className='hidden lg:col-span-5 lg:mt-0 lg:flex'>
                 <img src='reactjs_image.jpg' alt='intro' />
+              </div>
+            </div>
+            <div className='mx-auto px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36'>
+              <span className='font-semibold uppercase text-gray-400'>
+                FEATURED SITE
+              </span>
+              <div className='mt-8 flex flex-wrap items-center justify-center text-gray-500 sm:justify-between'>
+                <LinkOrAnchor
+                  href='https://kakaoweb.netlify.app'
+                  className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-400 lg:mb-0'
+                >
+                  카카오톡 웹
+                </LinkOrAnchor>
+                <LinkOrAnchor
+                  href='https://mymovies.fly.dev'
+                  className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-400 lg:mb-0'
+                >
+                  myMovies
+                </LinkOrAnchor>
               </div>
             </div>
           </section>
