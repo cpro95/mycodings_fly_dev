@@ -65,7 +65,7 @@ export default function Index() {
                   All about Web Development ...
                 </h1>
                 <p className='mb-6 max-w-2xl font-medium text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl'>
-                  Javascript, Typescript, React, Remix Framework, NextJS 등 최신
+                  Javascript, Typescript, React, Remix Framework, Next.js 등 최신
                   웹 개발 트렌드를 같이 공부할 수 있는 블로그 입니다.
                 </p>
                 <Link
