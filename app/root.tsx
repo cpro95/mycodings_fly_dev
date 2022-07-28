@@ -28,20 +28,6 @@ export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: skipNavStyles },
     { rel: 'stylesheet', href: appStyles },
-    {
-      rel: 'preload',
-      href: '/fonts/Poppins-Regular.ttf',
-      as: 'font',
-      type: 'font/ttf',
-      crossOrigin: 'anonymous',
-    },
-    {
-      rel: 'preload',
-      href: '/fonts/Poppins-Bold.ttf',
-      as: 'font',
-      type: 'font/ttf',
-      crossOrigin: 'anonymous',
-    },
     ...preloadSvg(),
     ...preloadFooterSvg(),
   ]
