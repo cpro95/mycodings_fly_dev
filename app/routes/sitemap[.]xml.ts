@@ -5,7 +5,7 @@ import { getMdxListItems } from '~/utils/mdx.server'
 import { getDomainUrl } from '~/utils/misc'
 
 export const loader: LoaderFunction = async ({ request }) => {
-    const posts = await getMdxListItems({ contentDirectory: 'blog' })
+    const posts = await getMdxListItems({ contentDirectory: 'blog', page: 1, itemsPerPage: 100000 })
 
     const blogUrl = `${getDomainUrl(request)}/blog`
 

@@ -61,7 +61,7 @@ function App() {
   }, [location])
 
   return (
-    <html lang='en' className={`h-full ${theme ? theme : 'dark'}`}>
+    <html lang='ko' className={`h-full ${theme ? theme : 'dark'}`}>
       <head>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width,initial-scale=1' />
@@ -69,6 +69,10 @@ function App() {
           name='naver-site-verification'
           content='2b76370650a82ce820d08f2aa4a87170e9d41692'
         />
+        <meta name='NaverBot' content='All' />
+        <meta name='NaverBot' content='index,follow' />
+        <meta name='Yeti' content='All' />
+        <meta name='Yeti' content='index,follow' />
         <link
           rel='apple-touch-icon'
           sizes='180x180'

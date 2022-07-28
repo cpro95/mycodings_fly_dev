@@ -6,7 +6,7 @@ import { getMdxListItems } from '~/utils/mdx.server'
 import { getDomainUrl } from '~/utils/misc'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getMdxListItems({ contentDirectory: 'blog' })
+  const posts = await getMdxListItems({ contentDirectory: 'blog', page: 1, itemsPerPage: 100000 })
 
   const blogUrl = `${getDomainUrl(request)}/blog`
 
@@ -19,43 +19,43 @@ export const loader: LoaderFunction = async ({ request }) => {
         <language>en-us</language>
         <ttl>40</ttl>
         ${posts
-          .map(post => {
-            const frontMatter = JSON.parse(post.frontmatter)
+      .map(post => {
+        const frontMatter = JSON.parse(post.frontmatter)
 
-            invariant(
-              typeof frontMatter.title === 'string',
-              `${post.slug} should have a title in fronte matter`,
-            )
-            invariant(
-              typeof frontMatter.description === 'string',
-              `${post.slug} should have a description in fronte matter`,
-            )
-            invariant(
-              typeof post.timestamp === 'object',
-              `${post.slug} should have a timestamp`,
-            )
+        invariant(
+          typeof frontMatter.title === 'string',
+          `${post.slug} should have a title in fronte matter`,
+        )
+        invariant(
+          typeof frontMatter.description === 'string',
+          `${post.slug} should have a description in fronte matter`,
+        )
+        invariant(
+          typeof post.timestamp === 'object',
+          `${post.slug} should have a timestamp`,
+        )
 
-            return `
+        return `
             <item>
               <title>${cdata(frontMatter.title ?? 'Untitled Post')}</title>
               <description>${cdata(
-                frontMatter.description ?? 'This post is... indescribable',
-              )}</description>
+          frontMatter.description ?? 'This post is... indescribable',
+        )}</description>
               <pubDate>${dateFns.format(
-                dateFns.add(
-                  post.timestamp
-                    ? dateFns.parseISO(post.timestamp.toISOString())
-                    : Date.now(),
-                  { minutes: new Date().getTimezoneOffset() },
-                ),
-                'yyyy-MM-ii',
-              )}</pubDate>
+          dateFns.add(
+            post.timestamp
+              ? dateFns.parseISO(post.timestamp.toISOString())
+              : Date.now(),
+            { minutes: new Date().getTimezoneOffset() },
+          ),
+          'yyyy-MM-ii',
+        )}</pubDate>
               <link>${blogUrl}/${post.slug}</link>
               <guid>${blogUrl}/${post.slug}</guid>
             </item>
           `.trim()
-          })
-          .join('\n')}
+      })
+      .join('\n')}
       </channel>
     </rss>
   `.trim()

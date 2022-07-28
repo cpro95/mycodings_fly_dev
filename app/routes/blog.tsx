@@ -18,7 +18,7 @@ type LoaderData = {
 }
 
 const [seoMeta, seoLinks] = getSeo({
-  title: '드리프트의 myCodings.fly.dev',
+  title: '드리프트의 myCodings',
   description: '드리프트의 myCodings.fly.dev!',
   twitter: {
     title: 'cpro95',
@@ -67,7 +67,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Blog() {
   const [myParams] = useSearchParams()
-  const { blogList, blogCount } = useLoaderData<LoaderData>()
+  const { blogList, blogCount } = useLoaderData()
 
   type paramsType = {
     [key: string]: string

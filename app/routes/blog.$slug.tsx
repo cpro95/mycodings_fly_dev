@@ -15,14 +15,22 @@ import type { MdxComponent } from '~/types'
 import styles from 'highlight.js/styles/night-owl.css'
 import { getSeoMeta } from '~/utils/seo'
 
-export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
-  const { keywords = [] } = data.frontmatter.meta ?? {}
+import { DiscussionEmbed } from 'disqus-react'
+import { getDomainUrl } from '~/utils/misc'
+
+type LoaderData = {
+  mdxPage: MdxComponent
+  domain: string
+}
+
+export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
+  const { keywords = [] } = data.mdxPage.frontmatter.meta ?? {}
   const seoMeta = getSeoMeta({
-    title: data.title,
-    description: data.description,
+    title: data.mdxPage.title,
+    description: data.mdxPage.description,
     twitter: {
-      description: data.description,
-      title: data.title,
+      description: data.mdxPage.description,
+      title: data.mdxPage.title,
     },
   })
 
@@ -39,7 +47,7 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   }
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
   const slug = params.slug
   invariant(typeof slug === 'string', 'Slug should be a string, and defined')
 
@@ -49,19 +57,42 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw json(null, { status: 404 })
   }
 
-  return json<MdxComponent>(mdxPage, {
-    headers: { 'cache-control': 'private, max-age: 60', Vary: 'Cookie' },
-  })
+  const domain = getDomainUrl(request)
+
+  // return json<MdxComponent>(mdxPage, {
+  //   headers: { 'cache-control': 'private, max-age: 60', Vary: 'Cookie' },
+  // })
+  return json<LoaderData>(
+    { mdxPage, domain },
+    {
+      headers: { 'cache-control': 'private, max-age: 60', Vary: 'Cookie' },
+    },
+  )
 }
 
 export default function Blog() {
-  const data = useLoaderData<MdxComponent>()
+  // const data = useLoaderData<MdxComponent>()
+  const data = useLoaderData<LoaderData>()
 
-  const Component = React.useMemo(() => getMDXComponent(data.code), [data])
+  const Component = React.useMemo(
+    () => getMDXComponent(data.mdxPage.code),
+    [data],
+  )
 
   return (
-    <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl pt-24 dark:prose-invert lg:prose-lg'>
-      <Component />
-    </article>
+    <>
+      <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl pt-24 dark:prose-invert lg:prose-lg'>
+        <Component />
+        <DiscussionEmbed
+          shortname='mycodings'
+          config={{
+            url: data.domain,
+            identifier: data.mdxPage.slug,
+            title: data.mdxPage.title,
+            language: 'ko',
+          }}
+        />
+      </article>
+    </>
   )
 }
