@@ -50,7 +50,10 @@ function App() {
     <html lang='ko' className={`h-full ${theme ? theme : 'dark'}`}>
       <head>
         <meta charSet='utf-8' />
-        <meta name='viewport' content='width=device-width,initial-scale=1' />
+        <meta
+          name='viewport'
+          content='width=device-width,initial-scale=1,maximum-scale=1'
+        />
         <meta
           name='naver-site-verification'
           content='2b76370650a82ce820d08f2aa4a87170e9d41692'

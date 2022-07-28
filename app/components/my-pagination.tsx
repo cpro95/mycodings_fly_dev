@@ -1,12 +1,14 @@
 import { Link } from '@remix-run/react'
 
 type PaginationType = {
+  q: string
   page: number
   itemsPerPage: number
   total_pages: number
 }
 
 export default function MyPagination({
+  q,
   page,
   itemsPerPage,
   total_pages,
@@ -77,10 +79,10 @@ export default function MyPagination({
   return (
     <nav
       aria-label='Pagination'
-      className='mt-4 mb-8 -ml-4 flex justify-evenly sm:justify-start py-4'
+      className='mt-4 mb-8 -ml-4 flex justify-evenly py-4 sm:justify-start'
     >
       {/* <Link
-        to={`?page=${1}&itemsPerPage=${itemsPerPage}`}
+        to={`?q=${q}&page=${1}&itemsPerPage=${itemsPerPage}`}
         className={linkStyle}
       >
         <span className='sr-only'>First</span>
@@ -88,7 +90,9 @@ export default function MyPagination({
       </Link> */}
 
       <Link
-        to={`?page=${page === 1 ? 1 : page - 1}&itemsPerPage=${itemsPerPage}`}
+        to={`?q=${q}&page=${
+          page === 1 ? 1 : page - 1
+        }&itemsPerPage=${itemsPerPage}`}
         className={linkStyle}
       >
         <span className='sr-only'>Previous</span>
@@ -99,7 +103,7 @@ export default function MyPagination({
       ) : (
         <>
           <Link
-            to={`?page=${page - 1}&itemsPerPage=${itemsPerPage}`}
+            to={`?q=${q}&page=${page - 1}&itemsPerPage=${itemsPerPage}`}
             aria-current='page'
             className={linkStyle}
           >
@@ -108,7 +112,7 @@ export default function MyPagination({
         </>
       )}
       <Link
-        to={`?page=${page}&itemsPerPage=${itemsPerPage}`}
+        to={`?q=${q}&page=${page}&itemsPerPage=${itemsPerPage}`}
         aria-current='page'
         className={linkStyle}
       >
@@ -118,7 +122,7 @@ export default function MyPagination({
         <></>
       ) : (
         <Link
-          to={`?page=${page + 1}&itemsPerPage=${itemsPerPage}`}
+          to={`?q=${q}&page=${page + 1}&itemsPerPage=${itemsPerPage}`}
           className={linkStyle}
         >
           {page + 1}
@@ -132,14 +136,14 @@ export default function MyPagination({
           </button>
 
           <Link
-            to={`?page=${total_pages - 1}&itemsPerPage=${itemsPerPage}`}
+            to={`?q=${q}&page=${total_pages - 1}&itemsPerPage=${itemsPerPage}`}
             className={linkStyle}
           >
             {total_pages - 1}
           </Link>
 
           <Link
-            to={`?page=${total_pages}&itemsPerPage=${itemsPerPage}`}
+            to={`?q=${q}&page=${total_pages}&itemsPerPage=${itemsPerPage}`}
             className={linkStyle}
           >
             {total_pages}
@@ -150,7 +154,7 @@ export default function MyPagination({
       )}
 
       <Link
-        to={`?page=${
+        to={`?q=${q}&page=${
           page === total_pages ? total_pages : page + 1
         }&itemsPerPage=${itemsPerPage}`}
         className={linkStyle}
@@ -160,7 +164,7 @@ export default function MyPagination({
       </Link>
 
       {/* <Link
-        to={`?page=${total_pages}&itemsPerPage=${itemsPerPage}`}
+        to={`?q=${q}&page=${total_pages}&itemsPerPage=${itemsPerPage}`}
         className={linkStyle}
       >
         <span className='sr-only'>Last</span>

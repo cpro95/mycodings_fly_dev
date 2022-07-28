@@ -3,6 +3,7 @@ import {
   deleteContent,
   getContent,
   getContentList,
+  getContentListWithQ,
   getMdxCount,
   requiresUpdate,
   upsertContent as upsertContentImpl,
@@ -97,10 +98,18 @@ async function updateMdx(mdxToUpdate: Content[], contentDirectory: string) {
   await upsertContent(compiledPages, contentDirectory)
 }
 
+export async function getMdxListItemsWithQ({
+  contentDirectory, q, page, itemsPerPage
+}: {
+  contentDirectory: string; q: string, page: number, itemsPerPage: number
+}) {
+  return getContentListWithQ(contentDirectory, q, page, itemsPerPage)
+}
+
 export async function getMdxListItems({
   contentDirectory,
   page,
-  itemsPerPage
+  itemsPerPage,
 }: {
   contentDirectory: string;
   page: number;

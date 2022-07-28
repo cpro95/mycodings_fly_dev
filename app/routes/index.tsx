@@ -87,7 +87,7 @@ export default function Index() {
                   </svg>
                 </Link>
               </div>
-              <div className='hidden lg:col-span-5 lg:mt-0 lg:flex'>
+              <div className='ml-2 hidden lg:col-span-5 lg:mt-0 lg:flex'>
                 <img src='reactjs_image.jpg' alt='intro' />
               </div>
             </div>

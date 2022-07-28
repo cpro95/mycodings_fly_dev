@@ -1,6 +1,37 @@
 import db from '~/utils/db.server'
 import { getQueue } from '~/utils/p-queue.server'
 
+export async function getMdxCountWithQ(contentDirectory: string, q: string) {
+  const count = await db.content.aggregate({
+    _count: { _all: true },
+    where: {
+      AND: [
+        { published: true, contentDirectory }
+      ],
+      OR: [
+        {
+          title: {
+            contains: q,
+
+          },
+        },
+        {
+          description: {
+            contains: q,
+          },
+        },
+        {
+          frontmatter: {
+            contains: q,
+          },
+        },
+      ],
+    },
+  })
+
+  return count._count._all
+}
+
 export async function getMdxCount(contentDirectory: string) {
   const count = await db.content.aggregate({
     _count: { _all: true },
@@ -27,8 +58,60 @@ export async function requiresUpdate(contentDirectory: string) {
   return requiresUpdate
 }
 
-export async function getContentList(contentDirectory = 'blog', page = 1, itemsPerPage = 10) {
+export async function getContentListWithQ(contentDirectory = 'blog', q: string, page = 1, itemsPerPage = 10) {
+  const contents = await db.content.findMany({
+    where: {
+      AND: [
+        { published: true, contentDirectory }
+      ],
+      OR: [
+        {
+          title: {
+            contains: q,
 
+          },
+        },
+        {
+          description: {
+            contains: q,
+          },
+        },
+        {
+          frontmatter: {
+            contains: q,
+          },
+        },
+      ],
+    },
+    select: {
+      slug: true,
+      title: true,
+      timestamp: true,
+      description: true,
+      frontmatter: true,
+    },
+    orderBy: { timestamp: 'desc' },
+    skip: page === 1 ? 0 : (page - 1) * itemsPerPage,
+    take: itemsPerPage,
+  })
+
+  return contents
+}
+
+export async function getFrontmatterList(contentDirectory = 'blog') {
+  const contents = await db.content.findMany({
+    where: { published: true, contentDirectory },
+    select: {
+      frontmatter: true,
+    },
+    orderBy: { timestamp: 'desc' },
+  })
+
+  return contents
+}
+
+
+export async function getContentList(contentDirectory = 'blog', page = 1, itemsPerPage = 10) {
   const contents = await db.content.findMany({
     where: { published: true, contentDirectory },
     select: {

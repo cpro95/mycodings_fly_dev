@@ -7,14 +7,23 @@ import type {
 import { json } from '@remix-run/server-runtime'
 import { useLoaderData, useSearchParams } from '@remix-run/react'
 import BlogList from '~/components/blog-list'
-import { getMdxListItems } from '~/utils/mdx.server'
+import { getMdxListItems, getMdxListItemsWithQ } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
-import { getMdxCount } from '~/model/content.server'
+import {
+  getFrontmatterList,
+  getMdxCount,
+  getMdxCountWithQ,
+} from '~/model/content.server'
 import MyPagination from '~/components/my-pagination'
+import SearchForm from '~/components/search-form'
+import { z } from 'zod'
+import { getSearchParams } from 'remix-params-helper'
+import BestTags from '~/components/best-tags'
 
 type LoaderData = {
   blogList: Awaited<ReturnType<typeof getMdxListItems>>
-  blogCount: Awaited<ReturnType<typeof getMdxCount>>
+  blogCount: number
+  arrayOfBestPool: Array<string>
 }
 
 const [seoMeta, seoLinks] = getSeo({
@@ -42,23 +51,67 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
   }
 }
 
+const filterBlogSchema = z.object({
+  index: z.void().optional(),
+  q: z.string().optional(),
+  page: z.string().optional(),
+  itemsPerPage: z.string().optional(),
+})
+
 export const loader: LoaderFunction = async ({ request }) => {
-  const url = new URL(request.url)
-  let page = Number(url.searchParams.get('page'))
-  let itemsPerPage = Number(url.searchParams.get('itemsPerPage'))
+  const query = getSearchParams(request, filterBlogSchema)
 
-  if (page === 0) page = 1
-  if (itemsPerPage === 0) itemsPerPage = 10
+  // const url = new URL(request.url)
+  // let page = Number(url.searchParams.get('page'))
+  // let itemsPerPage = Number(url.searchParams.get('itemsPerPage'))
 
-  const blogList = await getMdxListItems({
-    contentDirectory: 'blog',
-    page,
-    itemsPerPage,
-  })
-  const blogCount = await getMdxCount('blog')
+  let page: number = 1
+  let itemsPerPage: number = 10
+  let q = query.data?.q as string
+  if (query.data?.page && !isNaN(Number(query.data?.page)))
+    page = Number(query.data?.page)
+  if (query.data?.itemsPerPage && !isNaN(Number(query.data?.itemsPerPage)))
+    itemsPerPage = Number(query.data?.itemsPerPage)
+
+  let blogList
+  let blogCount
+  if (q === undefined) {
+    blogList = await getMdxListItems({
+      contentDirectory: 'blog',
+      page: page,
+      itemsPerPage: itemsPerPage,
+    })
+    blogCount = await getMdxCount('blog')
+  } else {
+    blogList = await getMdxListItemsWithQ({
+      contentDirectory: 'blog',
+      q: q,
+      page: page,
+      itemsPerPage: itemsPerPage,
+    })
+    blogCount = await getMdxCountWithQ('blog', q)
+  }
+
+  const allFrontmatterList = await getFrontmatterList()
+
+  let Pool = new Map<string, number>()
+
+  allFrontmatterList.map(af =>
+    JSON.parse(af.frontmatter).meta.keywords.map(k =>
+      Pool.set(k, Pool.has(k) ? Pool.get(k)! + 1 : 1),
+    ),
+  )
+  // console.log(new Map([...Pool].sort()))
+
+  const sortedPool = new Map([...Pool].sort((a, b) => b[1] - a[1]))
+
+  const bestPool = new Map([...sortedPool].filter(a => a[1] > 2))
+  // console.log(bestPool)
+  const arrayOfBestPool: Array<string> = [...bestPool.keys()]
+  // console.log(arrayOfBestPool)
 
   return json<LoaderData>(
-    { blogList, blogCount },
+    { blogList, blogCount, arrayOfBestPool: arrayOfBestPool.slice(0, 7) },
     {
       headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' },
     },
@@ -67,7 +120,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Blog() {
   const [myParams] = useSearchParams()
-  const { blogList, blogCount } = useLoaderData()
+  const { blogList, blogCount, arrayOfBestPool } = useLoaderData()
 
   type paramsType = {
     [key: string]: string
@@ -77,6 +130,9 @@ export default function Blog() {
 
   let page: number = 1
   let itemsPerPage: number = 10
+  let q: string = ''
+
+  paramsArray.map(p => (p.hasOwnProperty('q') ? (q = String(p.q)) : {}))
   paramsArray.map(p =>
     p.hasOwnProperty('page') ? (page = Number(p.page)) : {},
   )
@@ -86,11 +142,13 @@ export default function Blog() {
       : {},
   )
 
-  console.log(myParams.get('p'))
   return (
-    <section className='mx-auto max-w-4xl pt-24'>
+    <section className='mx-auto max-w-4xl pt-8'>
+      <BestTags bestTags={arrayOfBestPool} />
+      <SearchForm method='get' action='.' />
       <BlogList blogList={blogList} />
       <MyPagination
+        q={q}
         page={page}
         itemsPerPage={itemsPerPage}
         total_pages={Math.ceil(Number(blogCount) / itemsPerPage)}
