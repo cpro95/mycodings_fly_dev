@@ -14,15 +14,7 @@ import type { MdxComponent } from '~/types'
 
 import styles from 'highlight.js/styles/night-owl.css'
 import { getSeoMeta } from '~/utils/seo'
-
-// import { DiscussionEmbed } from 'disqus-react'
-// import { getDomainUrl } from '~/utils/misc'
-
-// for disqus
-// type LoaderData = {
-//   mdxPage: MdxComponent
-//   domain: string
-// }
+import Utterances from '~/components/utterances'
 
 export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
   const { keywords = [] } = data.frontmatter.meta ?? {}
@@ -38,21 +30,6 @@ export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
   return { ...seoMeta, keywords: keywords.join(', ') }
 }
 
-// for disqus
-// export const meta: MetaFunction = ({ data }: { data: LoaderData }) => {
-//   const { keywords = [] } = data.mdxPage.frontmatter.meta ?? {}
-//   const seoMeta = getSeoMeta({
-//     title: data.mdxPage.title,
-//     description: data.mdxPage.description,
-//     twitter: {
-//       description: data.mdxPage.description,
-//       title: data.mdxPage.title,
-//     },
-//   })
-
-//   return { ...seoMeta, keywords: keywords.join(', ') }
-// }
-
 export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }]
 
 export const headers: HeadersFunction = ({ loaderHeaders }) => {
@@ -62,9 +39,6 @@ export const headers: HeadersFunction = ({ loaderHeaders }) => {
     Vary: 'Cookie',
   }
 }
-
-//for disqus
-// export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug
@@ -76,51 +50,21 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw json(null, { status: 404 })
   }
 
-  // const domain = getDomainUrl(request)
-
   return json<MdxComponent>(mdxPage, {
     headers: { 'cache-control': 'private, max-age: 60', Vary: 'Cookie' },
   })
-
-  // for disqus
-  // return json<LoaderData>(
-  //   { mdxPage, domain },
-  //   {
-  //     headers: { 'cache-control': 'private, max-age: 60', Vary: 'Cookie' },
-  //   },
-  // )
 }
 
 export default function Blog() {
   const data = useLoaderData<MdxComponent>()
 
-  // for disqus
-  // const data = useLoaderData<LoaderData>()
-
-  const Component = React.useMemo(
-    () => getMDXComponent(data.code),
-    [data],
-  )
-
-  // for disqus
-  // const Component = React.useMemo(
-  //   () => getMDXComponent(data.mdxPage.code),
-  //   [data],
-  // )
+  const Component = React.useMemo(() => getMDXComponent(data.code), [data])
 
   return (
     <>
       <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl pt-24 dark:prose-invert lg:prose-lg'>
         <Component />
-        {/* <DiscussionEmbed
-          shortname='mycodings'
-          config={{
-            url: data.domain,
-            identifier: data.mdxPage.slug,
-            title: data.mdxPage.title,
-            language: 'ko',
-          }}
-        /> */}
+        <Utterances />
       </article>
     </>
   )
