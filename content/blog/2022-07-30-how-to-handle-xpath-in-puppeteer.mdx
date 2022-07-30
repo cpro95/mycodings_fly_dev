@@ -17,15 +17,19 @@ published: true
 
 오늘은 Puppeteer를 활용한 웹 스크래핑을 알아 보겠습니다.
 
-Puppeteer은 Node.js 패키지인데 크롬미움(Chromium)을 이용해서 웹을 제어할 수 있어 웹 페이지 테스트 용도에 많이 쓰입니다.
+Puppeteer는 Node.js 패키지인데요,
 
-물론 내가 원하는 방향으로 웹을 제어할 수 있어 웹에서 특정 데이터를 추출하는 웹 스크래핑 역할에 가장 좋은 도구입니다.
+크롬미움(Chromium)을 이용해서 웹을 제어할 수 있게 하여 웹 페이지 테스트 용도에 많이 쓰입니다.
 
-일단 Node.js 패키지라서 NPM으로 프로젝트를 초기화 하겠습니다.
+물론 내가 원하는 방향으로 웹을 제어할 수 있기 때문에 특정 데이터를 추출하는 웹 스크래핑 역할에 가장 좋은 도구입니다.
+
+일단 Node.js 패키지라서 NPM으로 프로젝트를 만들어 보겠습니다.
 
 ```js
 mkdir puppeteer-test
+
 npm init -y
+
 npm i puppeteer
 ```
 
@@ -47,7 +51,7 @@ npm i puppeteer
 }
 ```
 
-위의 package.json 파일 처럼 puppeteer 15.5.0 버전이 아주 잘 깔렸네요.
+위의 package.json 파일 처럼 puppeteer 15.5.0 버전이 아주 잘 설치 되었네요.
 
 이제 main.js 파일을 만들어서 puppeteer에 대해 좀 더 깊숙히 들어가 보겠습니다.
 
@@ -72,19 +76,19 @@ const puppeteer = require("puppeteer");
 
 위 코드가 puppeteer의 가장 기본이 되는 코드입니다.
 
-puppeteer은 비동기식으로 작동하기 때문에 async로 anonymous 함수를 작성하여 실행했고,
+puppeteer는 비동기식으로 작동하기 때문에 async를 둬서 anonymous 함수를 작성하여 실행했고,
 
-함수 안에서 await 방식으로 puppeteer를 실행시킨겁니다.
+함수 안에서 await 방식으로 puppeteer를 실행시킨 겁니다.
 
-puppeteer의 API에는 크게 몇가지 개념이 있는데요.
+puppeteer의 API에는 가장 기본이 되는 몇가지 개념이 있는데요.
 
 먼저, browser, page가 있습니다.
 
-browser가 크로미움 브라우저에 해당되고, 브라우저에서 한개 한개의 탭이 바로 page가 되는겁니다.
+browser는 이름 그대로 크로미움 브라우저에 해당되고, 브라우저에서 한 개 한 개의 탭이 바로 page가 되는 겁니다.
 
-그래서 위 코드에서는 먼저 puppeteer.launch로 브라우저를 실행시키고 그다음에 browser에서 newPage로 페이지를 하나 더 만듭니다.
+그래서 위 코드에서는 먼저 puppeteer.launch()로 브라우저를 실행 시키고, 그 다음에 browser에서 newPage로 페이지를 하나 더 만드는 겁니다.
 
-그리고 나서 우리가 page에 명령어를 줘서 원하는 주소로 가고, 특정 문자열을 찾고 그런 작업을 하게 됩니다.
+그리고 나서 우리가 page에 명령어를 줘서 원하는 주소로 가고, 또 특정 문자열을 찾고 등등, 이런 작업들을 하게 됩니다.
 
 위 코든는 다음 웹 사이트로 가서 스크린샷을 찍어오라는 명령어네요.
 
@@ -97,20 +101,20 @@ browser가 크로미움 브라우저에 해당되고, 브라우저에서 한개 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEjUKhIgpjmsAnh6z7jUCE6_8wucWaHlQFbvgVCSLcuHxs_OIU24TMPHtqOYxZV-2VMVe-7DgnOlfrdJxOVhINh1rHQuorVFEv73x_w5pF2Oa4ATGo2-f5VCoyjbjmzweRL5rLxH_NzYurGwCKisVbszk--Y4mNwHwnzIkLHZQVlsav7m__7F-3-SMCZ=s16000)
 
 
-스크린샷 파일도 정상적으로 작동 됐습니다.
+스크린샷 파일도 정상적으로 저장되었습니다.
 
-근데, 그냥 터미널 창에서만 뒤에서 뭔가 코드가 수행된 것으로 보이는데요.
+근데, 그냥 터미널 창에서만 코드가 실행된 것으로 보이는데요.
 
 puppeteer가 지금 뭘 하는지 볼 수 없을까요?
 
-바로 puppeteer.launch 함수에 옵션을 주면 됩니다.
+바로 puppeteer.launch() 함수에 옵션을 주면 됩니다.
 
 ```js
 const browser = await puppeteer.launch({
     headless: false
   });
 ```
-puppeteer.launch 함수 안에 객체 형태로 headless: false라고 지정했습니다.
+puppeteer.launch() 함수 안에 객체 형태로 headless: false라고 지정했습니다.
 
 이제 실행해 볼까요?
 
@@ -118,9 +122,9 @@ puppeteer.launch 함수 안에 객체 형태로 headless: false라고 지정했�
 
 크로미움 브라우저가 생기더니 순식간에 사라졌습니다.
 
-바로 코드가 종료되면 browser.close()에 의해 크로미움 브라우저가 종료되기 때문입니다.
+왜냐하면 우리의 코드는 브라우저를 launch()하고 newPage로 페이지 하나 생성하고 그냥 browser.close()에 의해 크로미움 브라우저가 종료되기 때문입니다.
 
-그래서 개발할 때는 browser.close() 함수 앞에 특정 시간 대기 코드를 넣어두면 쉽게 크로미움 브라우저를 사용할 수 있습니다.
+그래서 개발할 때는 browser.close() 함수 앞에 특정 시간 대기 코드를 넣어두면 쉽게 크로미움 브라우저를 오랜 시간 사용할 수 있습니다.
 
 ```js
 const puppeteer = require("puppeteer");
@@ -146,9 +150,9 @@ const puppeteer = require("puppeteer");
 })()
 ```
 
-이제 크로미움을 이용한 XPath 강좌에 들어가야하기 때문에 스크린샷 코드는 주석처리했습니다.
+위 코드에서는 크로미움을 이용한 XPath 강좌에 들어가야하기 때문에 스크린샷 코드는 주석처리했습니다.
 
-그리고 page.waitForTimeout 명령어로 10분(10*60*1000)동안 기다리라고 했습니다.
+그리고 page.waitForTimeout 명령어로 10분(`10*60*1000`)동안 기다리라고 했습니다.
 
 실행 결과를 볼까요?
 
@@ -156,15 +160,17 @@ const puppeteer = require("puppeteer");
 
 크로미움이 정상적으로 작동되고 있습니다.
 
-그런데, 탭이 한개 더 생겼고, 그리고 다음 웹페이지의 크기도 마음에 안듭니다.
+그런데, 탭이 한개 더 생겼고, 그리고 웹페이지의 크기도 마음에 안듭니다.
 
 먼저, 이 부분을 고쳐 볼까요?
 
-1. 탭이 한개 더 생긴 이유
+---
+
+## 탭이 한개 더 생긴 이유
 
 왜냐하면 크로미움을 실행하면 이미 한개의 탭이 있는데 그 상태에서 browser.newPage() 명령어에 의해 탭을 한개 더 만들었기 때문입니다.
 
-그럼, 크로미움 실행시 자동으로 생긴 page를 어떻게 가져올가요?
+그럼, 크로미움 실행시 자동으로 생긴 page를 어떻게 가져올까요?
 
 바로 browser.pages() 함수입니다.
 
@@ -186,7 +192,8 @@ pages() 함수는 복수이기 때문에 page를 가진 배열을 리턴합니�
 첫번째 방법이 훨씬 간결합니다. ES6의 좋은 점이죠.
 
 
-2. 페이지 크기가 작은 이유
+--- 
+## Page 크기가 작은 이유
 
 puppeteer.launch() 함수에 옵션을 줄수 있다고 했는데요.
 
@@ -202,7 +209,7 @@ puppeteer.launch() 함수에 옵션을 줄수 있다고 했는데요.
 
 브라우저 창 크기를 완전히 작게 만들었네요.
 
-근데 작업할 때 이 방법보다는 page의 뷰포트를 조작하는 방식을 씁니다.
+근데 작업할 때 이 방법보다는 page의 뷰포트(Viewport)를 조작하는 방식을 씁니다.
 
 ```js
   const [page] = await browser.pages();
@@ -218,7 +225,7 @@ page.setViewport() 함수를 이용하니까 좀더 깔끔한 상태가 되었�
 
 그럼 아까전에 launch 함수의 args를 크게하면 되지 않나요?
 
-args를 크게해도 그게 페이지에 대한 크기가 아니끼 때문에 페이지는 작게 나올겁니다.
+args를 크게해도 그게 페이지에 대한 크기가 아니고 크로미움 애플리케이션 창의 크기이끼 때문에 페이지는 작게 나올겁니다.
 
 뭐, 일단은 오늘의 주제인 XPath를 알아보기 위한 사전 준비작업이 완료 되었습니다.
 
@@ -226,15 +233,16 @@ args를 크게해도 그게 페이지에 대한 크기가 아니끼 때문에 �
 
 ## XPath
 
-puppeteer는 Page에서 검색 메써드를 여러개 제공하는데요.
+puppeteer는 Page에서 검색 Method를 여러 개 제공하는데요.
 
-아래 API 스크린샷 처럼 5개를 제공하는데요.
+아래 API 스크린샷 처럼 5개를 제공합니다.
 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEh2KcQuuaYPL9sKlk_utgf73FpUrFbCWZDHE8DzXJ54TaIy_ngl_sgN7uzX67ypNwOe5er_KMZrXMjixDPMuFZICoSeWoxgLjZyCmPEazqD7Kpy0tjlTTDJHGz5SajatYjMs_65OLtkSNJVIgLIfBzOHZ-kfW_cP7FamAPXNpgtVSzP0NgpYq5-xFlw=s16000)
 
-우리가 사용할 게 바로 Page.$x 함수입니다.
+우리가 사용할 게 바로 Page.$() 함수와 Page.$x() 함수입니다.
 
 API 설명은 아래와 같습니다.
+![](https://blogger.googleusercontent.com/img/a/AVvXsEjRnbtxTVyFeGA6dzF9eM75AY27U6EZhIUzWA28x043b52zA59te8GEnR7qMeJpUuHj39_kmWdeXxZHRFEQI1cmRXSNkF7IxyErc_TiVpNIxJpr0L9Nk3NX4T9zTznWcDlblcbekIyKpYgws2th3Z8ceGp6hcqdNobsfPOpFtHWzagEBwHUBBbgosxD=s16000)
 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEhKCZHnTF0h-1U11pMqmdyQ2LD9lK-uWDKpczoZhB1cdIfHzcerEQe4A6Y11YyYCj8KxbqZDX96BvecOv-c_vlq7Lyry_4C8KgXOOgE1SuO_GyFUz1G9T0gNgCmPwAuQWiaYTYFbRalDFaXEcl_f7GknasaUMA5SK2PVUnlEwW10Cuv9R40O1tyh0s2=s16000)
 
@@ -244,9 +252,7 @@ API 설명은 아래와 같습니다.
 
 먼저, 가장 쉬운 Page.$에 대해 알아 보겠습니다.
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEjRnbtxTVyFeGA6dzF9eM75AY27U6EZhIUzWA28x043b52zA59te8GEnR7qMeJpUuHj39_kmWdeXxZHRFEQI1cmRXSNkF7IxyErc_TiVpNIxJpr0L9Nk3NX4T9zTznWcDlblcbekIyKpYgws2th3Z8ceGp6hcqdNobsfPOpFtHWzagEBwHUBBbgosxD=s16000)
-
-일단 터미널창에서 실행되고 있는 크로미움 브라우저에서 주소를 좀 더 쉬은 제 블로그로 이동해 보겠습니다.
+일단 터미널창에서 실행되고 있는 크로미움 브라우저에서 주소를 제 블로그로 변경해 보겠습니다.
 
 [mycodings.fly.dev](https://mycodings.fly.dev)
 
@@ -276,7 +282,7 @@ API 설명은 아래와 같습니다.
 
 먼저, "카카오툭 웹"과 "myMovies" 사이트입니다.
 
-두개의 `<a>` 태그를 보시면 서로 구분할 수 있는게 사이트 이름밖에 없는데요.
+두개의 `<a>` 태그를 보시면 서로 구분할 수 있는 하는 차이점이 사이트 이름밖에 없어 보이는데요.
 
 그럼 puppeteer로 해당 링크를 선택해서 click하게 하는 코드를 작성해 보겠습니다.
 
@@ -288,15 +294,15 @@ API 설명은 아래와 같습니다.
   await kakaoTag.click();
 ```
 
-먼저, page.$() 함수로 원하는 HTML을 선택하고 그 HTML Element를 click()함수로 실행시켰습니다.
+먼저, page.$() 함수로 원하는 HTML 엘러먼트(node)을 선택하고 그 HTML Element를 click()함수로 실행시켰습니다.
 
-click()함수는 마우스 클릭을 에뮬레이팅한겁니다.
+click()함수는 마우스 클릭을 에뮬레이팅한 겁니다.
 
 브라우저는 실제 마우스가 클릭했다고 생각할 겁니다.
 
 그런데 궁금한거 위 코드에서 page.$() 안에 있는 이상한 문자열인데요.
 
-이 문자열은 자바스크립트로 document.querySelector() 함수를 쓸때와 같은 방식입니다.
+이 문자열은 자바스크립트로 document.querySelector() 함수를 쓸 때와 같은 방식입니다.
 
 크로미움 브라우저에서 해당 `<a>` 태그위에서 오른쪽 버튼을 클릭한 다음 COPY 부분으로 이동하시면 아래 그림처럼 나오는데,
 
@@ -328,7 +334,7 @@ const kakaoTag2 = await page.$("div.kakao_style");
 
 이렇지 않은 경우 사용하는 puppeteer 함수가 바로 page.$x() 함수입니다.
 
-$x() 의 x 가 바로 "XPath"를 의미하는데요.
+$x()의 `"x"` 가 바로 "XPath"를 의미하는데요.
 
 "XPath"는 XML, HTML같은 코드에서 특정 위치에서 상하 이동하여 선택하거나 특정 조건을 만족하는 위치를 찾게하는 만능 코드입니다.
 
@@ -336,11 +342,11 @@ $x() 의 x 가 바로 "XPath"를 의미하는데요.
 
 ---
 
-#### XPath
+## XPath
 
 XPath의 강력한 기능을 먼저 보여드리겠습니다.
 
-아까 위에서 선택한 쿼리대신 문자열을 검색할 수 있는데요.
+아까 위에서 선택한 쿼리 대신 문자열을 검색할 수 있는데요.
 
 참고로 page.$x() 함수는 배열을 리턴하니까 아래와 같이 `[kakaoTag]` 방식으로 배열로 지정해야 합니다.
 
@@ -351,7 +357,7 @@ XPath의 강력한 기능을 먼저 보여드리겠습니다.
 
 page.$x() 함수는 string을 인자로 받는데요.
 
-그 string에 우리가 원하는 형식을 적어 넣는겁니다.
+그 string에 우리가 원하는 형식을 적어 넣는 겁니다.
 
 먼저 위에 넣은 string을 자세히 살펴볼까요?
 
@@ -373,7 +379,7 @@ page.$x("//a[contains(text(), '카카오톡')]");
 
 그리고 태그다음에 `[]`을 줘서 옵션을 줄 수 있는데요.
 
-찾으려고 하는 `<a>`태그를 어떻게 찾을 지 옵션을 주는 겁니다.
+찾으려고 하는 `<a>` 태그를 어떻게 찾을 지 옵션을 주는 겁니다.
 
 위 코드를 보면 contains() 내부 함수를 적었는데요.
 
@@ -402,7 +408,9 @@ contains(@href, "kakaoweb.netlify.app")
   if (kakaoTag) await kakaoTag.click();
 ```
 
-#### XPath의 강력한 기능
+---
+
+## XPath의 강력한 기능
 
 XPath Expression의 좀더 강력한 기능을 알아 보기 위해 아래와 같은 HTML 코드가 있다고 합시다.
 
@@ -426,17 +434,17 @@ XPath Expression의 좀더 강력한 기능을 알아 보기 위해 아래와 �
 
 위 코드를 보시면 뭔가 검색 엔진 써치 결과 처럼 보이는데요.
 
-실제 Bing.com이 내놓은 코드가 위와 같은 코드입니다.
+실제 Bing.com이 내놓는 코드가 위와 같은 코드입니다.
 
-그래서 우리가 택스트로 "Answer"을 골랐는데 그에 해당하는 `<a>` 태그를 선택해야 하는데요.
+그래서 우리가 택스트로 `"Answer"`을 골랐는데 그에 해당하는 `<a>` 태그를 선택해야 하는데요.
 
-"href" 속성도 제멋대로라서 어떻게 고를 수가 없습니다.
+`"href"` 속성도 제멋대로라서 어떻게 고를 수가 없습니다.
 
-이럴때 쓰이는 강력한 XPath 기능을 알아 봅시다.
+이럴 때 쓰라고 XPath 기능이 있는 겁니다.
 
-일단 우리가 원하는 건 "Answer"의 `<a>` 태그를 가져와서 그걸 클릭하는 코드입니다.
+일단 우리가 원하는 건 `"Answer"`의 `<a>` 태그를 가져와서 그걸 클릭하는 코드입니다.
 
-그런데 검색할 수 있는 단서는 "Answer"인데요.
+그런데 검색할 수 있는 단서는 `"Answer"`인데요.
 
 그걸로 먼저 시작해 보겠습니다.
 
@@ -456,13 +464,13 @@ const [answerTag] = await page.$x("//cite[contains(., 'Answer')]/parent::li/a");
 
 즉, 아까 코드에서 바로 다음에 이어지는게 '/parent::li/a`인데요.
 
-'/'로 시작했다는 의미는 바로 "//cite[contains(., 'Answer')]" 여기서 부터 시작한다는 의미이고 그 다음에 "parent::li" 라고 적었기 때문에 `<cite>` 태그의 부모 엘러먼트인 `<li>`를 고르라는 의미입니다.
+'/'로 시작했다는 의미는 바로 `//cite[contains(., 'Answer')]` 여기서 부터 시작한다는 의미이고, 그 다음에 `parent::li` 라고 적었기 때문에 `<cite>` 태그의 부모 엘러먼트인 `<li>`를 고르라는 의미입니다.
 
-그리고 나서 다사 "/" 로 시작하고 그 다음에 우리가 원하는 태그인 "a" 태그가 온 것이죠.
+그리고 나서 다시 `"/"` 로 시작하고 그 다음에 우리가 원하는 태그인 `<a>` 태그가 온 것이죠.
 
 정말 강력한 기능이지 않나요?
 
-XPath Expression 만 잘 익히면 모든 경우에도 특정 엘러먼트에 접근할 수 있을 겁니다.
+XPath Expression 만 잘 익히면 어떤 경우에도 특정 엘러먼트에 접근할 수 있을 겁니다.
 
 아래는 참고로 XPath 관련 자료이니 참고 바랍니다.
 
