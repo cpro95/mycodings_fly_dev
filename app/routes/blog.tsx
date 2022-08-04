@@ -111,7 +111,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   // console.log(arrayOfBestPool)
 
   return json<LoaderData>(
-    { blogList, blogCount, arrayOfBestPool: arrayOfBestPool.slice(0, 7) },
+    { blogList, blogCount, arrayOfBestPool: arrayOfBestPool.slice(0, 6) },
     {
       headers: { 'cache-control': 'private, max-age=60', Vary: 'Cookie' },
     },
