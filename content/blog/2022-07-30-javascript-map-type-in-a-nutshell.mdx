@@ -16,15 +16,15 @@ published: true
 
 오늘은 엊그제 블로그 최다 키워드 추출 및 정렬에 있어 Map 타입으로 간단히 해결하게 된 사연도 있고 해서,
 
-자바스크립트 또는 타입스크립트의 Map Type에 대해 알아 보겠습니다.
+자바스크립트 또는 타입스크립트의 Map Type에 대해 알아보겠습니다.
 
-Map 타입은 ES6에 도입되었는데요, key-value 라는 간단한 구조로 되어 있습니다.
+Map 타입은 ES6에 도입되었는데요, key-value라는 간단한 구조로 되어 있습니다.
 
-객체나 어떤 primitive values라도 key 또는 value 값으로 들어 갈 수 있습니다.
+객체나 어떤 primitive values라도 key 또는 value 값으로 들어갈 수 있습니다.
 
-자바스크립트 Map은 콜렉션이라고 부르는데요.
+자바스크립트 Map은 컬렉션이라고 부르는데요.
 
-콜렉션이기 때문에 사이즈도 있고 순서도 있고, 각 아이템을 탐색할 수 도 있습니다.
+컬렉션이기 때문에 사이즈도 있고 순서도 있고, 각 아이템을 탐색할 수도 있습니다.
 
 본격적으로 기초부터 시작해 보겠습니다.
 
@@ -45,13 +45,13 @@ let myMap = new Map();
 
 편의상 타입스크립트로 진행하겠습니다.
 
-위 코드를 보시면 타입스크립트로 명확하게 key-value에 해당되는 타입을 지정했습니다.
+위 코드를 보시면 타입스크립트로 명확하게 key-value에 해당하는 타입을 지정했습니다.
 
 key는 string 타입이고 value는 number 타입입니다.
 
 ### 초기화 값을 지닌 Map 만들기
 
-Map을 만들때 아래처럼 Map constructor에 배열로 key-value 값을 지정해 주면 초기화 값을 지닌 Map을 만들 수 있습니다.
+Map을 만들 때 아래처럼 Map constructor에 배열로 key-value 값을 지정해 주면 초기화 값을 지닌 Map을 만들 수 있습니다.
 
 ```js
 let myMap = new Map<string, string>([
@@ -78,7 +78,7 @@ let myMap = new Map<string, string>([
 
 4. map.size
 
-  -- Map의 엔트리 갯수를 리턴
+  -- Map의 엔트리 개수를 리턴
 
 5. map.delete(key)
 
@@ -117,7 +117,7 @@ nameAgeMapping.clear();				//Clear all entries
 
 ## 맵 Iterating
 
-Map 엔트리는 삽입된 순서로 Iterating됩니다.
+Map 엔트리는 삽입된 순서로 Iterating 됩니다.
 
 for-each loop은 [key, value] 짝의 배열을 리턴합니다.
 
@@ -137,7 +137,7 @@ for-each loop은 [key, value] 짝의 배열을 리턴합니다.
 
 4. map
 
-  -- map entries를 iterating하기 위해 객체 디스트럭쳐링 사용
+  -- map entries를 iterating 하기 위해 객체 디스트럭쳐링 사용
 
 ### 예제
 
@@ -174,9 +174,9 @@ for (let [key, value] of nameAgeMapping) {
 
 ## forEach()를 이용한 Map 타입의 filtering
 
-Map 타입을 필터링하려면 일단 Array.from() 메쏘드로 Map 타입을 배열로 가져와야 합니다.
+Map 타입을 필터링하려면 일단 Array.from() 메서드로 Map 타입을 배열로 가져와야 합니다.
 
-아래처럼 Map 타입을 Array.from() 메쏘드로 배열로 전활 할 수 있는데요.
+아래처럼 Map 타입을 Array.from() 메서드로 배열로 전환할 수 있는데요.
 ```js
 const map1 = new Map([
   ['num1', 1],
@@ -188,9 +188,9 @@ const map1 = new Map([
 console.log(Array.from(map1));
 ```
 
-그 다음으로 배열 디스트럭쳐링을 이해하야 합니다.
+그다음으로 배열 디스트럭쳐링을 이해하여야 합니다.
 
-배열 디스트럭쳐링은 아래 코드를 보시면 쉽게 이해 할 수 있습니다.
+배열 디스트럭쳐링은 아래 코드를 보시면 쉽게 이해할 수 있습니다.
 
 ```js
 const [key, value] = ['num1', 1];
@@ -217,11 +217,11 @@ map1.forEach((value, key) => {
 console.log(map1);
 ```
 
-map1의 value값이 1 초과되는 엔트리를 map1.delete 함수로 삭제하는 코드입니다.
+map1의 value 값이 1 초과하는 엔트리를 map1.delete 함수로 삭제하는 코드입니다.
 
 iterating을 위해 forEach() method가 쓰였고요.
 
-위와 같이 필터링 하는 방법도 있고 맵을 배열로 변환해서 배열의 filter 메쏘드를 사용하는 방법도 있습니다
+위와 같이 필터링하는 방법도 있고 맵을 배열로 변환해서 배열의 filter 메서드를 사용하는 방법도 있습니다
 
 ```js
 const map1 = new Map([
@@ -249,18 +249,18 @@ console.log(filtered);
 
 ## 객체(Object)를 맵(Map) 타입으로 변환하기
 
-객체를 맵 타입으로 변환하기 위해서는 객체가 맵 타입처럼 key-value 형식의 관계를 가지고 있으면 가능합니다.
+객체를 맵 타입으로 변환하기 위해서는 객체가 맵 타입처럼 key-value 형식의 관계를 맺고 있으면 가능합니다.
 
-Object.entries() 메쏘드를 쓰면 객체의 key-value 형식의 배열을 얻을 수 있는데 그걸 Map() 컨스트럭터에 넣으면 됩니다.
+Object.entries() 메서드를 쓰면 객체의 key-value 형식의 배열을 얻을 수 있는데 그걸 Map() 컨스트럭터에 넣으면 됩니다.
 
-아래 코드처럼 Object.entries 메쏘드는 객체의 항목을 key-value 항목으로 변환해서 배열로 리턴합니다.
+아래 코드처럼 Object.entries 메서드는 객체의 항목을 key-value 항목으로 변환해서 배열로 리턴합니다.
 
 ```js
 // 👇️ [['id', 456], ['name', 'Gihun']]
 console.log(Object.entries({id: 456, name: 'Gihun'}));
 ```
 
-위 코드처럼 Object.entries() 메쏘드를 거친 배열의 첫번째 항목도 배열인데, 순차적으로 배열을 Map Constructor에 넣어서 Map을 생성하면 됩니다.
+위 코드처럼 Object.entries() 메서드를 거친 배열의 첫 번째 항목도 배열인데, 순차적으로 배열을 Map Constructor에 넣어서 Map을 생성하면 됩니다.
 
 ```js
 const obj = {
@@ -272,9 +272,9 @@ const map1 = new Map(Object.entries(obj));
 console.log(map1); // 👉️ {'id' => 456, 'name' => 'Gihun'}
 ```
 
-#### **반대로, Map 형식을 다시 Object 형식으로 변환시킬려면 어떻게 하면 될까요?**
+#### **반대로, Map 형식을 다시 Object 형식으로 변환시키려면 어떻게 하면 될까요?**
 
-여기서도 다시 Object.fromEntries() 메쏘드를 쓰면 됩니다.
+여기서도 다시 Object.fromEntries() 메서드를 쓰면 됩니다.
 
 ```js
 // 👇️ {id: 456, name: 'Gihun'}
@@ -286,11 +286,11 @@ console.log(
 );
 ```
 
-Object.fromEntries() 메쏘드는 꼭 iterating 할 수 있는 Map 형식이나 배열을 받아야 하는데요.
+Object.fromEntries() 메서드는 꼭 iterating 할 수 있는 Map 형식이나 배열을 받아야 하는데요.
 
 Iterating 할 수 있는 key-value 형식이어야 하는 건 당연해야 합니다.
 
-전체적인 코드를 보면 쉽게 이해 할 수 있을겁니다.
+전체적인 코드를 보면 쉽게 이해할 수 있을 겁니다.
 
 ```js
 const obj = {
@@ -323,7 +323,7 @@ console.log([...map1]);
 
 위 코드처럼 map1이라는 맵을 스프레드 연산자(...)를 이용해서 언팩(unpack)했습니다.
 
-병합하고자 하는 Map 여러개를 스프레드 연산자(...)로 언팩하고 나서
+병합하고자 하는 Map 여러 개를 스프레드 연산자(...)로 언팩하고 나서
 
 ```js
 const map3 = new Map([['name', 'Tom'], ['age', 30]])
@@ -331,7 +331,7 @@ const map3 = new Map([['name', 'Tom'], ['age', 30]])
 
 위 코드처럼 새로운 Map을 만들면 됩니다.
 
-전체적인 코드를 보면 이해하기 더 쉬울겁니다.
+전체적인 코드를 보면 이해하기 더 쉬울 겁니다.
 
 ```js
 const map1 = new Map([['name', 'Tom']]);
@@ -351,11 +351,11 @@ Map을 정렬하기 위해서는 sort() 함수가 필요한데요.
 
 Map 타입은 sort() 함수가 없습니다.
 
-그래서 sort() 함수가 있는 배열로 변환해서 sort()함수로 순서를 정렬하고 다시 Map 형식으로 되돌리면 쉽게 정렬할 수 있습니다.
+그래서 sort() 함수가 있는 배열로 변환해서 sort() 함수로 순서를 정렬하고 다시 Map 형식으로 되돌리면 쉽게 정렬할 수 있습니다.
 
-Map 타입은 데이터가 삽인된 순서를 기억하고 있습니다.
+Map 타입은 데이터가 삽입된 순서를 기억하고 있습니다.
 
-그래서 배열로 변환되서도 순서가 그대로입니다.
+그래서 배열로 변환돼서도 순서가 그대로입니다.
 
 여기서도 스프레드 연산자(...)가 중요하게 쓰입니다.
 
@@ -392,11 +392,11 @@ const sortedDesc = new Map([...map1].sort().reverse());
 console.log(sortedDesc); // 👉️ {'z' => 'three', 'b' => 'two', 'a' => 'one'}
 ```
 
-여기까지는 Map의 Key 타입이 문자열(string)일때만 가능한데요.
+여기까지는 Map의 Key 타입이 문자열(string) 일 때만 가능한데요.
 
-문자열은 아스키코드로 정렬이 되기 때문에 개발자가 신경 안써도 되지만,
+문자열은 아스키코드로 정렬이 되기 때문에 개발자가 신경 안 써도 되지만,
 
-만약에 Map의 Key 타입이 숫자(number)일때는 sort() 함수를 만들어서 지정해 줘야 합니다.
+만약에 Map의 Key 타입이 숫자(number) 일 때는 sort() 함수를 만들어서 지정해 줘야 합니다.
 
 ```js
 const map2 = new Map([
@@ -465,9 +465,9 @@ console.log(sortedNumDesc);
 
 Map의 key 순서대로 Map 정렬하기와 똑같습니다.
 
-틀린 점은 Map을 배열로 가져올때 key로 정렬할때는 배열의 첫번째 인자 즉, a[0], b[0]을 비교했지만,
+틀린 점은 Map을 배열로 가져올 때 key로 정렬할 때는 배열의 첫 번째 인자, 즉, a[0], b[0]을 비교했지만,
 
-value로 정렬할때는 배열의 두번째 인자인 a[1], b[1]을 비교하면 됩니다.
+value로 정렬할 때는 배열의 두 번째 인자인 a[1], b[1]을 비교하면 됩니다.
 
 Map이 배열로 전환될 때 [key, value] 형식의 배열로 저장되기 때문입니다.
 
@@ -515,9 +515,9 @@ console.log(sortedDesc);
 
 ---
 
-## Map에서 key, value 중 한개만 가져와서 배열 만들기
+## Map에서 key, value 중 한 개만 가져와서 배열 만들기
 
-이 방법도 똑같이 Array.from() 메쏘드를 쓰면됩니다.
+이 방법도 똑같이 Array.from() 메서드를 쓰면 됩니다.
 
 key만 가져오는 코드입니다.
 
@@ -548,7 +548,7 @@ console.log(values.length); // 👉️ 2
 const keys = Array.from(map.keys()); // 👉️ ['name', 'age']
 ```
 
-위 2개의 코드에서는 각각 map.keys() 메쏘드와 map.values() 메쏘드를 써서 Array.from()으로 전달했는데요.
+위 2개의 코드에서는 각각 map.keys() 메서드와 map.values() 메서드를 써서 Array.from()으로 전달했는데요.
 
 그럼, key, value 모두 전달하는 방법은 어떻게 할까요?
 
@@ -567,11 +567,11 @@ console.log(arr);
 
 ```
 
-Array.from() 메쏘드에 두번째 인자로 익명함수를 넣었습니다.
+Array.from() 메소드에 두 번째 인자로 익명 함수를 넣었습니다.
 
-만약에 Array.from() 메쏘드에 두번째 인자를 안 넣고 그냥 첫번째 인자로 map을 넣는다면,
+만약에 Array.from() 메소드에 두 번째 인자를 안 넣고 그냥 첫 번째 인자로 map을 넣는다면,
 
-Array.from()은 아래 처럼 배열의 배열을 리턴할 겁니다.
+Array.from()은 아래처럼 배열의 배열을 반환할 겁니다.
 
 ```js
 const map = new Map();
@@ -584,11 +584,11 @@ const arr = Array.from(map);
 console.log(arr);
 ```
 
-그래서 Array.from() 메쏘드가 배열의 배열을 리턴한걸 두번째 인자인 익명 함수에서 처리하는 거죠.
+그래서 Array.from() 메서드가 배열의 배열을 반환한 걸 두 번째 인자인 익명 함수에서 처리하는 거죠.
 
-두번째 인자인 익명 함수는 배열 디스트럭쳐링 방식이 쓰인 겁니다.
+두 번째 인자인 익명 함수는 배열 디스트럭쳐링 방식이 쓰인 겁니다.
 
-아래 처럼요.
+아래처럼요.
 
 ```js
 const [a, b] = ['hello', 'world'];
@@ -601,11 +601,11 @@ console.log(b); // 👉️ world
 ```js
 return {[key]: value}
 ```
-형식을 써서 객체를 리턴하게 했습니다.
+형식을 써서 객체를 반환하게 했습니다.
 
 ---
 
-지금까지 자바스크립트의 Map 타입에 대해 알아 보았는데요.
+지금까지 자바스크립트의 Map 타입에 대해 알아보았는데요.
 
 정말 많은 도움이 되었으면 합니다.
 
