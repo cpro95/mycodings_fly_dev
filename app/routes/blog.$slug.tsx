@@ -15,6 +15,8 @@ import type { MdxComponent } from '~/types'
 import styles from 'highlight.js/styles/night-owl.css'
 import { getSeoMeta } from '~/utils/seo'
 import Utterances from '~/components/utterances'
+import BestTags from '~/components/best-tags'
+import KeywordsLink from '~/components/keywords-link'
 
 export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
   const { keywords = [] } = data.frontmatter.meta ?? {}
@@ -57,6 +59,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function Blog() {
   const data = useLoaderData<MdxComponent>()
+  const links = data.frontmatter.meta?.keywords || []
 
   const Component = React.useMemo(() => getMDXComponent(data.code), [data])
 
@@ -64,6 +67,7 @@ export default function Blog() {
     <>
       <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl pt-24 dark:prose-invert lg:prose-lg'>
         <Component />
+        <KeywordsLink links={links} />
         <Utterances />
       </article>
     </>
