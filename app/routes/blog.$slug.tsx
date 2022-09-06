@@ -15,7 +15,6 @@ import type { MdxComponent } from '~/types'
 import styles from 'highlight.js/styles/night-owl.css'
 import { getSeoMeta } from '~/utils/seo'
 import Utterances from '~/components/utterances'
-import BestTags from '~/components/best-tags'
 import KeywordsLink from '~/components/keywords-link'
 
 export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
