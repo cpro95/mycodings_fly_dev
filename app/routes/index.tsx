@@ -92,19 +92,19 @@ export default function Index() {
               </div>
             </div>
             <div className='mx-auto px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36'>
-              <span className='font-semibold uppercase text-gray-400'>
+              <span className='text-2xl font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300'>
                 FEATURED SITE
               </span>
-              <div className='mt-8 flex flex-wrap items-center justify-center text-gray-500 sm:justify-between'>
+              <div className='mt-8 flex flex-wrap items-center justify-center text-gray-600 dark:text-gray-400 sm:justify-between'>
                 <LinkOrAnchor
                   href='https://kakaoweb.netlify.app'
-                  className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-400 lg:mb-0'
+                  className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-200 lg:mb-0'
                 >
                   카카오톡 웹
                 </LinkOrAnchor>
                 <LinkOrAnchor
                   href='https://mymovies.fly.dev'
-                  className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-400 lg:mb-0'
+                  className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-200 lg:mb-0'
                 >
                   myMovies
                 </LinkOrAnchor>

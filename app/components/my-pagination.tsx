@@ -76,6 +76,9 @@ export default function MyPagination({
   const linkStyle =
     'px-2 sm:px-4 py-1 sm:py-2 mx-1 sm:mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md sm:inline dark:bg-gray-900 dark:text-gray-200 hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200'
 
+  const currentLinkStyle =
+    'px-2 sm:px-4 py-1 sm:py-2 mx-1 sm:mx-1 text-gray-700 rounded-md sm:inline bg-blue-500 text-white dark:bg-blue-500 dark:text-gray-200'
+
   return (
     <nav
       aria-label='Pagination'
@@ -114,7 +117,7 @@ export default function MyPagination({
       <Link
         to={`?q=${q}&page=${page}&itemsPerPage=${itemsPerPage}`}
         aria-current='page'
-        className={linkStyle}
+        className={currentLinkStyle}
       >
         {page}
       </Link>

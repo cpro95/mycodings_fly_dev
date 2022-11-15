@@ -102,6 +102,13 @@ function App() {
               `,
           }}
         />
+
+        {/* <!-- google adsense insert --> */}
+        <script
+          async
+          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7748316956330968'
+          crossOrigin='anonymous'
+        ></script>
       </head>
       <body className='h-full bg-white dark:bg-slate-800'>
         <SkipNavLink className='bg-gray-700'>Skip to content</SkipNavLink>
