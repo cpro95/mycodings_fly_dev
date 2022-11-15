@@ -28,7 +28,8 @@ jobs:
       - name: ⚙️ Determine Changes
         id: changes
         run: >-
-          echo ::set-output name=DEPLOYABLE::$(node ./others/is-deployable.js)
+          # echo ::set-output name=DEPLOYABLE::$(node ./others/is-deployable.js)
+          echo "name=DEPLOYABLE::$(node ./others/is-deployable.js)" >> $GITHUB_OUTPUT
         env:
           FLY_APP_NAME: ${{ secrets.FLY_APP_NAME }}
 
