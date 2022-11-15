@@ -88,7 +88,7 @@ export default function Index() {
                 </Link>
               </div>
               <div className='ml-2 hidden lg:col-span-5 lg:mt-0 lg:flex'>
-                <img src='reactjs_image.jpg' alt='intro' />
+                <img src='intro_image.jpg' alt='intro' />
               </div>
             </div>
             <div className='mx-auto px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36'>

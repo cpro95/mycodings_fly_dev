@@ -26,6 +26,8 @@ type LoaderData = { theme: Theme | null }
 
 export const links: LinksFunction = () => {
   return [
+    { rel: 'preload', href: skipNavStyles, as: 'style' },
+    { rel: 'preload', href: appStyles, as: 'style' },
     { rel: 'stylesheet', href: skipNavStyles },
     { rel: 'stylesheet', href: appStyles },
     ...preloadSvg(),
