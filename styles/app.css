@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer components {
   [data-reach-skip-nav-link]:focus {
     @apply rounded bg-sky-500;
@@ -11,4 +15,3 @@
     @apply bg-gray-700;
   }
 }
-
