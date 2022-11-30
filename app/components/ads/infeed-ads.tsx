@@ -28,7 +28,7 @@ const InfeedAds = () => {
   return (
     <ins
       className='adsbygoogle'
-      style={{ display: 'inline-block' }}
+      style={{ display: 'block' }}
       data-ad-format='fluid'
       data-ad-layout-key='-i8-q+r-2a+71'
       data-ad-client='ca-pub-7748316956330968'

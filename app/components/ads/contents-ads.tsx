@@ -29,7 +29,7 @@ const ContentsAds = () => {
     <ins
       className='adsbygoogle'
       style={{
-        display: 'inline-block',
+        display: 'block',
         textAlign: 'center',
       }}
       data-ad-layout='in-article'

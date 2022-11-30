@@ -29,7 +29,7 @@ const MultiplexAds = () => {
     <ins
       className='adsbygoogle'
       style={{
-        display: 'inline-block',
+        display: 'block',
       }}
       data-ad-format='autorelaxed'
       data-ad-client='ca-pub-7748316956330968'
