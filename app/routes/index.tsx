@@ -98,7 +98,7 @@ export default function Index() {
               </div>
             </div>
 
-            <div className='mx-auto px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36'>
+            <div className='mx-auto mb-4 px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36'>
               <span className='text-2xl font-semibold uppercase tracking-widest text-gray-600 dark:text-gray-300'>
                 FEATURED SITE
               </span>
@@ -135,12 +135,10 @@ export default function Index() {
             Recent Posts
           </h2>
           <BlogList blogList={blogList} />
+          {/* 멀티플렉스광고 */}
+          <MultiplexAds />
+          {/* 멀티플렉스광고 */}
         </div>
-      </section>
-      <section className='mx-auto mt-6 w-[90vw]'>
-        {/* 멀티플렉스광고 */}
-        <MultiplexAds />
-        {/* 멀티플렉스광고 */}
       </section>
     </>
   )
