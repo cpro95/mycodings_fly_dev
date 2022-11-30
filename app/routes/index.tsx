@@ -56,7 +56,7 @@ export default function Index() {
         {/* <div className='grid h-[calc(100vh-92px)] place-content-center'> */}
 
         <div className='grid place-content-center'>
-          <div className='mx-auto max-w-4xl p-4'>
+          <div className='mx-auto max-w-4xl'>
             {/* 구글 디스플레이 광고 삽입 */}
             <DisplayAds />
             {/* 구글 디스플레이 광고 삽입 */}
@@ -137,7 +137,7 @@ export default function Index() {
             Recent Posts
           </h2>
           <BlogList blogList={blogList} />
-          <div className='mx-auto max-w-4xl p-4'>
+          <div className='mx-auto max-w-4xl'>
             {/* 멀티플렉스광고 */}
             <MultiplexAds />
             {/* 멀티플렉스광고 */}
