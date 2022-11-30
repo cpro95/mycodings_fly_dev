@@ -16,6 +16,8 @@ import styles from 'highlight.js/styles/night-owl.css'
 import { getSeoMeta } from '~/utils/seo'
 import Utterances from '~/components/utterances'
 import KeywordsLink from '~/components/keywords-link'
+import ContentsAds from '~/components/ads/contents-ads'
+import MultiplexAds from '~/components/ads/multiplex-ads'
 
 export const meta: MetaFunction = ({ data }: { data: MdxComponent }) => {
   const { keywords = [] } = data.frontmatter.meta ?? {}
@@ -65,9 +67,17 @@ export default function Blog() {
   return (
     <>
       <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl pt-24 dark:prose-invert lg:prose-lg'>
+        {/* 콘텐츠삽입광고 */}
+        <ContentsAds />
+        {/* 콘텐츠삽입광고 */}
+
         <Component />
         <KeywordsLink links={links} />
         <Utterances />
+
+        {/* 멀티플렉스광고 */}
+        <MultiplexAds />
+        {/* 멀티플렉스광고 */}
       </article>
     </>
   )

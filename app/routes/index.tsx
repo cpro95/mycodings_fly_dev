@@ -11,6 +11,7 @@ import BlogList from '~/components/blog-list'
 import { getMdxListItems } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
 import LinkOrAnchor from '~/components/link-or-anchor'
+import DisplayAds from '~/components/ads/display-ads'
 
 type LoaderData = { blogList: Awaited<ReturnType<typeof getMdxListItems>> }
 
@@ -52,12 +53,16 @@ export default function Index() {
     <>
       <section className='mx-auto max-w-4xl'>
         {/* <div className='grid h-[calc(100vh-92px)] place-content-center'> */}
+
         <div className='grid place-content-center'>
-          <h1 className='flex flex-col items-center p-4'>
+          {/* 구글 디스플레이 광고 삽입 */}
+          <DisplayAds />
+          {/* 구글 디스플레이 광고 삽입 */}
+          {/* <h1 className='flex flex-col items-center p-4'>
             <Link to='/'>
               <GradientText>myCodings</GradientText>
             </Link>
-          </h1>
+          </h1> */}
           <section>
             <div className='mx-auto grid max-w-screen-xl px-4 py-8 lg:grid-cols-12 lg:gap-8 lg:py-16 xl:gap-0'>
               <div className='mr-auto place-self-center lg:col-span-7'>
@@ -91,6 +96,7 @@ export default function Index() {
                 <img src='intro_image.jpg' alt='intro' />
               </div>
             </div>
+
             <div className='mx-auto px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36'>
               <span className='text-2xl font-semibold uppercase tracking-widest text-gray-600 dark:text-gray-300'>
                 FEATURED SITE
