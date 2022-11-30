@@ -92,21 +92,30 @@ export default function Index() {
               </div>
             </div>
             <div className='mx-auto px-4 text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36'>
-              <span className='text-2xl font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300'>
+              <span className='text-2xl font-semibold uppercase tracking-widest text-gray-600 dark:text-gray-300'>
                 FEATURED SITE
               </span>
               <div className='mt-8 flex flex-wrap items-center justify-center text-gray-600 dark:text-gray-400 sm:justify-between'>
                 <LinkOrAnchor
-                  href='https://kakaoweb.netlify.app'
+                  href='https://cpro95.github.io'
+                  target='_blank'
                   className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-200 lg:mb-0'
                 >
-                  카카오톡 웹
+                  cpro95.github.io
                 </LinkOrAnchor>
                 <LinkOrAnchor
                   href='https://mymovies.fly.dev'
+                  target='_blank'
                   className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-200 lg:mb-0'
                 >
                   myMovies
+                </LinkOrAnchor>
+                <LinkOrAnchor
+                  href='https://cpro95.tistory.com'
+                  target='_blank'
+                  className='mr-5 mb-5 hover:text-gray-800 dark:hover:text-gray-200 lg:mb-0'
+                >
+                  tistory
                 </LinkOrAnchor>
               </div>
             </div>
