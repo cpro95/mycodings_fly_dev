@@ -56,9 +56,11 @@ export default function Index() {
         {/* <div className='grid h-[calc(100vh-92px)] place-content-center'> */}
 
         <div className='grid place-content-center'>
-          {/* 구글 디스플레이 광고 삽입 */}
-          <DisplayAds />
-          {/* 구글 디스플레이 광고 삽입 */}
+          <div className='mx-auto max-w-4xl p-4'>
+            {/* 구글 디스플레이 광고 삽입 */}
+            <DisplayAds />
+            {/* 구글 디스플레이 광고 삽입 */}
+          </div>
           {/* <h1 className='flex flex-col items-center p-4'>
             <Link to='/'>
               <GradientText>myCodings</GradientText>
@@ -135,9 +137,11 @@ export default function Index() {
             Recent Posts
           </h2>
           <BlogList blogList={blogList} />
-          {/* 멀티플렉스광고 */}
-          <MultiplexAds />
-          {/* 멀티플렉스광고 */}
+          <div className='mx-auto max-w-4xl p-4'>
+            {/* 멀티플렉스광고 */}
+            <MultiplexAds />
+            {/* 멀티플렉스광고 */}
+          </div>
         </div>
       </section>
     </>

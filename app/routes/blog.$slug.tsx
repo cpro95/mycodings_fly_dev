@@ -67,19 +67,22 @@ export default function Blog() {
   return (
     <>
       <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl dark:prose-invert lg:prose-lg'>
-        {/* 콘텐츠삽입광고 */}
-        <ContentsAds />
-        {/* 콘텐츠삽입광고 */}
-
+        <div className='mx-auto max-w-4xl'>
+          {/* 콘텐츠삽입광고 */}
+          <ContentsAds />
+          {/* 콘텐츠삽입광고 */}
+        </div>
         <br />
         <br />
         <Component />
         <KeywordsLink links={links} />
-        <Utterances />
 
-        {/* 멀티플렉스광고 */}
-        <MultiplexAds />
-        {/* 멀티플렉스광고 */}
+        <div className='mx-auto max-w-4xl p-4'>
+          {/* 멀티플렉스광고 */}
+          <MultiplexAds />
+          {/* 멀티플렉스광고 */}
+        </div>
+        <Utterances />
       </article>
     </>
   )

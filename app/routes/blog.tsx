@@ -148,9 +148,11 @@ export default function Blog() {
       <BestTags bestTags={arrayOfBestPool} />
       <SearchForm method='get' action='.' />
 
-      {/* 인피드광고 */}
-      <InfeedAds />
-      {/* 인피드광고 */}
+      <div className='mt-2 max-w-lg'>
+        {/* 인피드광고 */}
+        <InfeedAds />
+        {/* 인피드광고 */}
+      </div>
 
       <BlogList blogList={blogList} />
       <MyPagination
