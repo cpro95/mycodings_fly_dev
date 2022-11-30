@@ -77,7 +77,7 @@ export default function Blog() {
         <Component />
         <KeywordsLink links={links} />
 
-        <div className='mx-auto max-w-4xl p-4'>
+        <div className='mx-auto max-w-4xl'>
           {/* 멀티플렉스광고 */}
           <MultiplexAds />
           {/* 멀티플렉스광고 */}

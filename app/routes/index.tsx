@@ -56,11 +56,10 @@ export default function Index() {
         {/* <div className='grid h-[calc(100vh-92px)] place-content-center'> */}
 
         <div className='grid place-content-center'>
-          <div className='mx-auto max-w-4xl'>
-            {/* 구글 디스플레이 광고 삽입 */}
-            <DisplayAds />
-            {/* 구글 디스플레이 광고 삽입 */}
-          </div>
+          {/* 구글 디스플레이 광고 삽입 */}
+          <DisplayAds />
+          {/* 구글 디스플레이 광고 삽입 */}
+          
           {/* <h1 className='flex flex-col items-center p-4'>
             <Link to='/'>
               <GradientText>myCodings</GradientText>

@@ -20,6 +20,7 @@ import { z } from 'zod'
 import { getSearchParams } from 'remix-params-helper'
 import BestTags from '~/components/best-tags'
 import InfeedAds from '~/components/ads/infeed-ads'
+import MultiplexAds from '~/components/ads/multiplex-ads'
 
 type LoaderData = {
   blogList: Awaited<ReturnType<typeof getMdxListItems>>
@@ -161,6 +162,11 @@ export default function Blog() {
         itemsPerPage={itemsPerPage}
         total_pages={Math.ceil(Number(blogCount) / itemsPerPage)}
       />
+      <div className='mx-auto max-w-4xl'>
+        {/* 멀티플렉스광고 */}
+        <MultiplexAds />
+        {/* 멀티플렉스광고 */}
+      </div>
     </section>
   )
 }
