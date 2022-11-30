@@ -19,6 +19,7 @@ import SearchForm from '~/components/search-form'
 import { z } from 'zod'
 import { getSearchParams } from 'remix-params-helper'
 import BestTags from '~/components/best-tags'
+import InfeedAds from '~/components/ads/infeed-ads'
 
 type LoaderData = {
   blogList: Awaited<ReturnType<typeof getMdxListItems>>
@@ -146,6 +147,11 @@ export default function Blog() {
     <section className='mx-auto max-w-4xl pt-8'>
       <BestTags bestTags={arrayOfBestPool} />
       <SearchForm method='get' action='.' />
+
+      {/* 인피드광고 */}
+      <InfeedAds />
+      {/* 인피드광고 */}
+
       <BlogList blogList={blogList} />
       <MyPagination
         q={q}

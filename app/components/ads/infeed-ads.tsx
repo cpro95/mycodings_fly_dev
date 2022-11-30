@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-const MultiplexAds = () => {
+const InfeedAds = () => {
   useEffect(() => {
     const pushAd = () => {
       try {
@@ -28,14 +28,13 @@ const MultiplexAds = () => {
   return (
     <ins
       className='adsbygoogle'
-      style={{
-        display: 'inline-block',
-      }}
-      data-ad-format='autorelaxed'
+      style={{ display: 'inline-block' }}
+      data-ad-format='fluid'
+      data-ad-layout-key='-i8-q+r-2a+71'
       data-ad-client='ca-pub-7748316956330968'
-      data-ad-slot='4495825428'
+      data-ad-slot='6882278984'
     ></ins>
   )
 }
 
-export default MultiplexAds
+export default InfeedAds

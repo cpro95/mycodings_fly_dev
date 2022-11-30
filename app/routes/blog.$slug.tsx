@@ -66,11 +66,13 @@ export default function Blog() {
 
   return (
     <>
-      <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl pt-24 dark:prose-invert lg:prose-lg'>
+      <article className='prose prose-zinc mx-auto min-h-screen max-w-4xl dark:prose-invert lg:prose-lg'>
         {/* 콘텐츠삽입광고 */}
         <ContentsAds />
         {/* 콘텐츠삽입광고 */}
 
+        <br />
+        <br />
         <Component />
         <KeywordsLink links={links} />
         <Utterances />

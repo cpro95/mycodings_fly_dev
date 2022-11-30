@@ -12,6 +12,7 @@ import { getMdxListItems } from '~/utils/mdx.server'
 import { getSeo } from '~/utils/seo'
 import LinkOrAnchor from '~/components/link-or-anchor'
 import DisplayAds from '~/components/ads/display-ads'
+import MultiplexAds from '~/components/ads/multiplex-ads'
 
 type LoaderData = { blogList: Awaited<ReturnType<typeof getMdxListItems>> }
 
@@ -128,7 +129,7 @@ export default function Index() {
           </section>
         </div>
       </section>
-      <section className='mx-auto mt-32 w-[90vw]'>
+      <section className='mx-auto mt-6 w-[90vw]'>
         <div className='mx-auto max-w-4xl'>
           <h2 className='text-xl text-gray-800 dark:text-gray-100'>
             Recent Posts
@@ -136,15 +137,20 @@ export default function Index() {
           <BlogList blogList={blogList} />
         </div>
       </section>
+      <section className='mx-auto mt-6 w-[90vw]'>
+        {/* 멀티플렉스광고 */}
+        <MultiplexAds />
+        {/* 멀티플렉스광고 */}
+      </section>
     </>
   )
 }
 
-function GradientText(props: React.HTMLAttributes<HTMLSpanElement>) {
-  return (
-    <span
-      className='bg-gradient-to-r from-sky-600 via-pink-500 to-red-600 bg-clip-text text-center text-4xl leading-snug text-transparent dark:via-blue-400 dark:to-green-300'
-      {...props}
-    />
-  )
-}
+// function GradientText(props: React.HTMLAttributes<HTMLSpanElement>) {
+//   return (
+//     <span
+//       className='bg-gradient-to-r from-sky-600 via-pink-500 to-red-600 bg-clip-text text-center text-4xl leading-snug text-transparent dark:via-blue-400 dark:to-green-300'
+//       {...props}
+//     />
+//   )
+// }
