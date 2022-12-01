@@ -1,5 +1,3 @@
-import { SkipNavContent, SkipNavLink } from '@reach/skip-nav'
-import skipNavStyles from '@reach/skip-nav/styles.css'
 import {
   Links,
   LiveReload,
@@ -26,9 +24,7 @@ type LoaderData = { theme: Theme | null }
 
 export const links: LinksFunction = () => {
   return [
-    { rel: 'preload', href: skipNavStyles, as: 'style' },
     { rel: 'preload', href: appStyles, as: 'style' },
-    { rel: 'stylesheet', href: skipNavStyles },
     { rel: 'stylesheet', href: appStyles },
     ...preloadSvg(),
     ...preloadFooterSvg(),
@@ -112,14 +108,11 @@ function App() {
           src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7748316956330968'
           crossOrigin='anonymous'
         ></script>
-        
       </head>
       <body className='h-full bg-white dark:bg-slate-800'>
-        <SkipNavLink className='bg-gray-700'>Skip to content</SkipNavLink>
         <div className='flex h-full flex-col'>
           <Nav />
           <main className='flex-1 px-6'>
-            <SkipNavContent />
             <Outlet />
           </main>
           <Footer />
