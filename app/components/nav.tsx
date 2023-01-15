@@ -12,6 +12,9 @@ export default function Nav() {
           <NavLink prefetch='intent' to='/blog'>
             Blog
           </NavLink>
+          <NavLink prefetch='intent' to='/life'>
+            Life
+          </NavLink>
         </div>
         {/*
          * Since the correct theme on the initial render is known at

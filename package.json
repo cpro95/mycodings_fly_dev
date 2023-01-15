@@ -17,6 +17,7 @@
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|mdx)\"",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx,ts,tsx .",
     "new:blog": "node -r esbuild-register others/new-blog.ts",
+    "new:life": "node -r esbuild-register others/new-life.ts",
     "setup": "prisma migrate dev && npm run new:blog",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
     "start:mocks": "cross-env NODE_ENV=production node --require ./mocks --require dotenv/config ./build/server.js",

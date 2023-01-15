@@ -4,9 +4,9 @@ import inquirer from 'inquirer'
 import slugify from 'lodash.kebabcase'
 
 async function go() {
-  console.log("\nLet's create a new blog 💿\n")
+  console.log("\nLet's create a new life contents 💿\n")
 
-  const blogsPath = path.resolve(process.cwd(), 'content', 'blog')
+  const blogsPath = path.resolve(process.cwd(), 'content', 'life')
 
   if (!fs.existsSync(blogsPath)) {
     fs.mkdirSync(blogsPath)
@@ -121,7 +121,7 @@ published: ${published}
   }
 
   console.log(
-    `\nBlog created 🚀\n\`cd\` into ${relativePath}\nOpen it in you favorite text editor, and get started!\n`,
+    `\nLife blog created 🚀\n\`cd\` into ${relativePath}\nOpen it in you favorite text editor, and get started!\n`,
   )
 }
 

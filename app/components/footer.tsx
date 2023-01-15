@@ -38,6 +38,7 @@ export default function Footer() {
           <ul className='flex flex-col items-center gap-4 md:items-start'>
             <Link href='/'>Home</Link>
             <Link href='/blog'>Blog</Link>
+            <Link href='/life'>Life</Link>
           </ul>
         </div>
       </div>

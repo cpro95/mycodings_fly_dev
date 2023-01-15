@@ -79,22 +79,22 @@ export const loader: LoaderFunction = async ({ request }) => {
   let blogCount
   if (q === undefined) {
     blogList = await getMdxListItems({
-      contentDirectory: 'blog',
+      contentDirectory: 'life',
       page: page,
       itemsPerPage: itemsPerPage,
     })
-    blogCount = await getMdxCount('blog')
+    blogCount = await getMdxCount('life')
   } else {
     blogList = await getMdxListItemsWithQ({
-      contentDirectory: 'blog',
+      contentDirectory: 'life',
       q: q,
       page: page,
       itemsPerPage: itemsPerPage,
     })
-    blogCount = await getMdxCountWithQ('blog', q)
+    blogCount = await getMdxCountWithQ('life', q)
   }
 
-  const allFrontmatterList = await getFrontmatterList("blog")
+  const allFrontmatterList = await getFrontmatterList('life')
 
   let Pool = new Map<string, number>()
 
@@ -108,7 +108,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   const sortedPool = new Map([...Pool].sort((a, b) => b[1] - a[1]))
 
   const bestPool = new Map([...sortedPool].filter(a => a[1] > 2))
+  // console.log(bestPool)
   const arrayOfBestPool: Array<string> = [...bestPool.keys()]
+  // console.log(arrayOfBestPool)
 
   return json<LoaderData>(
     { blogList, blogCount, arrayOfBestPool: arrayOfBestPool.slice(0, 6) },
@@ -118,7 +120,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   )
 }
 
-export default function Blog() {
+export default function Life() {
   const [myParams] = useSearchParams()
   const { blogList, blogCount, arrayOfBestPool } = useLoaderData()
 
@@ -153,7 +155,7 @@ export default function Blog() {
         {/* 인피드광고 */}
       </div>
 
-      <BlogList blogList={blogList} contentDirectory="blog" />
+      <BlogList blogList={blogList} contentDirectory='life' />
       <MyPagination
         q={q}
         page={page}

@@ -135,7 +135,7 @@ export default function Index() {
           <h2 className='text-xl text-gray-800 dark:text-gray-100'>
             Recent Posts
           </h2>
-          <BlogList blogList={blogList} />
+          <BlogList blogList={blogList} contentDirectory="blog" />
           <div className='mx-auto max-w-4xl'>
             {/* 멀티플렉스광고 */}
             <MultiplexAds />

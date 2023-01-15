@@ -61,7 +61,7 @@ async function postJSON({
         res.on('end', () => {
           try {
             resolve(JSON.parse(data))
-          } catch (e) {
+          } catch (err) {
             console.error('Error!', err.message)
             reject(data)
           }

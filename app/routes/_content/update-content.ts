@@ -25,6 +25,10 @@ export const action: ActionFunction = async ({ request }) => {
       contentDirectory: 'blog', page: 1,
       itemsPerPage: 100000,
     })
+    void getMdxListItems({
+      contentDirectory: 'life', page: 1,
+      itemsPerPage: 100000,
+    })
 
     console.log(`🌀 Refreshing all contents. SHA: ${body.sha}`)
 
@@ -46,6 +50,12 @@ export const action: ActionFunction = async ({ request }) => {
     if (refreshPaths.some(p => p.startsWith('blog'))) {
       void getMdxListItems({
         contentDirectory: 'blog', page: 1,
+        itemsPerPage: 100000,
+      })
+    }
+    if (refreshPaths.some(p => p.startsWith('life'))) {
+      void getMdxListItems({
+        contentDirectory: 'life', page: 1,
         itemsPerPage: 100000,
       })
     }

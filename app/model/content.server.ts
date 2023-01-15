@@ -110,6 +110,40 @@ export async function getFrontmatterList(contentDirectory = 'blog') {
   return contents
 }
 
+export async function getBeforeAfterSlug({ slug, contentDirectory }: { slug: string, contentDirectory: string }) {
+  const contents = await db.content.findMany({
+    where: { contentDirectory, published: true, },
+    select: {
+      slug: true,
+      title: true,
+    },
+    orderBy: { timestamp: 'desc' },
+  })
+
+  let targetSlugNumber = contents.findIndex(s => s.slug === slug);
+  let totalSlugNumber = contents.length;
+  let page = Math.floor(targetSlugNumber / 10) + 1;
+
+  if (targetSlugNumber === 0) {
+    return {
+      before: contents[targetSlugNumber + 1],
+      page: page,
+      after: null
+    }
+  } else if (targetSlugNumber === totalSlugNumber - 1) {
+    return {
+      before: null,
+      page: page,
+      after: contents[targetSlugNumber - 1]
+    }
+  } else {
+    return {
+      before: contents[targetSlugNumber + 1],
+      page: page,
+      after: contents[targetSlugNumber - 1]
+    }
+  }
+}
 
 export async function getContentList(contentDirectory = 'blog', page = 1, itemsPerPage = 10) {
   const contents = await db.content.findMany({

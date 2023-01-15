@@ -49,7 +49,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug
   invariant(typeof slug === 'string', 'Slug should be a string, and defined')
 
-  const mdxPage = await getMdxPage({ contentDirectory: 'blog', slug })
+  const mdxPage = await getMdxPage({ contentDirectory: 'life', slug })
 
   if (!mdxPage) {
     throw json(null, { status: 404 })
@@ -57,7 +57,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const beforeAfterSlugList = await getBeforeAfterSlug({
     slug,
-    contentDirectory: 'blog',
+    contentDirectory: 'life',
   })
 
   return json(
@@ -68,9 +68,9 @@ export const loader: LoaderFunction = async ({ params }) => {
   )
 }
 
-export default function Blog() {
+export default function LifeDetail() {
   const { mdxPage, beforeAfterSlugList } = useLoaderData()
-  const links = mdxPage.frontmatter.meta.keywords || []
+  const links = mdxPage.frontmatter.meta?.keywords || []
 
   const Component = React.useMemo(
     () => getMDXComponent(mdxPage.code),
@@ -89,10 +89,7 @@ export default function Blog() {
         <br />
         <Component />
         <KeywordsLink links={links} />
-        <BeforeAfterLink
-          beforeAfter={beforeAfterSlugList}
-          contentDirectory='blog'
-        />
+        <BeforeAfterLink beforeAfter={beforeAfterSlugList} contentDirectory="life" />
 
         <div className='mx-auto max-w-4xl'>
           {/* 멀티플렉스광고 */}

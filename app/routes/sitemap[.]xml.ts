@@ -5,9 +5,11 @@ import { getMdxListItems } from '~/utils/mdx.server'
 import { getDomainUrl } from '~/utils/misc'
 
 export const loader: LoaderFunction = async ({ request }) => {
-    const posts = await getMdxListItems({ contentDirectory: 'blog', page: 1, itemsPerPage: 100000 })
+    const blogPosts = await getMdxListItems({ contentDirectory: 'blog', page: 1, itemsPerPage: 100000 });
+    const lifePosts = await getMdxListItems({ contentDirectory: 'life', page: 1, itemsPerPage: 100000 });
 
-    const blogUrl = `${getDomainUrl(request)}/blog`
+    const blogUrl = `${getDomainUrl(request)}/blog`;
+    const lifeBlogUrl = `${getDomainUrl(request)}/life`;
 
     const sitemap = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -22,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     <lastmod>2022-07-23T13:02:06+00:00</lastmod>
     <priority>0.80</priority>
 </url>
-        ${posts
+        ${blogPosts
             .map(post => {
                 const frontMatter = JSON.parse(post.frontmatter)
 
@@ -45,6 +47,31 @@ export const loader: LoaderFunction = async ({ request }) => {
     <lastmod>${post.timestamp.toISOString()}</lastmod>
 </url>
                 `.trim()
+            })
+            .join('\n')}
+            ${lifePosts
+            .map(post => {
+                const frontMatter = JSON.parse(post.frontmatter)
+
+                invariant(
+                    typeof frontMatter.title === 'string',
+                    `${post.slug} should have a title in fronte matter`,
+                )
+                invariant(
+                    typeof frontMatter.description === 'string',
+                    `${post.slug} should have a description in fronte matter`,
+                )
+                invariant(
+                    typeof post.timestamp === 'object',
+                    `${post.slug} should have a timestamp`,
+                )
+
+                return `
+    <url>
+        <loc>${lifeBlogUrl}/${post.slug}</loc>
+        <lastmod>${post.timestamp.toISOString()}</lastmod>
+    </url>
+                    `.trim()
             })
             .join('\n')}
 </urlset>
