@@ -22,6 +22,8 @@ import { getBeforeAfterSlug } from '~/model/content.server'
 import BeforeAfterLink from '~/components/before-after-link'
 
 export const meta: MetaFunction = ({ data }) => {
+  if (!data) return {};
+  
   const { keywords = [] } = data.mdxPage.frontmatter.meta ?? {}
   const seoMeta = getSeoMeta({
     title: data.mdxPage.title,
@@ -88,7 +90,7 @@ export default function LifeDetail() {
         <br />
         <br />
         <Component />
-        <KeywordsLink links={links} />
+        <KeywordsLink links={links} contentDirectory="life" />
         <BeforeAfterLink beforeAfter={beforeAfterSlugList} contentDirectory="life" />
 
         <div className='mx-auto max-w-4xl'>
