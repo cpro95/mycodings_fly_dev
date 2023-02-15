@@ -11,7 +11,7 @@ export default function BestTags({ bestTags }: { bestTags: Array<string> }) {
         </LinkOrAnchor>
         {bestTags ? (
           bestTags.map(b => (
-            <LinkOrAnchor href={`?q=${b}`} className={linkStyle} key={b}>
+            <LinkOrAnchor href={`?q=${encodeURIComponent(b)}`} className={linkStyle} key={b}>
               {b}
             </LinkOrAnchor>
           ))

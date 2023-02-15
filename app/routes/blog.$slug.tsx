@@ -52,7 +52,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   invariant(typeof slug === 'string', 'Slug should be a string, and defined')
 
   const mdxPage = await getMdxPage({ contentDirectory: 'blog', slug })
-
+  
   if (!mdxPage) {
     throw json(null, { status: 404 })
   }
