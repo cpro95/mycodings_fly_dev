@@ -24,7 +24,7 @@ published: true
 
 전부 유료입니다.
 
-만약 제 웹이 대박을 친다고 했을 때 사용료를 어마어마하게 내야 한다면 좀 부담이 되겠죠.
+만약 제 웹이 대박을 터트린다고 했을 때 사용료를 어마어마하게 내야 한다면 좀 부담이 되겠죠.
 
 그래서 무료 지도 서비스를 찾다가 정부에서 운영하는 공간정보 오픈 플랫폼인 VWorld에 대해 알게 되었습니다.
 
@@ -60,22 +60,15 @@ VWorld는 오픈 API도 운영하는데요.
 
 그럼 본격적인 개발에 들어가 볼까요?
 
-## VWorld가 제공하는 SDK로 지도 만들어 보기
+## VWorld가 제공하는 서비스로 지도 만들어 보기
 
-먼저, VWorld가 제공하는 자바스크립트 SDK가 있습니다.
+먼저, VWorld가 제공하는 WMTS API가 있습니다.
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEi1yGiWSPei-Yki9sTHMrFR43ggwY81yTnpQsWr3FDYTeIGwuT3oSmrvPE8H4mWwAS1cXNAoqbmab9TU0rKashSDTZggor24XGT2tEOg7Ia1_wz1tDAc5knnPD4jUZyVhSNnIdiOSDOuNxPA3zOHTwEieo0lfVJoI9jg1y3wnGBcdkBQwSRjuRFjWOw)
+![](https://blogger.googleusercontent.com/img/a/AVvXsEgcikXy-RrtvjnJo4_5ZF83hLdM558JZ-HOeihImA9BpDqT42KgoCUOi-JzA2Zd4u00fhJg3icj-dGYrvdirLzXJLPSHJFLrTh3It1bckpFonOa5YGNOHHrcedUy2Cemkxow_iQHo4MufFESyFHUhdtLwQ_A9Zrk28BcfCtbnVtFAl130x70HWAf6zq)
 
 위와 같이 나옵니다.
 
-```js
-<script
-  type='text/javascript'
-  src='http://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=[인증키]'
-></script>
-```
-
-이제 테스트를 위한 Nest.js 템플릿을 만들까요?
+이제 테스트를 위한 Next.js 템플릿을 만들까요?
 
 ```bash
 npx create-next-app@latest --typescript --eslint ./map-test
@@ -143,7 +136,7 @@ export default function Home() {
 
 ## OpenLayers 설치하기
 
-VWorld나 모든 지도 데이터는 OpenLayers를 이용하고 있는데요.
+VWorld나 다른 모든 지도 데이터는 OpenLayers를 이용하고 있는데요.
 
 다음과 같이 OpenLayers 패키지를 설치합시다.
 
@@ -299,9 +292,9 @@ center 값에는 현재 어느 위치를 보여줄까 하는 건데요.
 
 꼭 배열로 집어넣어야 합니다.
 
-이제 Map 객체를 만들었고 이 Map 객체를 브라우저에 나타내어 보는 것도 했는데요.
+이제 Map 객체를 만들었고 이 Map 객체를 브라우저에 나타내 보는 것도 했는데요.
 
-이제 지도 위에 마커를 넣는걸 해보겠습니다.
+이제 지도 위에 마커를 넣는 걸 해보겠습니다.
 
 ## 마커 넣기
 
@@ -480,5 +473,108 @@ new Tile({
 위 그림을 보시면 midnight이 무슨 뜻인지 쉽게 이해되실 겁니다.
 
 그리고 중요한 점은 브이월드 WMTS 요청 주소 형식은 위 코드에 나와 있는 XYZ 형식으로 쓰셔야 합니다.
+
+브이월드 API 설명서에 나와있는 형식으로 쓰면 안 되더라고요.
+
+## 마커를 클릭했을 때 팝업창 오버레이에 만들기
+
+이번에는 아래 그림처럼 마커를 클릭했을 때 간단히 설명을 보여줄 수 있는 팝업창을 만들어 보도록 하겠습니다.
+
+![](https://blogger.googleusercontent.com/img/a/AVvXsEg2BO-yfxCegST8bH3FLeax8KXY0c3sooVCorw5Huvhb6O_LArjl01RZ_RKPLpd33t4rN_iKykJUty9VYv9VGWtVwwQW5etm4-HCpF9yQrehVXjSOKgSWAVJU6t7f6kAvsNYFawB181Rc1QsyrZQUyDXKyR-9EJaoK6sumVDOf5qfEKgYzg6kPbt2yE)
+
+일단 우리가 만든 useEffect 훅 안의 코드에서 마지막에 몇개 추가하도록 하겠습니다.
+
+먼저, 맵 위에 클릭했을 때의 이벤트리스너를 만들어야 하는데요.
+
+useEffect 훅 끝부분에 아래와 같이 넣으면 됩니다.
+
+```js
+...
+...
+...
+
+// add myLayer
+map.addLayer(markerLayer)
+
+// 여기까지가 기존 코드 부분입니다.
+
+// 아래 코드는 마커를 클릭했을 때 이벤트 처리 로직입니다.
+
+map.on('click', function (event) {
+  map.forEachFeatureAtPixel(event.pixel, function (feature: any) {
+    const coordinate = feature.getGeometry().getCoordinates()
+    const attributes = feature.getProperties()
+    const name = feature.get('name')
+    const tel = feature.get('tel')
+    const address = feature.get('address')
+    // create popup with name and tel attributes
+    const popup = new Overlay({
+      position: attributes.geometry.flatCoordinates,
+      element: document.createElement('div'),
+    })
+
+    const content = document.createElement('div')
+    content.innerHTML = `
+          <div class="card w-full bg-base-100 shadow-xl">
+            <div class="card-body">
+            <button class="btn btn-square btn-xs md:btn-sm bg-base-100 text-gray-700 font-bold hover:text-gray-200 popup-close">
+            X
+            </button>
+              <div class="grid text-xs md:text-sm">
+                <div>${name}</div>
+                <div>${tel}</div>
+                <div>${address}</div>
+              </div>
+            </div>
+          </div>
+        `
+    popup.getElement()?.appendChild(content)
+    map.addOverlay(popup)
+
+    const closeButton = content.querySelector('.popup-close')
+    closeButton?.addEventListener('click', () => {
+      map.removeOverlay(popup)
+    })
+  })
+})
+```
+
+위 코드는 클릭 시 Feature에서 데이터를 얻어 오고 있습니다. name, tel, address 정보인데요.
+
+그럼, 우리가 지도상의 위치를 Point로해서 Feature 객체에 넘겼는데요.
+
+그 부분에서 특별히 원하는 값을 설정할 수 있습니다.
+
+아랫부분을 보시면 Feature 객체에 geometry 객체만 설정하는 것이 아니라,
+
+우리가 원하는 코드도 설정할 수 있습니다.
+
+```js
+let marker = new Feature({
+      geometry: new Point(fromLonLat([127.189972804, 37.723058796])),
+      name: "나의 로케이션",
+      tel: "02-333-2222",
+      address: "주소는 서울시 종로 1번지"
+    })
+```
+
+아! 그리고 Overlay 객체를 import 해야 합니다.
+
+```js
+import { Map, Overlay, View } from "ol";
+```
+
+참고로 content.innerHTML 부분의 코드 중에 UI부분은 DaisyUI를 썼습니다.
+
+그리고 X 버튼을 누르면 팝업창이 사라지는 코드는 `map.removeOverlay(popup)` 함수를 사용해서 처리했습니다.
+
+3초후에 자동으로 사라지게 할 수 도 있는데요.
+
+```js
+// hide popup overlay after 3 seconds
+    setTimeout(() => {
+      map.removeOverlay(popup);
+    }, 3000);
+```
 
 그럼.
