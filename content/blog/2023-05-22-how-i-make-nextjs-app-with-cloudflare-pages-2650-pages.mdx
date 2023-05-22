@@ -1,8 +1,8 @@
 ---
 slug: 2023-05-22-how-i-make-nextjs-app-with-cloudflare-pages-2650-pages
-title: Next.js로 2,650페이지의 정적 사이트 만든 경험담 공유 (Cloudflare Pages)
+title: Next.js로 2,650페이지나 되는 정적 사이트 만든 경험담 공유 (Cloudflare Pages)
 date: 2023-05-22T07:55:11.333Z
-description: Next.js로 2,650페이지의 정적 사이트 만든 경험담 공유 (Cloudflare Pages)
+description: Next.js로 2,650페이지나 되는 정적 사이트 만든 경험담 공유 (Cloudflare Pages)
 meta:
   keywords:
     - next.js
@@ -12,11 +12,11 @@ meta:
 published: true
 ---
 
-# Next.js로 2,650페이지의 정적 사이트 만든 경험담 공유 (Cloudflare Pages)
+# Next.js로 2,650페이지나 되는 정적 사이트 만든 경험담 공유 (Cloudflare Pages)
 
 안녕하세요?
 
-제가 몇 달 전에 완성한 취비 프로젝트가 있었는데요.
+제가 몇 달 전에 완성한 취미 프로젝트가 있었는데요.
 
 바로 [mylotto.pages.dev](https://mylotto.pages.dev) 사이트입니다.
 
@@ -41,7 +41,7 @@ Next.js가 아무 에러 없이 컴파일되는 걸 보고 다시 한번 Next.js
 
 위 그림은 Cloudflare 대시보드에서 Github 저장소를 불러와서 빌드하는 로그인데요.
 
-아주 잘 건설 되고 있습니다.
+아주 잘 빌드되고 있습니다.
 
 ## 기초 데이터 수집은 어떻게?
 
@@ -75,7 +75,7 @@ Cloudflare의 Pages가 너무 빠르다는 걸 알고 정적 사이트로 방향
 
 이 방식을 위해 Strapi 서버를 제 맥북에 설치한 게 아니라 오라클 클라우드에 설치했습니다.
 
-그리고 오라클 클라우드의 무료 서버에서는 Crontab을 이용해서 매주 토요일 저녁 9시 30분에 이번 주차 당첨 번호를 파이선으로 끓어서 Strapi에 저장하고, 그다음 으로 Cloudflare에서 재 빌드하면 됩니다.
+그리고 오라클 클라우드의 무료 서버에서는 Crontab을 이용해서 매주 토요일 저녁 9시 30분에 이번 주차 당첨 번호를 파이선으로 끓어서 Strapi에 저장하고, 그다음으로 Cloudflare에서 재 빌드하면 됩니다.
 
 ```bash
 ubuntu@sub-instance:~$ crontab -l
@@ -136,7 +136,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/2
 
 다시 그 CSV 파일을 Strapi DB 파일인 sqlite3 파일에 직접 업로드하면 됩니다.
 
-마지막으로 Cloudflare Pages를 다시 빌드 해야 하는데요.
+마지막으로 Cloudflare Pages를 다시 빌드해야 하는데요.
 
 마지막에 curl 명령어로 POST 시킨 게 바로 다시 빌드하기 위한 Cloudflare의 HOOK입니다.
 
