@@ -203,6 +203,21 @@ MacOS에서는 아래와 같이 설치하시면 됩니다.
 brew install flyctl
 ```
 
+설치가 다 되면 Fly.io에 로그인해야 하는데요.
+
+아래와 같이 터미널상에서 명령어를 입력하면 브라우저 창이 뜨면서 로그인하라고 나옵니다.
+
+보통 Github ID와 연동시켜놔서 쉽게 로그인 할 수 있을겁니다.
+
+```bash
+➜  sveltekit-deploy-on-fly-io> flyctl auth login
+Opening https://fly.io/app/auth/cli/ebbf52d3dcee200c3d571 ...
+
+Waiting for session... Done
+successfully logged in as cpro95@~~~~
+➜  sveltekit-deploy-on-fly-io
+```
+
 이제 우리 프로젝트가 있는 폴더에서 아래와 같이 flyctl 명령어를 실행해 보겠습니다.
 
 ```bash
