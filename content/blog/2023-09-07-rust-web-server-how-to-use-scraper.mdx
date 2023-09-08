@@ -89,6 +89,20 @@ id는 바로 "vg_hosts_table_id"입니다.
 
 이걸 이용해서 scraper를 이용해 봅시다.
 
+먼저, Cargo.toml파일에 설치할 패키지를 설정하겠습니다.
+
+```bash
+[dependencies]
+actix-web = "4.4"
+reqwest = "0.11"
+tokio = { version = "1", features = ["full"] }
+scraper = "0.17"
+url = "2.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+env_logger = "0.10.0"
+```
+
 ---
 
 ## 테스트를 위한 코드 구축
