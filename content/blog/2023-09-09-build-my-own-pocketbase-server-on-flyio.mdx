@@ -18,6 +18,14 @@ published: true
 
 오늘부터 Pocketbase 강좌를 시작해 보려 합니다.
 
+** 목차 **
+1. [배포를 위한 Dockerfile 만들기와 Fly.io에 deploy](#1-배포를-위한-dockerfile-만들기와-flyio에-deploy)
+2. [DB 강제로 초기화하기 또는 관리자 비밀번호를 잊어버린 경우](#2-db-강제로-초기화하기-또는-관리자-비밀번호를-잊어버린-경우)
+3. [pb_public 폴더에 대해 알아보기](#3-pb_public-폴더에-대해-알아보기)
+---
+
+## 1. 배포를 위한 Dockerfile 만들기와 Fly.io에 deploy
+
 먼저, 항상 그랬듯이 실제 배포(deploy)부터 해보겠습니다.
 
 ```bash
@@ -242,7 +250,7 @@ pocketbase가 좋은 점이 이렇게 웹상에서 관리자가 DB를 편하게 
 
 ---
 
-## DB 강제로 초기화하기 또는 관리자 비밀번호를 잊어버린 경우
+## 2. DB 강제로 초기화하기 또는 관리자 비밀번호를 잊어버린 경우
 
 Fly.io가 좋은 점은 ssh 원격 접속으로 실제 가상서버에 접속할 수 있습니다.
 
@@ -419,7 +427,7 @@ update _admins set passwordHash = "$2a$08$qeqzNleYmDf87kND.LfgU.MhmE9qQ1aecPtlpe
 
 ---
 
-## pb_public 폴더에 대해 알아보기
+## 3. pb_public 폴더에 대해 알아보기
 
 아까 위에서 우리가 pb_data 폴더가 실제 DB가 있는 폴더라고 했습니다.
 
