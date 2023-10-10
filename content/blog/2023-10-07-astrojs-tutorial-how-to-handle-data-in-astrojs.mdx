@@ -1,8 +1,8 @@
 ---
 slug: 2023-10-07-astrojs-tutorial-how-to-handle-data-in-astrojs
-title: AstroJs 강좌 1편, AstroJs에서 데이터 가져오기
+title: astrojs 강좌 1편. astrojs에서 데이터 가져오기
 date: 2023-10-07T07:36:58.148Z
-description: AstroJs에서 데이터 다루는 5가지 방법에 대해 알아봅시다.
+description: astrojs에서 데이터 다루는 5가지 방법에 대해 알아봅시다.
 meta:
   keywords:
     - astrojs
@@ -11,13 +11,13 @@ meta:
 published: true
 ---
 
-# AstroJs 강좌 1편, AstroJs에서 데이터 가져오기
+# astrojs 강좌 1편. astrojs에서 데이터 가져오기
 
 ** 목차 **
 
 1. [astrojs: 웹 개발의 새로운 차원을 열다](#astrojs-웹-개발의-새로운-차원을-열다)
 
-2. [AstroJs 템플릿 만들기](#astrojs-템플릿-만들기)
+2. [astrojs 템플릿 만들기](#astrojs-템플릿-만들기)
 
 3. [첫 번째. 자바스크립트에서 직접 데이터 다루는 방법](#첫-번째-자바스크립트에서-직접-데이터-다루는-방법)
 
@@ -31,11 +31,11 @@ published: true
 
 ---
 
-안녕하세요?
+안녕하세요? 
 
-오늘은 제가 최근에 Next.js와 Remix Framework을 뒤로하고 가장 공을 들이고 있는 AstroJs인데요.
+오늘은 제가 최근에 Next.js와 Remix Framework을 뒤로하고 가장 공을 들이고 있는 astrojs인데요.
 
-먼저, AstroJs를 설명한 홈페이지의 내용을 요약해 봤습니다.
+먼저, astrojs를 설명한 홈페이지의 내용을 요약해 봤습니다.
 
 ## astrojs: 웹 개발의 새로운 차원을 열다
 
@@ -61,21 +61,21 @@ published: true
 
 Next.js의 SSG(Static Site Generation) 방식에서는 데이터를 다루는 자바스크립트 코드가 그대로 들어가 있는데요.
 
-AstroJs에서는 실제 자바스크립트 코드가 없고 순수 HTML 파일만 남습니다.
+astrojs에서는 실제 자바스크립트 코드가 없고 순수 HTML 파일만 남습니다.
 
 물론, React 컴포넌트나 Svelte, VueJS 등 여러 가지 Client UI 툴을 이용해서 Astro 페이지를 만들 수 있는데요.
 
-이 때는 AstroJS의 Islands 기법으로 자바스크립트를 특정 부분에만 로딩하는 방식입니다.
+이 때는 astrojs의 Islands 기법으로 자바스크립트를 특정 부분에만 로딩하는 방식입니다.
 
-Astrojs를 처음 실행해 보면 그냥 HTML 페이지를 작성하는 것 같은데요.
+astrojs를 처음 실행해 보면 그냥 HTML 페이지를 작성하는 것 같은데요.
 
 기본적인 사용법은 홈페이지를 보시면 쉽게 이해할 수 있을 겁니다.
 
-오늘은 AstroJs에서 데이터를 다루는 방법에 대해 알아볼 계획인데요.
+오늘은 astrojs에서 데이터를 다루는 방법에 대해 알아볼 계획인데요.
 
 ---
 
-## AstroJs 템플릿 만들기
+## astrojs 템플릿 만들기
 
 테스트를 위해 astrojs 템플릿을 만들어야 하는데요.
 
@@ -114,13 +114,13 @@ astrojs 전체적인 구조는 위처럼 단순합니다.
 
 Next.js 12 버전의 pages 폴더의 역할과 같은 역할을 합니다.
 
-AstroJs는 폴더 + 파일 방식의 라우팅을 제공해 주는데요.
+astrojs는 폴더 + 파일 방식의 라우팅을 제공해 주는데요.
 
 Remix V1과 같은 방식입니다.
 
 Remix V2의 flat 라우팅 방식이 좀 더 세련된 방식인 거 같은데요.
 
-아직 AstroJs 3.0까지도 flat 방식은 지원하지 않고 있네요.
+아직 astrojs 3.0까지도 flat 방식은 지원하지 않고 있네요.
 
 즉, '/about'라는 라우팅을 만들려면 'src/pages/about.astro' 페이지를 만들거나,
 
@@ -309,9 +309,9 @@ const users: User[] = await result.json();
 
 한 가지 다른 점은 async 함수를 작성하지 않고 바로 await fetch 했다는 점인데요.
 
-이 점이 AstroJs의 특징입니다.
+이 점이 astrojs의 특징입니다.
 
-즉, AstroJs는 자체적으로 async 방식으로 작동하기 때문에 위와 같이 그냥 await 코드를 호출해도 된다는 점입니다.
+즉, astrojs는 자체적으로 async 방식으로 작동하기 때문에 위와 같이 그냥 await 코드를 호출해도 된다는 점입니다.
 
 아주 쉽게 구현되네요.
 
@@ -358,7 +358,7 @@ build 결과물만 HTML 코드로 보겠습니다.
 
 위와 같이 우리가 fetch 했던 API 주소도 보이지 않고, 순수하게 결과물만 보여주는 HTML 코드만 나오는데요.
 
-정말 AstroJs가 정적 사이트 제조기로써는 최고의 Tool이라고 생각합니다.
+정말 astrojs가 정적 사이트 제조기로써는 최고의 Tool이라고 생각합니다.
 
 ---
 
@@ -366,7 +366,7 @@ build 결과물만 HTML 코드로 보겠습니다.
 
 가끔은 실제 코드에서 로컬 파일의 json 파일을 불러올 때가 있는데요.
 
-AstroJs는 json 파일뿐만 아니라 자바스크립트, 타입스크립트, 마크다운 파일 등 여러 가지 형식의 파일을 직접 불러올 수 있습니다.
+astrojs는 json 파일뿐만 아니라 자바스크립트, 타입스크립트, 마크다운 파일 등 여러 가지 형식의 파일을 직접 불러올 수 있습니다.
 
 먼저, json 파일을 불러와 보겠습니다.
 
@@ -487,7 +487,7 @@ console.log(postdata);
 
 이제 md 파일을 불러오는 코드를 작성해 볼까요?
 
-AstroJs는 특별히 마크다운 파일을 로컬에서 전부 불러올 수 있는 함수를 제공해 줍니다.
+astrojs는 특별히 마크다운 파일을 로컬에서 전부 불러올 수 있는 함수를 제공해 줍니다.
 
 ```js
 ---
@@ -504,7 +504,7 @@ Astro 글로벌 객체에 있는 겁니다.
 
 앞으로 Astro 글로벌 객체를 자주 이용할 텐데요.
 
-AstroJs는 이 Astro라는 글로벌 객체 하나만 있으면 다 됩니다.
+astrojs는 이 Astro라는 글로벌 객체 하나만 있으면 다 됩니다.
 
 이제, 그 데이터를 볼까요?
 
@@ -516,7 +516,7 @@ AstroJs는 이 Astro라는 글로벌 객체 하나만 있으면 다 됩니다.
 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEjhdJKEydGABN8zRBkx8_yxV6rrPG-kuC9q7l_bKVyfoKSMsyDt9peCr3E1xYnwGOWqXcODdDVIpbxd_AEJTK72j5WEsJbFDSOXM-dJ4F66IpbRWkGLn2TXpSwx3gnw4cZ_1rAzUkN99L1arRS5XpO002ixn4-5I3CWJwDDWXI_zFDeg27yfNsdKtRCNzE)
 
-위 그림과 같이 AstroJs는 실제 마크다운 파일을 객체로 관리해 주는데요.
+위 그림과 같이 astrojs는 실제 마크다운 파일을 객체로 관리해 주는데요.
 
 위 그림과 같이 여러 항목이 있습니다.
 
@@ -528,7 +528,7 @@ AstroJs는 이 Astro라는 글로벌 객체 하나만 있으면 다 됩니다.
 
 위와 같이 마크다운 파일을 HTML 파일로 컴파일한 상태 그대로 나옵니다.
 
-그래서 AstroJs에서는 아래와 같은 방식으로 컴파일된 컨텐츠를 렌더링합니다.
+그래서 astrojs에서는 아래와 같은 방식으로 컴파일된 컨텐츠를 렌더링합니다.
 
 ```js
 <ul>
@@ -562,7 +562,7 @@ Content 객체를 이용해 볼까요?
 
 ## 네 번째. 좀 더 진보된 Content Collections 이용하기
 
-AstroJs가 버전 업되면서 기존의 glob 함수를 이용한 방식에서 Content Collections 기능을 직접 제공해 주는데요.
+astrojs가 버전 업되면서 기존의 glob 함수를 이용한 방식에서 Content Collections 기능을 직접 제공해 주는데요.
 
 실제, zod 패키지를 이용해서 타입스크립트를 이용한 컨텐츠의 데이터 타입을 정확하게 지정할 수 있습니다.
 
@@ -586,7 +586,7 @@ price: 100
 
 이제 이 데이터를 읽어들이기 전에 Collections에 대한 정의가 필요한데요.
 
-AstroJs가 제공하는 defineCollection 함수를 이용하면 됩니다.
+astrojs가 제공하는 defineCollection 함수를 이용하면 됩니다.
 
 'src/content' 폴더에 config.ts 파일을 만듭시다.
 
@@ -653,7 +653,7 @@ getCollection 함수가 완벽하게 작동하고 있네요.
 
 ## 다섯 번째. EndPoint 작성하기
 
-AstroJs에서는 EndPoint를 제공해 주는데요.
+astrojs에서는 EndPoint를 제공해 주는데요.
 
 API를 만들 수 있게 해줍니다.
 
@@ -684,7 +684,7 @@ export const GET = async () => {
 
 어떤가요?
 
-AstroJs를 이용해서 EndPoint를 만들었습니다.
+astrojs를 이용해서 EndPoint를 만들었습니다.
 
 그러면 이 EndPoint는 build 시 어떻게 표현될까요?
 
