@@ -640,13 +640,17 @@ idle 항목은 브라우저에서 모든 항목이 다운로드가 되었을 상
 
 즉, 모든 게 브라우저에 로드되었을 때만 아일랜드 아키텍처가 작동하라는 뜻입니다.
 
-document.readyState 항목을 이용할 건데요.
-
-이게 complete이면 조건이 만족하는 상태인 거죠.
-
-그리고 window.requestIdleCallback() 메서드가 있는데요.
+idle 상태를 따지는 로직은 바로 window.requestIdleCallback 메서드를 사용할 건데요.
 
 window.requestIdleCallback() 메서드는 브라우저가 유휴 상태일 때 호출될 함수를 대기열에 추가합니다.
+
+즉, requestIdleCallback 함수에 Promise를 resolve 되는 명령어를 입력해 놓으면 브라우저가 idle이 되면 알아서 Promise가 resolve가 되겠죠.
+
+그리고 만약, requestIdleCallback 함수가 지원되지 않으면 load 이벤트를 이용하면 됩니다.
+
+load 이벤트를 이용하는 방법은 바로 document.readyState 항목을 이용하는 건데요.
+
+이게 complete가 아니면 load 이벤트리스너를 추가해서 끝날때까지 기다리는거죠.
 
 ```js
 static waitForIdle() {
@@ -680,8 +684,9 @@ static waitForIdle() {
   }
 
 ```
+우리는 onIdle, onLoad 함수를 둘 다 만들었고 두개가 모드 Promise resolve가 되야지 waitForIdle 함수가 실행되는 겁니다.
 
-waitForIdle 함수도 완성되었네요.
+이제, waitForIdle 함수도 완성되었네요.
 
 client:idle 같은 경우의 아일랜드 아키텍처를 테스트해보려면 img 태그에 용량이 큰 이미지를 걸어 놓으면 됩니다.
 
@@ -697,7 +702,7 @@ client:idle 같은 경우의 아일랜드 아키텍처를 테스트해보려면 
       alt="34MB large satellite image from Effigis."
     />
 
-    <mini-island client:idle>
+    <my-island client:idle>
       <p>Hello island</p>
 
       <template data-island>
@@ -706,7 +711,7 @@ client:idle 같은 경우의 아일랜드 아키텍처를 테스트해보려면 
           <script>console.log("hello from template of my-island")</script>
         </script>
       </template>
-    </mini-island>
+    </my-island>
   </body>
 ```
 
