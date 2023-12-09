@@ -630,7 +630,7 @@ d1 서비스의 명령어 도움말 화면입니다.
 당연히 create 명령어를 사용 해야겠네요.
 
 ```bash
-➜  cloudflare-pages-d1-stack-example npx wrangler d1 create pages-d1-stack
+➜  cloudflare-pages-d1-stack-example> npx wrangler d1 create pages-d1-stack
 ✅ Successfully created DB 'pages-d1-stack' in region APAC
 Created your database using D1's new storage backend. The new storage backend is not yet recommended
 for production workloads, but backs up your data via point-in-time restore.
@@ -677,7 +677,7 @@ CREATE TABLE todos (
   created_at TIMESTAMP DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime'))
 );
 
-INSERT INTO todos(title, desc) VALUES('test title',"test desc");
+INSERT INTO todos(title, desc) VALUES('test title','test desc');
 ```
 
 위와 같이 테이블 이름이 todos이란 이름으로 SQL에서 테이블 만드는 SQL 구문인데요.
