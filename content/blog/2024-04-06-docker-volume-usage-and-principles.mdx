@@ -26,6 +26,8 @@ published: true
 
 4. [Docker 강좌 4편. Docker 볼륨 (Volume) 사용 방법과 원리](https://mycodings.fly.dev/blog/2024-04-06-docker-volume-usage-and-principles)
 
+5. [Docker 강좌 5편. Docker 바인드 마운트와 포트 publish](https://mycodings.fly.dev/blog/2024-04-06-docker-tutorial-understanding-bind-mount-and-port-publish)
+
 ---
 
 ** 목 차 **
@@ -265,16 +267,16 @@ Data Volume 컨테이너를 사용하라고 하셔서 사용하고 있지만, �
 예를 들어 `sample/image:latest` 이미지를 실행한다고 가정하고, 다음은 기호에 따른 차이를 나열합니다.
 
 1. **익명 볼륨 (Anonymous Volume)**
-    - `$ docker container run -v /hoge sample/image:latest`
-    - 호스트 측에는 Linux의 경우 `/var/lib/docker/volumes/` 아래에 공간이 확보되며, 컨테이너 내의 `/hoge` 디렉토리와 공유됩니다. 식별을 위해 해시 값이 할당됩니다. 동일한 네트워크에서 해당 해시 값을 사용하여 액세스할 수 있습니다.
+    - `$ docker container run -v /some sample/image:latest`
+    - 호스트 측에는 Linux의 경우 `/var/lib/docker/volumes/` 아래에 공간이 확보되며, 컨테이너 내의 `/some` 디렉토리와 공유됩니다. 식별을 위해 해시 값이 할당됩니다. 동일한 네트워크에서 해당 해시 값을 사용하여 액세스할 수 있습니다.
 
 2. **이름이 지정된 볼륨 (Named Volume)**
-    - `$ docker container run -v name:/hoge sample/image:latest`
-    - 익명 볼륨과 유사하게 호스트 측에는 Linux의 경우 `/var/lib/docker/volumes/` 아래에 공간이 확보되며, 컨테이너 내의 `/hoge` 디렉토리와 공유됩니다. `name`이라는 이름이 지정되어 있으므로 동일한 네트워크 내에서 `name` 호스트 이름으로 액세스할 수 있습니다.
+    - `$ docker container run -v name:/some sample/image:latest`
+    - 익명 볼륨과 유사하게 호스트 측에는 Linux의 경우 `/var/lib/docker/volumes/` 아래에 공간이 확보되며, 컨테이너 내의 `/some` 디렉토리와 공유됩니다. `name`이라는 이름이 지정되어 있으므로 동일한 네트워크 내에서 `name` 호스트 이름으로 액세스할 수 있습니다.
 
 3. **바인드 마운트 (Bind Mount)**
-    - `$ docker container run -v ${PWD}/data:/hoge sample/image:latest`
-    - 호스트 측의 현재 디렉토리 아래의 `data` 디렉토리와 컨테이너 측의 `/hoge` 디렉토리가 공유됩니다.
+    - `$ docker container run -v ${PWD}/data:/some sample/image:latest`
+    - 호스트 측의 현재 디렉토리 아래의 `data` 디렉토리와 컨테이너 측의 `/some` 디렉토리가 공유됩니다.
 
 ## `--mount` 옵션
 
@@ -283,7 +285,7 @@ Docker 17.06부터 단일 컨테이너에도 `--mount` 옵션을 사용할 수 �
 키-값 형식으로 각 요소를 지정할 수 있으므로 이 쪽이 문법적으로 더 명확합니다. 길지만 다음과 같이 지정합니다.
 
 ```
-$ docker container run --mount type=volume,src=name,dst=/hoge sample/image:latest
+$ docker container run --mount type=volume,src=name,dst=/some sample/image:latest
 ```
 
 - `type`: `volume`, `bind`, `tmpfs`를 지정합니다.
