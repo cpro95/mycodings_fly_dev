@@ -16,7 +16,7 @@ published: true
 
 안녕하세요?
 
-오늘은 타입스크립트 5.5 버전이 베타 버전이 되면서 트위터 상에서 큰 반향을 불러 일으키고 있는 새로운 기능인 타입 가드 추론에 대해 알아보겠습니다.
+오늘은 타입스크립트 5.5 버전이 베타 버전이 되면서 트위터 상에서 큰 반향을 불러일으키고 있는 새로운 기능인 타입 가드 추론에 대해 알아보겠습니다.
 
 ** 목 차 **
 
@@ -50,13 +50,13 @@ if (typeof value === 'string') {
 
 위와 같이 if 문을 이용하면 타입스크립트는 아주 간단하게 value 타입 추론할 수 있습니다.
 
-if 문 안에 있는 `console.log(value)` 구문에서 value 위에 마우스를 갖다 놓으면 아마 다음과 같이 보일겁니다.
+if 문 안에 있는 `console.log(value)` 구문에서 value 위에 마우스를 갖다 놓으면 아마 다음과 같이 보일 겁니다.
 
 ```js
 const value: string
 ```
 
-타입스크립트는 value 가 string 인지 아는거죠.
+타입스크립트는 value 가 string 인지 아는 거죠.
 
 이런 방식을 타입스크립트에서는 '타입 좁힘' 또는 '타입 축소'라고 부릅니다.
 
@@ -74,7 +74,7 @@ if (isString(value)) {
 }
 ```
 
-위 코드와 같이 타입 축소(좁힘)이 작동되지 않고 있습니다.
+위 코드와 같이 타입 축소(좁힘)가 작동되지 않고 있습니다.
 
 좀 더 어려운 말로는 isString 함수가 타입 가드(type predicate)인지 타입스크립트가 인지하지 못한다는 겁니다.
 
@@ -98,15 +98,15 @@ if (isString(value)) {
 }
 ```
 
-위와 같이 isString 함수 뒤에 함수의 리턴 타입을 적는게 아니라 is 연산자를 이용해서 타입 가드를 작성해 넣었습니다.
+위와 같이 isString 함수 뒤에 함수의 리턴 타입을 적는 게 아니라 is 연산자를 이용해서 타입 가드를 작성해 넣었습니다.
 
 type predicate 즉, 타입을 서술했다는 뜻인데요.
 
 "value 타입은 string입니다"라고 서술한 겁니다.
 
-이게 타입스크립트에서는 타입 가드라고 합니다.
+이게 타입스크립트에서는 '타입 가드' 라고 합니다.
 
-is 연산자를 이용한 타입가드가 있으면 filter 메서드에서도 제대로 작동합니다.
+is 연산자를 이용한 '타입 가드'가 있으면 filter 메서드에서도 제대로 작동합니다.
 
 ```js
 function isString(value: unknown): value is string {
@@ -142,7 +142,7 @@ const strings: string[]
 
 반환 유형을 value is number로 변경해도 TypeScript는 불평하지 않습니다.
 
-심각한 문제인거죠.
+심각한 문제인 거죠.
 
 ```js
 function isString(value: unknown): value is number {
@@ -162,9 +162,9 @@ const strings: number[]
 
 우리가 구현한 함수의 원래 취지와 전혀 상반된 행동을 하는데도 타입스크립트는 아무런 문제점을 제기하지 않고 있습니다.
 
-사실 타입스크립트가 AI가 아닌이상 위와 같은 문제점을 인식할 수 없는거죠.
+사실 타입스크립트가 AI가 아닌 이상 위와 같은 문제점을 인식할 수 없는 거죠.
 
-하지만 타입스크립트 5.5에서는 이 문제를 해결 할 수 있는 type predicate inference가 도입되었습니다.
+하지만 타입스크립트 5.5에서는 이 문제를 해결할 수 있는 type predicate inference가 도입되었습니다.
 
 타입스크립트 개발 contributor이신 "Dan Vanderkam"님께서 요청하신 PR이 이제 5.5 베타버전에 포함되었습니다.
 
@@ -172,11 +172,11 @@ const strings: number[]
 
 ## type predicate inference
 
-영어로 썻는데 번역해 보면 타입 프레디컷 인피어런스 즉, 타입 서술자 추론입니다.
+영어로 썼는데 번역해 보면 타입 프레디컷 인피어런스 즉, 타입 서술자 추론입니다.
 
 타입 가드 추론이라고도 불릴 수 있는데요.
 
-아까 우리가 제기한 문제점인 함수의 구현과 전혀 상반된 타입을 추론한 걸 이제는 AI 처럼 함수 body 안에 있는 코드를 감안해서 타입을 추론한다는 겁니다.
+아까 우리가 제기한 문제점인 함수의 구현과 전혀 상반된 타입을 추론한 걸 이제는 AI처럼 함수 body 안에 있는 코드를 감안해서 타입을 추론한다는 겁니다.
 
 그러면 이제 타입 가드를 할 필요가 없는데요.
 
@@ -194,7 +194,7 @@ npm init -y
 npm install -D typescript@beta
 ```
 
-위와 같이 설치하면 package.json 파일에 아래와 같이 설치될겁니다.
+위와 같이 설치하면 package.json 파일에 아래와 같이 설치될 겁니다.
 
 ```js
   "devDependencies": {
@@ -218,7 +218,7 @@ const strings = arr.filter(isString)
 
 역시나 에러가 발생하는데요.
 
-Visual Studio Code가 타입스크립트 5.5 베타버전을 사용하지 않아서 입니다.
+Visual Studio Code가 타입스크립트 5.5 베타버전을 사용하지 않아서입니다.
 
 "Cmd + Shipt + P" 버튼을 눌러 아래 그림과 같이 쓰면 됩니다.
 
@@ -238,13 +238,13 @@ Visual Studio Code가 타입스크립트 5.5 베타버전을 사용하지 않아
 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEhOUe5QsQ9o3-xhheMNAQFo3iW0GwGRyV8n40F6I3VOBCmQ9V2srEl3B3X3Y7ifkAzxx4S-D8K3l_FZjs3z0-8GsKuE9cHXJQoSI9TcM7UVwFc-VwOoWQTKijHkOTfpiVNdIprrzSxB8rkfodJNHppngdgfrNuklkUrTSs7xWaIVmWotOTaU6AVUlOsRT4)
 
-위와 같이 strings가 is 연산자를 이용한 타입가드 "value is string"이 있었을 때와 같이 정확하게 작동합니다.
+위와 같이 strings가 is 연산자를 이용한 타입가드 "value is string"이 있었을 때와같이 정확하게 작동합니다.
 
-더이상 is 연산자를 이용한 타입가드에서 타입을 "value is number"와 같이 잘못 넣을 경우와 같이 위험한 상황도 없어지고 오로지 함수 body 안의 코드에 의해 유출한 타입이 적용되어 지는데요.
+더 이상 is 연산자를 이용한 타입가드에서 타입을 "value is number"와 같이 잘못 넣을 경우처럼 위험한 상황도 없어지고 오로지 함수 body 안의 코드에 의해 유추한 타입이 적용되어 지는데요.
 
 타입스크립트 역사에 있어 아주 위대한 순간이 아닐 수 없습니다.
 
-이제 개발자가 직접 타입가드없이 복잡한 타입 축소(좁힘) 코드를 아래와 같이 작성할 수 있게 되는 겁니다.
+이제 개발자가 직접 타입가드 없이 복잡한 타입 축소(좁힘) 코드를 아래와 같이 작성할 수 있게 되는 겁니다.
 
 ```js
 function isObjAndHasIdProperty(value: unknown) {
