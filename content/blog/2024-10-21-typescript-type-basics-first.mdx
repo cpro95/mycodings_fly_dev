@@ -53,19 +53,19 @@ TypeScript의 프리미티브 타입은 JavaScript의 기본 데이터 타입과
 
 다음은 주요 프리미티브 타입과 간단한 설명입니다:
 
-* **`string`**: 문자열 (예: `"hello"`, `'world'` )
-* **`number`**: 숫자 (예: `10`, `3.14`, `-5` )  JavaScript와 마찬가지로 정수와 실수를 구분하지 않습니다.
-* **`boolean`**: 불리언 값 (예: `true`, `false`)
-* **`symbol`**: 고유한 값을 생성하는 데 사용되는 심볼 (JavaScript의 `Symbol`과 동일)
-* **`bigint`**: 매우 큰 정수를 표현하는 데 사용되는 타입 (JavaScript의 `BigInt`와 동일)
-* **`null`**:  값이 없음을 나타내는 특수한 값.  `--strictNullChecks` 옵션에 따라 동작이 달라집니다.
-* **`undefined`**: 변수가 선언되었지만 값이 할당되지 않았음을 나타내는 특수한 값. 마찬가지로, `--strictNullChecks` 옵션에 따라 동작이 달라집니다.
+* **string**: 문자열 (예: hello, world )
+* **number**: 숫자 (예: 10, 3.14, -5 )  JavaScript와 마찬가지로 정수와 실수를 구분하지 않습니다.
+* **boolean**: 불리언 값 (예: true, false)
+* **symbol**: 고유한 값을 생성하는 데 사용되는 심볼 (JavaScript의 Symbol과 동일)
+* **bigint**: 매우 큰 정수를 표현하는 데 사용되는 타입 (JavaScript의 BigInt와 동일)
+* **null**:  값이 없음을 나타내는 특수한 값. `--strictNullChecks` 옵션에 따라 동작이 달라집니다.
+* **undefined**: 변수가 선언되었지만 값이 할당되지 않았음을 나타내는 특수한 값. 마찬가지로, `--strictNullChecks` 옵션에 따라 동작이 달라집니다.
 
 **`--strictNullChecks` 옵션의 중요성:**
 
 `--strictNullChecks` 옵션은 TypeScript 컴파일러의 매우 중요한 옵션입니다.
 
-이 옵션을 켜면,  `null` 과 `undefined` 를 다른 타입으로 취급하여,  `number` 타입의 변수에 `null`이나 `undefined`를 대입할 수 없습니다.
+이 옵션을 켜면,  null 과 undefined 를 다른 타입으로 취급하여,  number 타입의 변수에 null이나 undefined를 대입할 수 없습니다.
 
 예를 들어,  `--strictNullChecks` 옵션이 **켜져 있는 경우**:
 
@@ -85,28 +85,28 @@ myNumber = null; // 정상 (경고는 발생할 수 있으나, 오류는 아님)
 myNumber = undefined; // 정상 (경고는 발생할 수 있으나, 오류는 아님)
 ```
 
-`--strictNullChecks` 옵션을 켜는 것이 권장되는 이유는,  `null` 과 `undefined` 의 예상치 못한 사용으로 인한 오류를 미리 방지하기 위해서입니다.
+`--strictNullChecks` 옵션을 켜는 것이 권장되는 이유는,  null 과 undefined 의 예상치 못한 사용으로 인한 오류를 미리 방지하기 위해서입니다.
 
 옵션을 켜면, 컴파일 시점에 이러한 오류를 잡아낼 수 있으므로,  런타임 오류를 줄이고 코드의 안정성을 높일 수 있습니다.
 
 따라서,  TypeScript 프로젝트에서는 항상 이 옵션을 켜두는 것이 좋습니다.
 
-참고로, `tsconfig.json` 파일에서 `strict` 속성은 여러 개의 엄격한 타입 검사 옵션을 한 번에 활성화하는 **약식 표현**입니다.
+참고로, tsconfig.json 파일에서 strict 속성은 여러 개의 엄격한 타입 검사 옵션을 한 번에 활성화하는 **약식 표현**입니다.
 
-`strict: true` 로 설정하면,  다음 옵션들이 자동으로 `true`로 설정됩니다.
+`strict: true` 로 설정하면,  다음 옵션들이 자동으로 true로 설정됩니다.
 
-* `strictNullChecks`: `null`과 `undefined`에 대한 엄격한 검사를 활성화합니다.
-* `noImplicitAny`: `any` 타입의 암시적 사용을 금지합니다.
-* `noImplicitThis`: `this` 키워드의 암시적 타입을 금지합니다.
-* `alwaysStrict`: 모든 JavaScript 파일에서 `use strict`; 를 사용하도록 합니다.
-* `noUnusedLocals`: 사용되지 않은 지역 변수에 대한 경고를 표시합니다.
-* `noUnusedParameters`: 사용되지 않은 함수 매개변수에 대한 경고를 표시합니다.
-* `noImplicitReturns`: 함수에서 모든 경로가 값을 반환하도록 합니다.
-* `noFallthroughCasesInSwitch`: `switch` 문에서 `case` 문이 `break` 또는 `return`으로 끝나지 않으면 경고를 표시합니다.
+* strictNullChecks: null과 undefined에 대한 엄격한 검사를 활성화합니다.
+* noImplicitAny: any 타입의 암시적 사용을 금지합니다.
+* noImplicitThis: this 키워드의 암시적 타입을 금지합니다.
+* alwaysStrict: 모든 JavaScript 파일에서 `use strict`; 를 사용하도록 합니다.
+* noUnusedLocals: 사용되지 않은 지역 변수에 대한 경고를 표시합니다.
+* noUnusedParameters: 사용되지 않은 함수 매개변수에 대한 경고를 표시합니다.
+* noImplicitReturns: 함수에서 모든 경로가 값을 반환하도록 합니다.
+* noFallthroughCasesInSwitch: switch 문에서 case 문이 break 또는 return으로 끝나지 않으면 경고를 표시합니다.
 
-따라서, `tsconfig.json` 에서 `"strict": true` 로 설정하는 것은 `"strictNullChecks": true` 를 설정하는 것과 **동일한 효과**를 갖습니다.
+따라서, tsconfig.json 에서 `strict: true` 로 설정하는 것은 `strictNullChecks: true` 를 설정하는 것과 **동일한 효과**를 갖습니다.
 
-`strict` 속성을 사용하면 위에 나열된 모든 엄격한 옵션들을 한꺼번에 설정할 수 있어 편리합니다.
+strict 속성을 사용하면 위에 나열된 모든 엄격한 옵션들을 한꺼번에 설정할 수 있어 편리합니다.
 
 하지만,  필요에 따라 개별 옵션들을 따로 설정해서 조정할 수도 있습니다.
 
@@ -120,19 +120,19 @@ TypeScript의 리터럴(literal) 타입은 매우 간단한 개념입니다.
 
 핵심은 **값 자체가 타입이 된다**는 것입니다.
 
-예를 들어,  `"hello"` 라는 문자열은 단순히 문자열 값이 아니라, `"hello"` 라는 **특정 문자열만 허용하는 타입**이 됩니다. 
+예를 들어,  `hello` 라는 문자열은 단순히 문자열 값이 아니라, `hello` 라는 **특정 문자열만 허용하는 타입**이 됩니다. 
 
 `3` 이라는 숫자도 마찬가지로, `3` 이라는 **특정 숫자만 허용하는 타입**입니다.
 
-따라서,  `const myString: "hello" = "hello";`  는  `"hello"` 라는 문자열 값을 가진 변수 `myString`을 선언하는 것인데,  여기서 중요한 것은  `myString` 에는 **오직 `"hello"` 만 대입할 수 있다**는 것입니다.
+따라서,  `const myString: hello = hello;`  는  `hello` 라는 문자열 값을 가진 변수 `myString`을 선언하는 것인데,  여기서 중요한 것은  `myString` 에는 **오직 `"hello"` 만 대입할 수 있다**는 것입니다.
 
-`"Hello"`, `"world"`,  아무 다른 문자열도 안됩니다.
+`Hello`, `world`,  아무 다른 문자열도 안됩니다.
 
 타입 오류가 발생합니다.
 
 이것이 리터럴 타입의 전부입니다. 
 
-`'foo'`, `3`, `true` 등은 각각 그 값 자체를 유일한 값으로 허용하는 타입입니다.
+`foo`, `3`, `true` 등은 각각 그 값 자체를 유일한 값으로 허용하는 타입입니다.
 
 문자열 리터럴 타입, 숫자 리터럴 타입, 불리언 리터럴 타입이라고 부르는 것은 단지 그 값의 종류(문자열, 숫자, 불리언)를 나타낼 뿐입니다.
 
