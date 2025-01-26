@@ -68,7 +68,7 @@ export default function Index() {
           <section>
             <div className='mx-auto grid max-w-screen-xl px-4 py-8 lg:grid-cols-12 lg:gap-8 lg:py-16 xl:gap-0'>
               <div className='mr-auto place-self-center lg:col-span-7'>
-                <h1 className='mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl'>
+                <h1 className='mb-4 max-w-2xl text-4xl text-gray-500 font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl'>
                   All about Web Development ...
                 </h1>
                 <p className='mb-6 max-w-2xl font-medium text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl'>
