@@ -11,7 +11,7 @@ RUN mkdir /app
 WORKDIR /app
 
 ADD package.json package-lock.json ./
-RUN npm install --production=false
+RUN npm install --production=false --legacy-peer-deps
 
 # Setup production node_modules
 FROM base as production-deps
