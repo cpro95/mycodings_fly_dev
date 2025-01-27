@@ -9,7 +9,8 @@ const { commitSession, getSession } = createCookieSessionStorage({
     name: 'theme',
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 100),
-    secrets: [getRequiredEnvVar('SESSION_SECRETS')],
+    // secrets: [getRequiredEnvVar('SESSION_SECRETS')],
+    secrets: ["asdfasdfasfqwerqwerdasdfasfdasfd"],
     secure: true,
   },
 })
