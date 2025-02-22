@@ -1,23 +1,27 @@
-# fly.toml file generated for mycodings on 2022-07-17T09:03:11+09:00
+# fly.toml app configuration file generated for mycodings-fly-test on 2025-02-08T12:53:37+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "mycodings"
-kill_signal = "SIGINT"
-kill_timeout = 5
-processes = []
-
-[env]
-  DATABASE_URL = "file:/data/sqlite.db"
-  PORT = "8080"
+app = 'mycodings-fly-test'
+primary_region = 'sjc'
+kill_signal = 'SIGINT'
+kill_timeout = '5s'
 
 [experimental]
-  allowed_public_ports = []
+  cmd = ['start_with_migrations.sh']
+  entrypoint = ['sh']
   auto_rollback = true
-  cmd = "start_with_migrations.sh"
-  entrypoint = "sh"
+
+[build]
+
+[env]
+  DATABASE_URL = 'file:/data/sqlite.db'
+  PORT = '8080'
 
 [[mounts]]
-  destination = "/data"
-  source = "data"
+  source = 'data'
+  destination = '/data'
 
 [[services]]
   internal_port = 8080
@@ -53,3 +57,8 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
+  
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

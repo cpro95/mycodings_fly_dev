@@ -1,29 +1,29 @@
 type GitHubFile = {
-  content: string
-  path: string
-}
+  content: string;
+  path: string;
+};
 
 type MdxPage = {
-  code: string
-  slug: string
+  code: string;
+  slug: string;
   frontmatter: {
-    published?: boolean
-    title?: string
-    description?: string
+    published?: boolean;
+    title?: string;
+    description?: string;
     meta?: Record<string, string | string[]> & {
-      keywords?: Array<string>
-    }
-    date?: string
-  }
-}
+      keywords?: Array<string>;
+    };
+    date?: string;
+  };
+};
 
 type MdxComponent = {
-  frontmatter: MdxPage['frontmatter']
-  slug: string
-  title: string
-  code: string
-  timestamp: Date
-  description?: string
-}
+  frontmatter: MdxPage["frontmatter"];
+  slug: string;
+  title: string;
+  code: string;
+  timestamp: Date;
+  description?: string;
+};
 
-export type { GitHubFile, MdxPage, MdxComponent }
+export type { GitHubFile, MdxPage, MdxComponent };
