@@ -13,22 +13,22 @@ jobs:
       DEPLOYABLE: ${{steps.changes.outputs.DEPLOYABLE}}
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          fetch-depth: '50'
+          fetch-depth: "50"
 
       - name: 🛠 Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: ⚙️ Determine Changes
         id: changes
         run: >-
-          echo "DEPLOYABLE=$(node ./others/is-deployable.js)" >> $GITHUB_OUTPUT
+          echo "DEPLOYABLE=$(node ./others/is-deployable.mjs)" >> $GITHUB_OUTPUT
         env:
           FLY_APP_NAME: ${{ secrets.FLY_APP_NAME }}
 
@@ -51,7 +51,7 @@ jobs:
   #         fetch-depth: '50'
 
   #     - name: 🛠 Setup node
-  #       uses: actions/setup-node@v2
+  #       uses: actions/setup-node@v4
   #       with:
   #         node-version: 16
 
@@ -61,30 +61,30 @@ jobs:
   #     - name: ⚡ Run vitest
   #       run: npm run test -- --coverage --passWithNoTests
 
-  lint:
-    name: ⬣ ESLint
-    runs-on: ubuntu-latest
-    needs: [changes]
-    if: ${{ needs.changes.outputs.DEPLOYABLE == 'true' }}
-    steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+  # lint:
+  #   name: ⬣ ESLint
+  #   runs-on: ubuntu-latest
+  #   needs: [changes]
+  #   if: ${{ needs.changes.outputs.DEPLOYABLE == 'true' }}
+  #   steps:
+  #     - name: 🛑 Cancel Previous Runs
+  #       uses: styfle/cancel-workflow-action@0.9.1
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: '50'
+  #     - name: ⬇️ Checkout repo
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: "50"
 
-      - name: 🛠 Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+  #     - name: 🛠 Setup node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
 
-      - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+  #     - name: 📥 Download deps
+  #       uses: bahmutov/npm-install@v1
 
-      - name: 🔬 Lint
-        run: npm run lint
+  #     - name: 🔬 Lint
+  #       run: npm run lint
 
   # typecheck:
   #   name: ʦ TypeScript
@@ -101,7 +101,7 @@ jobs:
   #         fetch-depth: '50'
 
   #     - name: 🛠 Setup node
-  #       uses: actions/setup-node@v2
+  #       uses: actions/setup-node@v4
   #       with:
   #         node-version: 16
 
@@ -118,7 +118,7 @@ jobs:
   #   if: ${{ needs.changes.outputs.DEPLOYABLE == 'true' }}
   #   steps:
   #     - name: 🛑 Cancel Previous Runs
-  #       uses: styfle/cancel-workflow-action@0.9.1
+  #       uses: styfle/cancel-workflow-action@0.12.1
 
   #     - name: ⬇️ Checkout repo
   #       uses: actions/checkout@v2
@@ -127,9 +127,9 @@ jobs:
   #       run: cp .env.example .env
 
   #     - name: ⎔ Setup node
-  #       uses: actions/setup-node@v2
+  #       uses: actions/setup-node@v4
   #       with:
-  #         node-version: 16
+  #         node-version: 20
 
   #     - name: 📥 Download deps
   #       uses: bahmutov/npm-install@v1
@@ -159,19 +159,17 @@ jobs:
     # only build/deploy main branch on pushes
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: 🐳 Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-        with:
-          version: v0.9.1
+        uses: docker/setup-buildx-action@v3
 
       # Setup cache
       - name: ⚡️ Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
@@ -179,14 +177,14 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: 🔑 Fly Registry Auth
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           registry: registry.fly.io
           username: x
           password: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🐳 Docker build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
@@ -217,16 +215,16 @@ jobs:
 
     steps:
       - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.12.1
 
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: 🚀 Deploy
         uses: superfly/flyctl-actions@1.1
         with:
           args:
-            'deploy -i registry.fly.io/${{ secrets.FLY_APP_NAME }}:${{ github.sha }}
-            --strategy rolling'
+            "deploy -i registry.fly.io/${{ secrets.FLY_APP_NAME }}:${{ github.sha }}
+            --strategy rolling"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

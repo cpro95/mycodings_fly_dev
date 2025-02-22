@@ -1,21 +1,20 @@
 /* eslint-disable no-var */
-import { PrismaClient } from '@prisma/client'
-import { getRequiredEnvVar } from './misc'
+import { PrismaClient } from "@prisma/client";
 
 declare global {
-  var client: PrismaClient | undefined
+  var client: PrismaClient | undefined;
 }
 
-let client: PrismaClient
+let client: PrismaClient;
 
-if (getRequiredEnvVar('NODE_ENV') === 'production') {
-  client = new PrismaClient()
+if (process.env.NODE_ENV === "production") {
+  client = new PrismaClient();
 } else {
   if (!global.client) {
-    global.client = client = new PrismaClient()
+    global.client = client = new PrismaClient();
   } else {
-    client = global.client
+    client = global.client;
   }
 }
 
-export default client
+export default client;

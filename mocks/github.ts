@@ -1,164 +1,229 @@
-import nodepath from 'path'
-import fs from 'fs-extra'
-import type { DefaultRequestBody, MockedRequest, RestHandler } from 'msw'
-import { rest } from 'msw'
+import nodepath from "path";
+import fs from "fs-extra";
+import { http, HttpResponse } from "msw";
 
-async function isDirectory(d: string) {
+async function isDirectory(d: any) {
   try {
-    return (await fs.lstat(d)).isDirectory()
+    return (await fs.lstat(d)).isDirectory();
   } catch {
-    return false
+    return false;
   }
 }
-async function isFile(d: string) {
+async function isFile(d: any) {
   try {
-    return (await fs.lstat(d)).isFile()
+    return (await fs.lstat(d)).isFile();
   } catch {
-    return false
+    return false;
   }
 }
 
-type GHContentsDescription = {
-  name: string
-  path: string
-  sha: string
-  type: 'dir' | 'file'
-}
+export const GitHubMocks = [
+  http.get(
+    "https://api.github.com/repos/:owner/:repo/contents/:path",
+    async ({ params }) => {
+      const { owner, repo } = params;
 
-export const GitHubMocks: Array<
-  RestHandler<MockedRequest<DefaultRequestBody>>
-> = [
-  rest.get(
-    'https://api.github.com/repos/:owner/:repo/contents/:path',
-    async (req, res, ctx) => {
-      const { owner, repo } = req.params
-
-      if (typeof req.params.path !== 'string') {
-        throw new Error('Path should be a string')
+      if (typeof params.path !== "string") {
+        throw new Error("Path should be a string");
       }
-      const path = decodeURIComponent(req.params.path).trim()
+      const path = decodeURIComponent(params.path).trim();
 
+      console.log(`mock process1 ${process.env.GITHUB_REPOSITORY}`);
       if (
         `${owner}/${repo}` !== process.env.GITHUB_REPOSITORY ||
-        !path.startsWith('content')
+        !path.startsWith("content")
       ) {
         throw new Error(
-          `Trying to fetch resource for unmockable resource: ${owner}/${repo}/${path}`,
-        )
+          `Trying to fetch resource for unmockable resource: ${owner}/${repo}/${path}`
+        );
       }
 
-      const localPath = nodepath.resolve(process.cwd(), path)
-      const isLocalDir = await isDirectory(localPath)
-      const isLocalFile = await isFile(localPath)
+      const localPath = nodepath.resolve(process.cwd(), path);
+      const isLocalDir = await isDirectory(localPath);
+      const isLocalFile = await isFile(localPath);
 
       if (!isLocalDir && !isLocalFile) {
-        return res(
-          ctx.status(200),
-          // return an empty array when there are no blogs inside content/blogs
-          ctx.json([]),
-        )
+        // return an empty array when there are no blogs inside content/blogs
+        return HttpResponse.json([], { status: 200 });
       }
 
       if (isLocalFile) {
-        const file = fs.readFileSync(localPath, { encoding: 'utf-8' })
-        const encoding = 'base64'
+        const file = fs.readFileSync(localPath, { encoding: "utf-8" });
+        const encoding = "base64";
 
-        return res(
-          ctx.status(200),
-          ctx.json({
-            content: Buffer.from(file, 'utf-8').toString(encoding),
+        return HttpResponse.json(
+          {
+            content: Buffer.from(file, "utf-8").toString(encoding),
             encoding,
-          }),
-        )
+          },
+          { status: 200 }
+        );
       }
 
-      const dirList = await fs.readdir(localPath)
+      const dirList = await fs.readdir(localPath);
 
       const dirContent = await Promise.all(
-        dirList.map(async (name): Promise<GHContentsDescription> => {
-          const relativePath = nodepath.join(path, name)
-          const sha = relativePath
-          const fullPath = nodepath.resolve(process.cwd(), relativePath)
-          const isDir = await isDirectory(fullPath)
+        dirList.map(async (name) => {
+          const relativePath = nodepath.join(path, name);
+          const sha = relativePath;
+          const fullPath = nodepath.resolve(process.cwd(), relativePath);
+          const isDir = await isDirectory(fullPath);
 
           return {
             name,
             path: relativePath,
             sha,
-            type: isDir ? 'dir' : 'file',
-          }
-        }),
-      )
+            type: isDir ? "dir" : "file",
+          };
+        })
+      );
 
-      return res(ctx.status(200), ctx.json(dirContent))
-    },
+      return HttpResponse.json(dirContent, { status: 200 });
+    }
   ),
-  rest.get(
-    'https://api.github.com/repos/:owner/:repo/git/blobs/:sha',
-    async (req, res, ctx) => {
-      const { repo, owner } = req.params
+  http.get(
+    "https://api.github.com/repos/:owner/:repo/git/blobs/:sha",
+    async ({ params }) => {
+      const { repo, owner } = params;
 
-      if (typeof req.params.sha !== 'string') {
-        throw new Error('sha should be a string')
+      if (typeof params.sha !== "string") {
+        throw new Error("sha should be a string");
       }
-      const sha = decodeURIComponent(req.params.sha).trim()
+      const sha = decodeURIComponent(params.sha).trim();
+
+      console.log(`mock process2 ${process.env.GITHUB_REPOSITORY}`);
 
       if (`${owner}/${repo}` !== process.env.GITHUB_REPOSITORY) {
         throw new Error(
-          `Trying to fetch resource for unmockable resource: ${owner}/${repo}`,
-        )
+          `Trying to fetch resource for unmockable resource: ${owner}/${repo}`
+        );
       }
 
-      if (!sha.includes('/')) {
-        throw new Error(`No mockable data found for the given sha: ${sha}`)
+      if (!sha.includes("/")) {
+        throw new Error(`No mockable data found for the given sha: ${sha}`);
       }
 
-      const fullPath = nodepath.resolve(process.cwd(), sha)
-      const content = fs.readFileSync(fullPath, { encoding: 'utf-8' })
-      const encoding = 'base64'
+      const fullPath = nodepath.resolve(process.cwd(), sha);
 
-      return res(
-        ctx.status(200),
-        ctx.json({
-          sha,
-          content: Buffer.from(content, 'utf-8').toString(encoding),
-          encoding,
-        }),
-      )
-    },
+      const encoding = "base64";
+
+      try {
+        if (!fs.existsSync(fullPath)) {
+          return HttpResponse.json(
+            { error: "File not found", sha },
+            { status: 404 }
+          );
+        }
+
+        const content = fs.readFileSync(fullPath, { encoding: "utf-8" });
+
+        return HttpResponse.json(
+          {
+            sha,
+            content: Buffer.from(content, "utf-8").toString(encoding),
+            encoding,
+          },
+          { status: 200 }
+        );
+      } catch (error: any) {
+        console.error("Error reading file:", error);
+        return HttpResponse.json(
+          { error: "Internal Server Error", details: error.message },
+          { status: 500 }
+        );
+      }
+    }
   ),
-  rest.get(
-    'https://api.github.com/repos/:owner/:repo/contents/:path*',
-    async (req, res, ctx) => {
-      const { owner, repo } = req.params
+  http.get(
+    "https://api.github.com/repos/:owner/:repo/contents/*", // `*` 사용하여 전체 경로 매칭
+    async ({ request, params }) => {
+      const { owner, repo } = params;
 
-      if (typeof req.params.path !== 'string') {
-        throw new Error('Path should be a string')
+      // URL에서 직접 경로 추출 (params.path 대신 request.url 사용)
+      const url = new URL(request.url);
+      const encodedPath = url.pathname.split("/contents/")[1] || "";
+      const decodedPath = decodeURIComponent(encodedPath).trim();
+
+      console.log(
+      `mock process 3 GITHUB_REPOSITORY: ${process.env.GITHUB_REPOSITORY}`
+      );
+
+      if (!process.env.GITHUB_REPOSITORY) {
+        throw new Error("GITHUB_REPOSITORY is not defined");
       }
-      const path = decodeURIComponent(req.params.path).trim()
 
       if (
-        owner !== process.env.GH_OWNER ||
-        repo !== process.env.GH_REPO ||
-        !path.startsWith('content')
+        `${owner}/${repo}` !== process.env.GITHUB_REPOSITORY ||
+        !decodedPath.startsWith("content")
       ) {
         throw new Error(
-          `Trying to fetch resource for unmockable resource: ${owner}/${repo}/${path}`,
-        )
+          `Trying to fetch resource for unmockable resource: ${owner}/${repo}/${decodedPath}`
+        );
       }
 
-      const fullPath = nodepath.resolve(process.cwd(), path)
-      const content = fs.readFileSync(fullPath, { encoding: 'utf-8' })
-      const encoding = 'base64'
+      const fullPath = nodepath.resolve(process.cwd(), decodedPath);
 
-      return res(
-        ctx.status(200),
-        ctx.json({
-          sha: path,
-          content: Buffer.from(content, 'utf-8').toString(encoding),
+      if (!fs.existsSync(fullPath)) {
+        return HttpResponse.json({ error: "File not found" }, { status: 404 });
+      }
+
+      const content = fs.readFileSync(fullPath, { encoding: "utf-8" });
+      const encoding = "base64";
+
+      return HttpResponse.json(
+        {
+          sha: decodedPath,
+          content: Buffer.from(content, "utf-8").toString(encoding),
           encoding,
-        }),
-      )
-    },
+        },
+        { status: 200 }
+      );
+    }
   ),
-]
+  http.get(
+    "https://api.github.com/repos/:owner/:repo/git/blobs/*", // `*` 사용하여 전체 경로 매칭
+    async ({ request, params }) => {
+      const { owner, repo } = params;
+
+      // URL에서 직접 경로 추출 (params.path 대신 request.url 사용)
+      const url = new URL(request.url);
+      const encodedPath = url.pathname.split("/blobs/")[1] || "";
+      const decodedPath = decodeURIComponent(encodedPath).trim();
+
+      console.log(
+        `mock process 4 GITHUB_REPOSITORY: ${process.env.GITHUB_REPOSITORY}`
+      );
+
+      if (!process.env.GITHUB_REPOSITORY) {
+        throw new Error("GITHUB_REPOSITORY is not defined");
+      }
+
+      if (
+        `${owner}/${repo}` !== process.env.GITHUB_REPOSITORY ||
+        !decodedPath.startsWith("content")
+      ) {
+        throw new Error(
+          `Trying to fetch resource for unmockable resource: ${owner}/${repo}/${decodedPath}`
+        );
+      }
+
+      const fullPath = nodepath.resolve(process.cwd(), decodedPath);
+
+      if (!fs.existsSync(fullPath)) {
+        return HttpResponse.json({ error: "File not found" }, { status: 404 });
+      }
+
+      const content = fs.readFileSync(fullPath, { encoding: "utf-8" });
+      const encoding = "base64";
+
+      return HttpResponse.json(
+        {
+          sha: decodedPath,
+          content: Buffer.from(content, "utf-8").toString(encoding),
+          encoding,
+        },
+        { status: 200 }
+      );
+    }
+  ),
+];

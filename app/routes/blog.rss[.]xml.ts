@@ -1,14 +1,18 @@
-import type { LoaderFunction } from '@remix-run/server-runtime'
-import * as dateFns from 'date-fns'
-import invariant from 'tiny-invariant'
+import type { Route } from "./+types/blog.rss[.]xml";
+import * as dateFns from "date-fns";
+import invariant from "tiny-invariant";
 
-import { getMdxListItems } from '~/utils/mdx.server'
-import { getDomainUrl } from '~/utils/misc'
+import { getMdxListItems } from "~/utils/mdx.server";
+import { getDomainUrl } from "~/utils/misc";
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getMdxListItems({ contentDirectory: 'blog', page: 1, itemsPerPage: 100000 })
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const posts = await getMdxListItems({
+    contentDirectory: "blog",
+    page: 1,
+    itemsPerPage: 100000,
+  });
 
-  const blogUrl = `${getDomainUrl(request)}/blog`
+  const blogUrl = `${getDomainUrl(request)}/blog`;
 
   const rss = `
     <rss xmlns:blogChannel="${blogUrl}" version="2.0">
@@ -19,55 +23,55 @@ export const loader: LoaderFunction = async ({ request }) => {
         <language>en-us</language>
         <ttl>40</ttl>
         ${posts
-      .map(post => {
-        const frontMatter = JSON.parse(post.frontmatter)
+          .map((post) => {
+            const frontMatter = JSON.parse(post.frontmatter);
 
-        invariant(
-          typeof frontMatter.title === 'string',
-          `${post.slug} should have a title in fronte matter`,
-        )
-        invariant(
-          typeof frontMatter.description === 'string',
-          `${post.slug} should have a description in fronte matter`,
-        )
-        invariant(
-          typeof post.timestamp === 'object',
-          `${post.slug} should have a timestamp`,
-        )
+            invariant(
+              typeof frontMatter.title === "string",
+              `${post.slug} should have a title in fronte matter`
+            );
+            invariant(
+              typeof frontMatter.description === "string",
+              `${post.slug} should have a description in fronte matter`
+            );
+            invariant(
+              typeof post.timestamp === "object",
+              `${post.slug} should have a timestamp`
+            );
 
-        return `
+            return `
             <item>
-              <title>${cdata(frontMatter.title ?? 'Untitled Post')}</title>
+              <title>${cdata(frontMatter.title ?? "Untitled Post")}</title>
               <description>${cdata(
-          frontMatter.description ?? 'This post is... indescribable',
-        )}</description>
+                frontMatter.description ?? "This post is... indescribable"
+              )}</description>
               <pubDate>${dateFns.format(
-          dateFns.add(
-            post.timestamp
-              ? dateFns.parseISO(post.timestamp.toISOString())
-              : Date.now(),
-            { minutes: new Date().getTimezoneOffset() },
-          ),
-          'yyyy-MM-ii',
-        )}</pubDate>
+                dateFns.add(
+                  post.timestamp
+                    ? dateFns.parseISO(post.timestamp.toISOString())
+                    : Date.now(),
+                  { minutes: new Date().getTimezoneOffset() }
+                ),
+                "yyyy-MM-ii"
+              )}</pubDate>
               <link>${blogUrl}/${post.slug}</link>
               <guid>${blogUrl}/${post.slug}</guid>
             </item>
-          `.trim()
-      })
-      .join('\n')}
+          `.trim();
+          })
+          .join("\n")}
       </channel>
     </rss>
-  `.trim()
+  `.trim();
 
   return new Response(rss, {
     headers: {
-      'Content-Type': 'application/xml',
-      'Content-Length': String(Buffer.byteLength(rss)),
+      "Content-Type": "application/xml",
+      "Content-Length": String(Buffer.byteLength(rss)),
     },
-  })
-}
+  });
+};
 
 function cdata(s: string) {
-  return `<![CDATA[${s}]]>`
+  return `<![CDATA[${s}]]>`;
 }

@@ -1,12 +1,12 @@
-node_modules
-.cache
+.react-router
 build
+node_modules
+README.md
+
+.cache
 public/build
 .env
 prisma/*.db
-
-content/
-mocks/
 
 app/styles
 app/**/*.ignore.*
