@@ -1,5 +1,5 @@
 # base node image
-FROM node:22-bookworm-slim as bas
+FROM node:22-bookworm-slim as base
 
 # Install openssl for Prisma
 # RUN apt-get update && apt-get install -y openssl
