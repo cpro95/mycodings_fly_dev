@@ -4,9 +4,13 @@
 #
 
 app = "mycodings"
-kill_signal = 'SIGINT'
-kill_timeout = '5s'
+kill_signal = "SIGINT"
+kill_timeout = 5
 processes = []
+
+[env]
+  DATABASE_URL = "file:/data/sqlite.db"
+  PORT = "8080"
 
 [experimental]
   allowed_public_ports = []
@@ -14,13 +18,9 @@ processes = []
   cmd = "start_with_migrations.sh"
   entrypoint = "sh"
 
-[env]
-  DATABASE_URL = 'file:/data/sqlite.db'
-  PORT = '8080'
-
 [[mounts]]
-  source = 'data'
-  destination = '/data'
+  destination = "/data"
+  source = "data"
 
 [[services]]
   internal_port = 8080
@@ -56,8 +56,3 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
-  
-  [[vm]]
-    memory = '1gb'
-    cpu_kind = 'shared'
-    cpus = 1
