@@ -4,16 +4,15 @@
 #
 
 app = "mycodings"
-primary_region = 'nrt'
 kill_signal = 'SIGINT'
 kill_timeout = '5s'
+processes = []
 
 [experimental]
-  cmd = ['start_with_migrations.sh']
-  entrypoint = ['sh']
+  allowed_public_ports = []
   auto_rollback = true
-
-[build]
+  cmd = "start_with_migrations.sh"
+  entrypoint = "sh"
 
 [env]
   DATABASE_URL = 'file:/data/sqlite.db'
@@ -58,7 +57,7 @@ kill_timeout = '5s'
     restart_limit = 0
     timeout = "2s"
   
-# [[vm]]
-#  memory = '1gb'
-#  cpu_kind = 'shared'
-#  cpus = 1
+  [[vm]]
+    memory = '1gb'
+    cpu_kind = 'shared'
+    cpus = 1
