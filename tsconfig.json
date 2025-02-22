@@ -1,28 +1,24 @@
 {
-  "include": [
-    "**/*",
-    "**/.server/**/*",
-    "**/.client/**/*",
-    ".react-router/types/**/*"
-  ],
-  "exclude": ["**/content/**/*"],
+  "exclude": ["./cypress"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["node", "vite/client"],
-    "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "bundler",
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "types": ["vitest/globals"],
+    "isolatedModules": true,
+    "esModuleInterop": true,
     "jsx": "react-jsx",
-    "rootDirs": [".", "./.react-router/types"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2019",
+    "strict": true,
     "baseUrl": ".",
     "paths": {
       "~/*": ["./app/*"]
     },
-    "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true
+    "allowJs": true,
+    "noEmit": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

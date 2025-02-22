@@ -1,17 +1,27 @@
-// https://github.com/sergiodxa/remix-utils/blob/main/src/react/client-only.tsx
+// https://github.com/sergiodxa/remix-utils
+import * as React from 'react'
+import { useHydrated } from '../hooks/use-hydrated'
 
-import * as React from "react";
-import { useHydrated } from "~/hooks/use-hydrated";
+/**
+ * @deprecated Pass a function as children to avoid issues with client only
+ * imported components
+ */
+type DeprecatedProps = {
+  children: React.ReactNode
+  fallback?: React.ReactNode
+}
 
-type Props = {
-  /**
-   * You are encouraged to add a fallback that is the same dimensions
-   * as the client rendered children. This will avoid content layout
-   * shift which is disgusting
-   */
-  children(): React.ReactNode;
-  fallback?: React.ReactNode;
-};
+type Props =
+  | DeprecatedProps
+  | {
+      /**
+       * You are encouraged to add a fallback that is the same dimensions
+       * as the client rendered children. This will avoid content layout
+       * shift which is disgusting
+       */
+      children: () => React.ReactNode
+      fallback?: React.ReactNode
+    }
 
 /**
  * Render the children only after the JS has loaded client-side. Use an optional
@@ -29,5 +39,15 @@ type Props = {
  * ```
  */
 export function ClientOnly({ children, fallback = null }: Props) {
-  return useHydrated() ? <>{children()}</> : <>{fallback}</>;
+  if (typeof children !== 'function') {
+    console.warn(
+      '[remix-utils] ClientOnly: Pass a function as children to avoid issues with client-only imported components',
+    )
+  }
+
+  return useHydrated() ? (
+    <>{typeof children === 'function' ? children() : children}</>
+  ) : (
+    <>{fallback}</>
+  )
 }

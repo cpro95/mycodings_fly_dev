@@ -1,110 +1,112 @@
-import * as React from "react";
-import { useFetcher } from "react-router";
+import * as React from 'react'
+import { useFetcher } from '@remix-run/react'
 
 export enum Theme {
-  light = "light",
-  dark = "dark",
+  light = 'light',
+  dark = 'dark',
 }
 
 type ThemeContextType = [
   Theme | null,
-  React.Dispatch<React.SetStateAction<Theme | null>>
-];
+  React.Dispatch<React.SetStateAction<Theme | null>>,
+]
 
-const themes = Object.values(Theme);
+const themes = Object.values(Theme)
 
-const ThemeContext = React.createContext<ThemeContextType | null>(null);
+const ThemeContext = React.createContext<ThemeContextType | null>(null)
 
-const themeMediaQuery = "(prefers-color-scheme: dark)";
+const themeMediaQuery = '(prefers-color-scheme: dark)'
 
 const getPrefferedTheme = () => {
-  return window.matchMedia(themeMediaQuery).matches ? Theme.dark : Theme.light;
-};
+  return window.matchMedia(themeMediaQuery).matches ? Theme.dark : Theme.light
+}
 
 export function ThemeProvider({
   children,
   ssrTheme,
 }: {
-  children: React.ReactNode;
-  ssrTheme: Theme | null;
+  children: React.ReactNode
+  ssrTheme: Theme | null
 }) {
   const [theme, setTheme] = React.useState<Theme | null>(() => {
     if (ssrTheme) {
       if (themes.includes(ssrTheme)) {
-        return ssrTheme;
+        return ssrTheme
       } else {
-        return null;
+        return null
       }
     }
 
-    if (typeof window === "undefined") {
-      return null;
+    if (typeof window === 'undefined') {
+      return null
     }
 
-    return getPrefferedTheme();
-  });
+    return getPrefferedTheme()
+  })
 
-  const themeFetcher = useFetcher();
-  const skipFirstRender = React.useRef(true);
-  const themeFetcherRef = React.useRef(themeFetcher);
+  const themeFetcher = useFetcher()
+  const skipFirstRender = React.useRef(true)
+  const themeFetcherRef = React.useRef(themeFetcher)
 
   React.useEffect(() => {
     if (skipFirstRender.current) {
-      skipFirstRender.current = false;
-      return;
+      skipFirstRender.current = false
+      return
     }
     if (!theme) {
-      return;
+      return
     }
 
     themeFetcherRef.current.submit(
       { theme },
-      { method: "post", action: "_action/set-theme" }
-    );
-  }, [theme]);
+      { method: 'post', action: '_action/set-theme' },
+    )
+  }, [theme])
 
   React.useEffect(() => {
-    const media = window.matchMedia(themeMediaQuery);
+    const media = window.matchMedia(themeMediaQuery)
 
     function handleThemeChange() {
-      setTheme(media.matches ? Theme.dark : Theme.light);
+      setTheme(media.matches ? Theme.dark : Theme.light)
     }
 
-    media.addEventListener("change", handleThemeChange);
+    media.addEventListener('change', handleThemeChange)
 
     return () => {
-      window.removeEventListener("change", handleThemeChange);
-    };
-  }, []);
+      window.removeEventListener('change', handleThemeChange)
+    }
+  }, [])
 
   return (
     <ThemeContext.Provider value={[theme, setTheme]}>
       {children}
     </ThemeContext.Provider>
-  );
+  )
 }
 
 export function useTheme() {
-  const data = React.useContext(ThemeContext);
+  const data = React.useContext(ThemeContext)
 
   if (!data) {
-    throw new Error("useTheme should only be used under ThemeProvider");
+    throw new Error('useTheme should only be used under ThemeProvider')
   }
 
-  return data;
+  return data
 }
 
 export function isTheme(theme: unknown): theme is Theme {
-  return typeof theme === "string" && themes.includes(theme as Theme);
+  return typeof theme === 'string' && themes.includes(theme as Theme)
 }
 
-export function ThemeMeta({ theme }: { theme: Theme }) {
+export function ThemeMeta() {
+  const [theme] = useTheme()
+
   return (
     <meta
-      name="color-scheme"
-      content={theme === Theme.dark ? "dark" : "light"}
+      name='color-scheme'
+      content={theme === Theme.dark ? 'dark light' : 'light dark'}
     />
-  );
+  )
 }
 
 export function SsrTheme({ serverTheme }: { serverTheme?: boolean }) {
@@ -129,5 +131,5 @@ export function SsrTheme({ serverTheme }: { serverTheme?: boolean }) {
         />
       )}
     </>
-  );
+  )
 }

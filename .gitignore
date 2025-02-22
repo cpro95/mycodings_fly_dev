@@ -1,17 +1,18 @@
 .DS_Store
-/node_modules/
+node_modules
 
-# React Router
-/.react-router/
-/build/
-/public/build
-
+build/
 /.cache
+/server/build
+/public/build
+coverage/
 
 .env
 
 prisma/*.db
 prisma/*.db*
 
+app/styles
 app/**/*.ignore.*
 
+cypress/videos/

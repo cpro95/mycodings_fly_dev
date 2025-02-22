@@ -1,42 +1,41 @@
-import { useEffect } from "react";
+import React, { useEffect } from 'react'
 
 const MultiplexAds = () => {
   useEffect(() => {
     const pushAd = () => {
       try {
-        // @ts-ignore
-        const adsbygoogle = window.adsbygoogle;
-        adsbygoogle.push({});
+        const adsbygoogle = window.adsbygoogle
+        // console.log({ adsbygoogle })
+        adsbygoogle.push({})
       } catch (e) {
-        console.error(e);
+        console.error(e)
       }
-    };
+    }
 
     let interval = setInterval(() => {
       // Check if Adsense script is loaded every 300ms
-      // @ts-ignore
       if (window.adsbygoogle) {
-        pushAd();
+        pushAd()
         // clear the interval once the ad is pushed so that function isn't called indefinitely
-        clearInterval(interval);
+        clearInterval(interval)
       }
-    }, 300);
+    }, 300)
 
     return () => {
-      clearInterval(interval);
-    };
-  }, []);
+      clearInterval(interval)
+    }
+  }, [])
   return (
     <ins
-      className="adsbygoogle"
+      className='adsbygoogle'
       style={{
-        display: "block",
+        display: 'block',
       }}
-      data-ad-format="autorelaxed"
-      data-ad-client="ca-pub-7748316956330968"
-      data-ad-slot="4495825428"
+      data-ad-format='autorelaxed'
+      data-ad-client='ca-pub-7748316956330968'
+      data-ad-slot='4495825428'
     ></ins>
-  );
-};
+  )
+}
 
-export default MultiplexAds;
+export default MultiplexAds

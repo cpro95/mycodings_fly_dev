@@ -1,8 +1,7 @@
 # base node image
-FROM node:22-bookworm-slim as base
+FROM node:18-bullseye AS base
 
 # Install openssl for Prisma
-# RUN apt-get update && apt-get install -y openssl
 RUN apt-get update && apt-get install -y openssl
 
 # Install all node_modules, including dev dependencies
@@ -12,7 +11,7 @@ RUN mkdir /app
 WORKDIR /app
 
 ADD package.json package-lock.json ./
-RUN npm ci --include=dev
+RUN npm install --production=false
 
 # Setup production node_modules
 FROM base AS production-deps
@@ -22,10 +21,10 @@ WORKDIR /app
 
 COPY --from=deps /app/node_modules /app/node_modules
 ADD package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm prune --production
 
 # Build the app
-FROM base AS build
+FROM base as build
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
