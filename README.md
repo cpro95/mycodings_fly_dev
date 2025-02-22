@@ -157,6 +157,24 @@ npx prisma migrate dev
 
 The above command will prompt for a migration name, and you can name it as `initial migration`. This command will also install Prisma Client for interacting with the database.
 
+### Prisma Migrate Deploy Error Fix
+
+`start_with_migrations.sh` 파일에 있는 prisma migrate deploy 에서 에러가 나면 일단 `start_with_migrations.sh` 파일의 prisma migrate deploy 명령어를 주석처리하면 Fly 배포가 이루어집니다.
+
+이제 아래와 같이 fly.io 서버에 접속해서 migration 부분 수작업으로 고치면 됩니다.
+
+```sh
+fly ssh console
+cd /app
+npx prisma migrate status
+
+- If you rolled back the migration(s) manually:
+prisma migrate resolve --rolled-back "20250222090523_init_migration"
+
+- If you fixed the database manually (hotfix):
+prisma migrate resolve --applied "20250222090523_init_migration"
+```
+
 ## Development 💻
 
 We can start our development server with the migrations run and the SQLite database populated with the initial schema. Then, from a new tab in your terminal, run the command.
