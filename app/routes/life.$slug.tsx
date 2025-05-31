@@ -129,7 +129,7 @@ export default function Blog({ loaderData }: Route.ComponentProps) {
         <KeywordsLink keywords={keywords} contentDirectory="life" />
         <BeforeAfterLink
           beforeAfter={beforeAfterSlugList}
-          contentDirectory="blog"
+          contentDirectory="life"
         />
 
         <div className="mx-auto max-w-4xl">
