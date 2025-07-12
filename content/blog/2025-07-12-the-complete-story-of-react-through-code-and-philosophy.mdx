@@ -1,0 +1,723 @@
+---
+slug: 2025-07-12-the-complete-story-of-react-through-code-and-philosophy
+title: 코드로 읽는 리액트 연대기 - 왜 리액트는 지금의 모습이 되었는가
+date: 2025-07-12T09:37:18.393Z
+description: React는 단편적인 API의 집합이 아닙니다. 초창기 페이스북의 고민부터 Fiber 아키텍처, 그리고 서버 컴포넌트에 이르기까지, 일관된 철학 아래 React가 어떻게 진화해왔는지 그 완전한 역사를 코드와 함께 심층적으로 탐구합니다.
+meta:
+  keywords:
+    - react
+    - React
+    - 리액트 역사
+    - 리액트 철학
+    - JSX
+    - 가상 DOM
+    - Fiber
+    - React Server Components
+published: true
+---
+
+# 코드로 읽는 리액트 연대기: 왜 리액트는 지금의 모습이 되었는가
+
+React는 웹 개발 프레임워크 중에서 조금은 독특한 존재입니다.<br /><br />
+저는 React의 여러 API들을 제대로 사용하려면 특정한 사고방식이 필요하다는 것을 발견했는데요.<br /><br />
+도대체 왜 그런 것일까요.<br /><br />
+저 역시 수년간 React를 사용하면서 바로 이 질문을 품고 있었습니다.<br /><br />
+그러던 어느 날, 문득 모든 것이 하나로 맞춰지는 순간이 찾아왔습니다.<br /><br />
+수년간 React 핵심 팀의 소통 방식을 지켜본 경험과 이 도구의 자연스러운 진화 과정을 관찰한 것들이 마침내 하나의 그림으로 완성된 것이죠.<br /><br />
+오늘 저는 React라는 라이브러리를 마침내 이해하게 만들어준 그 배경 이야기를 공유하고자 합니다.<br /><br />
+이 이야기는 두 가지 방향을 동시에 따라갑니다.<br /><br />
+하나는 역사적인 흐름이고, 다른 하나는 순수하게 코드 자체에서 파생된 흐름입니다.<br /><br />
+왜 이 이야기를 두 갈래로 나누었을까요.<br /><br />
+우리 대부분은 React의 API가 어떤 중심적인 주제 없이 시간이 지나면서 단편적으로 개발되었을 것이라고 쉽게 가정하는 경향이 있습니다.<br /><br />
+하지만 이 라이브러리의 기원에서부터 시작하여 React 팀이 그 시절부터 오늘날까지 제시해온 아이디어들을 탐구해 보면, 그것이 사실과 다르다는 것을 알게 될 것입니다.<br /><br />
+이 이야기를 통해 제가 제시하고 싶은 핵심 주장은 이것입니다.<br /><br />
+**React는 초창기부터 API 설계에 있어 놀라울 정도로 일관성을 유지해왔습니다.** 그리고 이 일관성은 여러분이 React에서 10배 개발자가 되기 위해 채택할 수 있는 특정한 정신 모델로 이어집니다.<br /><br />
+이 여정을 따라가면서, 우리는 다음 내용들을 다룰 것입니다.<br /><br />
+자, 이제 서론은 이만하고, 바로 뛰어들어 봅시다!<br /><br />
+
+## React의 첫걸음<br /><br />
+
+때는 2011년, 페이스북은 한 가지 문제에 직면해 있었습니다.<br /><br />
+사내 '광고(ads)' 팀에서 사용하던 'BoltJS'라는 자체 프레임워크가 있었죠.<br /><br />
+잘 작동하고는 있었지만, 코드에는 문제가 있었습니다.<br /><br />
+광고 제품의 문제 중 약 90%는 Bolt로 작성할 수 있었지만, 프로젝트의 일부 상황에서는 팀이 자체 프레임워크에서 벗어나 덜 선언적인 해결책을 사용해야만 했습니다.<br /><br />
+이것이 당장 해결해야 할 문제는 아니었지만, 급격히 성장하는 페이스북 팀에게는 새로운 문제들을 야기했습니다.<br /><br />
+큰 그룹 전체에 적용된 10%의 예외는 금세 일관성, 교육, 그리고 전반적인 개발자 경험의 문제로 번졌습니다.<br /><br />
+이를 방치하면, 그들이 원하는 만큼 빠르게 제품을 출시하는 능력에 필연적으로 영향을 미칠 것이었습니다.<br /><br />
+BoltJS의 문제점은 광고 팀의 한 멤버였던 조던 워크(Jordan Walke)에게는 영 마음에 들지 않았습니다.<br /><br />
+사실 그 어떤 프로그래밍 패러다임도 마찬가지였죠.<br /><br />
+한 커뮤니티 인터뷰에서 조던은 이렇게 회고했습니다.<br /><br />
+> "제가 처음 프로그래밍을 배울 때부터, 데이터 바인딩과 변경(mutation)을 사용하는 구식 MVC 스타일의 프로그래밍은 저에게 결코 옳게 느껴지지 않았습니다.<br /><br />
+> '변경'이나 '함수형 프로그래밍' 같은 기술 용어로 설명할 능력이 없었을 때조차도 말이죠.<br /><br />
+> 제 코드는 보통 다른 사람들에게 정말 이상하게 보였어요 [...]. 아주 오랫동안 저는 그저 '음, 나는 그냥 이상한 프로그래머인가 보다'라고 생각했죠.<br /><br />
+> 그러다 마침내 프로그래밍 언어 기초에 대한 강의를 듣게 되었고, [...] 제가 애플리케이션을 만들고 싶은 방식을 설명할 수 있는 기본적인 용어를 갖게 되었습니다.<br /><br />
+>"
+
+그래서 조던은 당시 Bolt와 다른 프레임워크들이 가지고 있다고 인식했던 많은 문제들에 대해 자신만의 해결책을 실험하기 시작했습니다.<br /><br />
+이 실험은 'FaxJS'라는 개인 프로젝트로 시작되었습니다.<br /><br />
+FaxJS는 곧 'FBolt'(Functional Bolt)로 이름이 바뀌었고, 최종적으로 'React'라고 불리게 되었습니다.<br /><br />
+이 신생 도구를 중심으로 작은 팀이 꾸려지기 시작했습니다.<br /><br />
+시간은 흘러 2012년, 페이스북은 승승장구하고 있었습니다.<br /><br />
+얼마나 잘 나갔냐면, 막 10억 달러에 인스타그램을 인수했을 정도였죠.<br /><br />
+인스타그램은 안드로이드와 iOS용 모바일 앱은 있었지만, 웹사이트는 없었습니다.<br /><br />
+페이스북의 새로운 팀은 이 문제를 해결하기 위한 솔루션을 구축하는 임무를 맡았지만, 새로운 모회사로부터 한 가지 제약을 받았습니다.<br /><br />
+바로 기존 기술 스택 중 하나를 사용해야 한다는 것이었죠.<br /><br />
+Bolt와 React를 얼마간 평가한 후, 팀은 결정을 내렸습니다.<br /><br />
+그들은 React를 사용하는 최초의 프로덕션 코드베이스가 되기로 한 것입니다.<br /><br />
+팀은 자신들의 손에 특별한 것이 쥐어져 있다는 것을 금세 깨달았습니다.<br /><br />
+빠르게 제품을 출시하고 있었고, 성능도 잘 처리되는 것 같았으며, 개발자들은 새로 찾은 시스템에서 일하는 것을 무척 좋아했습니다.<br /><br />
+초기부터 이 프로젝트를 오픈소스화하려는 논의가 시작되었습니다.<br /><br />
+하지만 이제 그들에게는 새로운 문제가 생겼습니다.<br /><br />
+페이스북은 기존의 Bolt와 떠오르는 React라는 두 개의 브라우저 렌더링 솔루션을 갖게 된 것입니다.<br /><br />
+양 팀은 머리를 맞대고 열띤 토론을 벌인 끝에, 이 도전이 자신들의 전문 분야를 넘어선다는 것을 깨달았습니다.<br /><br />
+페이스북의 IPO는 부진했고, 광고 제품이 그들의 주 수입원이었습니다.<br /><br />
+바로 그 팀이 최근에 대규모 프로젝트를 Bolt를 사용하도록 이전했던 것이죠.<br /><br />
+React로 마이그레이션하려면 4개월이 걸릴 것이고, 그동안 새로운 기능은 없다는 의미였습니다.<br /><br />
+페이스북 내에서 React의 채택이 불가능해 보일 바로 그때, CTO가 등장했습니다.<br /><br />
+**"올바른 기술적 선택을 하고, 올바른 장기적 선택을 하세요.<br /><br /> 만약 단기적인 결과가 따른다면, 제가 뒷받침하겠습니다.<br /><br /> 재작성에 몇 달이 필요하다면, 그렇게 하세요.<br /><br />"**
+광고 플랫폼의 React 마이그레이션은 인스타그램 채택 때와 비슷한 성공을 거두며 팀에게 또 다른 승리를 안겨주었습니다.<br /><br />
+2013년이 되자, React의 오픈소스화를 추진하던 팀의 목소리는 대화 속에서 점점 더 커졌습니다.<br /><br />
+결국 그들은 내부의 싸움에서 이겼습니다.<br /><br />
+마침내, 그 모든 시간이 지난 후, React는 오픈소스화될 준비가 되었습니다.<br /><br />
+JSConfUS 2013에서 톰 오키노(Tom Occhino)와 조던 워크는 코드 및 문서 공개와 함께 프로젝트를 공식적으로 발표했습니다.<br /><br />
+그때 그들이 무엇을 선보였는지 한번 살펴보겠습니다.<br /><br />
+
+## 마크업의 문제<br /><br />
+
+React의 가장 초기 시절부터, HTML 코드를 JavaScript 파일 안에서 표현한다는 아이디어는 확립되어 있었습니다.<br /><br />
+이는 초창기 프레임워크에 엄청난 유연성을 제공했습니다.<br /><br />
+조건부 렌더링 로직이나 반복문 같은 것들을 위해 커스텀 템플릿 태그를 피할 수 있게 했을 뿐만 아니라, 함께 작업하기 재미있었고 UI 코드의 빠른 반복 개발을 가능하게 했습니다.<br /><br />
+이는 예전에는 이렇게 보였을 코드를:<br /><br />
+
+```html
+<!-- 이 코드는 다른 파일에 있거나 정적인 문자열 형태일 것으로 예상됨 -->
+<div>
+  <!-- 이론적인 프레임워크 템플릿 코드의 의사 문법 -->
+  <some-tag data-if="someVar"></some-tag>
+  <some-item-tag data-for="let someItem of someList"></some-item-tag>
+</div>
+```
+<br /><br />
+대신 이렇게 보이게 할 수 있다는 의미였습니다.<br /><br />
+
+```javascript
+const data = (
+  <div>
+    {someVar && <some-tag />}
+    {someList.map((someItem) => (
+      <some-item-tag />
+    ))}
+  </div>
+);
+```
+<br /><br />
+여기에는 몇 가지 주요 이점이 있었습니다.<br /><br />
+
+-   **템플릿 컴파일이 런타임 전에 발생할 수 있었습니다.** — 개발 라이프사이클 초기에 에러를 잡을 수 있게 되었죠.
+-   **JSX는 문자열이 아니었기 때문에,** 특정 API를 요구하지 않고도 기본적으로 더 나은 XSS 방어 기능을 갖추고 있었습니다.
+-   **흐름 제어를 위해 JavaScript를 재사용했습니다.** — 다른 문자열 기반 언어에서 JavaScript의 표현력을 다시 발명할 필요가 없었죠.
+
+JSX의 API는 또한 "템플릿에서 JavaScript로" 변환하는 과정을 극도로 가볍게 유지할 수 있게 했습니다.<br /><br />
+어떤 종류의 HTML-to-JavaScript 컴파일러에 의존하는 대신, JSX의 태그들은 아주 간단하게 JavaScript 함수로 변환될 수 있습니다.<br /><br />
+
+```javascript
+// 아래의 JSX는
+function App() {
+  return (
+    <ul role="list">
+      <li>Test</li>
+    </ul>
+  );
+}
+
+// 브라우저에서 실행될 함수 호출로 간단하게 변환됩니다.
+function App() {
+  return React.createElement(
+    "ul",
+    {
+      role: "list",
+    },
+    [React.createElement("li", {}, ["Test"])],
+  );
+}
+```
+<br /><br />
+이는 또한 코드 변환 과정 전반에 걸쳐, 에러가 발생한 코드 라인이 브라우저에서 실행된 최종 결과물과 일대일로 매핑될 수 있다는 것을 의미했습니다.<br /><br />
+디버깅에 아주 좋았죠!<br /><br />
+
+### "관심사의 분리"는 당신이 생각하는 그것이 아니다<br /><br />
+
+JSX에 대한 흔한 비판 중 하나는 그것이 "관심사의 분리(separation of concerns)"를 깨뜨린다는 주장이었습니다.<br /><br />
+대부분의 프로젝트는 초기에 사용되는 언어와 코드 유형에 따라 코드를 분리했습니다.<br /><br />
+
+```
+src/
+  html/
+    button.html
+    card.html
+  css/
+    button.css
+    card.css
+  js/
+    button.js
+    card.js
+```
+<br /><br />
+하지만 이것은 코드의 다른 부분들 사이에 임의적인 구분을 짓는 것입니다.<br /><br />
+이 시스템을 사용하면 관련된 코드를 추적하는 것이 금세 어려워집니다.<br /><br />
+대신, React 팀은 (그리고 대부분의 현대 코드베이스가 계속해서 지지하는) 코드를 **기능(features)**에 따라 분리해야 한다고 제안했습니다.<br /><br />
+
+```
+src/
+  button/
+    button.html
+    button.css
+    button.js
+  card/
+    card.html
+    card.css
+    card.js
+```
+<br /><br />
+이렇게 함으로써 코드의 패턴을 따라가기가 훨씬 쉬워지고, 이상적인 React 코드 구조와 더 가깝게 정렬됩니다.<br /><br />
+
+## 시간의 모든 지점에 걸친 상태 표현하기<br /><br />
+
+React 이전에는 Backbone.js가 있었습니다.<br /><br />
+간단한 카운터 컴포넌트를 살펴보겠습니다.<br /><br />
+
+```html
+<!-- index.html -->
+<div id="counter-app"></div>
+
+<script type="text/template" id="counter-template">
+  <p>Count: <%= count %></p>
+  <button>Add 1</button>
+</script>
+
+<script>
+  /* app.js */
+  var CounterView = Backbone.View.extend({
+    // ...
+    initialize: function () {
+      this.listenTo(this.model, "change", this.render);
+      this.render();
+    },
+    render: function () {
+      var html = this.template(this.model.toJSON());
+      this.$el.html(html);
+      return this;
+    },
+    // ...
+  });
+</script>
+```
+<br /><br />
+여기서 우리는 여러 가지 일을 하고 있습니다.<br /><br />
+1. 템플릿을 나타내는 문자열을 담고 있는 `script` 태그에서 초기 템플릿을 읽어옵니다.
+2. 템플릿에서 사용할 컴포넌트의 데이터 모델을 정의합니다.
+3. 수동으로 이벤트에 바인딩하고, 요청 시 템플릿을 HTML로 재구성합니다.
+
+괜찮은 방법이지만, "Counter"의 이벤트/데이터 동기화가 수동적이기 때문에, 의도치 않게 분리되어서는 안 될 무언가를 실수로 분리하기 쉽습니다.<br /><br />
+이것을 그 시대의 동등한 React 카운터와 비교해 봅시다.<br /><br />
+
+```html
+<div id="root"></div>
+
+<script type="text/babel">
+  var Counter = React.createClass({
+    getInitialState: function () {
+      return { count: 0 };
+    },
+    increment: function () {
+      this.setState({
+        count: this.state.count + 1,
+      });
+    },
+    render: function () {
+      return (
+        <div>
+          <p>Count: {this.state.count}</p>
+          <button onClick={this.increment}>Add 1</button>
+        </div>
+      );
+    },
+  });
+  ReactDOM.render(<Counter />, document.getElementById("root"));
+</script>
+```
+<br /><br />
+`this.setState`가 어떤 면에서는 템플릿에 대한 명시적인 업데이트이지만, Backbone.js와 비교했을 때 큰 변화가 일어났습니다.<br /><br />
+
+**React의 `render` 메서드에 있는 템플릿은 단지 컴포넌트의 초기 템플릿이 아닙니다; 그것은 시간을 초월하여 사용되는 템플릿입니다.**
+
+실용적인 용어로, 이는 앱 데이터를 업데이트할 때 어떤 컴포넌트가 어디에 렌더링되고 있는지 추적할 필요가 없다는 것을 의미합니다.<br /><br />
+철학적인 용어로, 이것은 DOM의 "변경(mutation)" 과정이라기보다는 "조정(reconciliation)" 과정으로 볼 수 있습니다.<br /><br />
+이 아이디어는 데이터가 항상 불변해야 한다는 함수형 프로그래밍 세계에서 조던이 얻은 배움에서 직접 비롯되었습니다.<br /><br />
+그리고 이 데이터는 정적이지도 않습니다! 버튼을 클릭하여 `count`의 상태 변경을 트리거하면, 여러분의 `render` 함수가 즉시 실행되어 빠르고 편리한 반응성을 제공합니다.<br /><br />
+
+### 마크업을 반응형으로 만들기<br /><br />
+
+JSX가 많은 유연성을 허용했지만, 이는 템플릿이 새로운 값으로 DOM을 구성하기 위해 모든 템플릿 노드를 재실행해야 한다는 것을 의미했습니다.<br /><br />
+소규모 애플리케이션에서는 이러한 접근 방식이 큰 문제에 부딪히지 않겠지만, 큰 DOM 트리는 이러한 결정의 결과로 엄청난 성능 저하를 초래할 것입니다.<br /><br />
+이 문제를 해결하기 위해, 팀은 "가상 DOM(Virtual DOM, VDOM)"이라는 개념을 사용했습니다.<br /><br />
+이 VDOM은 브라우저 DOM의 복사본으로 JavaScript에 저장되었습니다.<br /><br />
+React가 DOM에 노드를 구성할 때, 그것의 복사본을 자신의 DOM 복사본에 만들었습니다.<br /><br />
+그런 다음, 특정 컴포넌트가 DOM을 업데이트해야 할 때, 이 VDOM과 비교하여 특정 노드에만 재렌더링을 국한시켰습니다.<br /><br />
+이는 훨씬 더 성능 좋은 React 애플리케이션이 확장될 수 있게 한 거대한 최적화였습니다.<br /><br />
+내부적으로, 이것은 React의 "조정" 단계에 비교(diffing) 단계를 도입함으로써 작동했습니다.<br /><br />
+초기 React 빌드조차도 VDOM의 비교 과정 대부분을 최적화했다는 점은 언급할 가치가 있습니다.<br /><br />
+
+## 초기 개발자 경험<br /><br />
+
+React는 2013년에 클래스 기반 컴포넌트 개념으로 출시되었습니다; 훅은 2019년까지 출시되지 않았습니다.<br /><br />
+이는 코드를 모듈화할 수 있게 해주어 훌륭했지만, 그 자체의 문제점도 있었습니다.<br /><br />
+컴포넌트의 핵심 원칙 중 하나는 **합성(compose)**이 가능하다는 것입니다.<br /><br />
+즉, 기존 컴포넌트로부터 새로운 컴포넌트를 만들 수 있다는 뜻이죠.<br /><br />
+이 능력이 없었다면, React는 대규모 애플리케이션에서 확장하기가 극도로 어려웠을 것입니다.<br /><br />
+하지만, 그 당시에는 클래스 기반 컴포넌트의 내부 로직에 대해서는 동일한 합성 능력을 말할 수 없었습니다.<br /><br />
+다음 예시를 봅시다.<br /><br />
+
+```javascript
+class WindowSize extends React.Component {
+  state = {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  };
+  // ... 생명주기 메서드
+}
+```
+<br /><br />
+이 `WindowSize` 컴포넌트는 브라우저 창의 크기를 가져와 상태에 저장하고, 이것이 발생할 때 컴포넌트의 재렌더링을 트리거합니다.<br /><br />
+이제 이 로직을 컴포넌트 간에 재사용하고 싶다고 가정해 봅시다.<br /><br />
+객체 지향 프로그래밍을 공부해 본 적이 있다면, 좋은 방법이 있다는 것을 알게 될 것입니다.<br /><br />
+바로 **클래스 상속(Class inheritance)**입니다.<br /><br />
+
+### 직관적인 단기 해결책<br /><br />
+
+`WindowSize` 컴포넌트의 코드를 변경하지 않고, JavaScript의 `extends` 키워드를 사용하여 새로운 클래스가 다른 클래스로부터 메서드와 속성을 상속받게 할 수 있습니다.<br /><br />
+
+```javascript
+class MyComponent extends WindowSize {
+  render() {
+    const { windowWidth, windowHeight } = this.state;
+    // ...
+  }
+}
+```
+<br /><br />
+이 간단한 예시는 작동하지만, 확실히 단점이 없는 것은 아닙니다.<br /><br />
+특히 `MyComponent`가 더 복잡해질 때 문제가 됩니다.<br /><br />
+우리는 기본 클래스가 예전처럼 계속 동작하도록 하기 위해 `super` 키워드를 사용해야 합니다.<br /><br />
+
+```javascript
+class MyComponent extends WindowSize {
+  state = {
+    // 기본 클래스와 함께 필요
+    ...this.state,
+    counter: 0,
+  };
+  componentDidMount() {
+    // 기본 클래스와 함께 필요
+    super.componentDidMount();
+    // ...
+  }
+  // ...
+}
+```
+<br /><br />
+하지만 `super()` 호출이나 그 사이의 무언가를 놓치면, 동작 문제, 메모리 누수 등이 발생하게 됩니다.<br /><br />
+이 문제를 해결하기 위해, 많은 앱과 라이브러리는 **"고차 컴포넌트(Higher-Order Components, HOC)"**라는 패턴을 사용했습니다.<br /><br />
+
+### 커뮤니티가 채택한 해결책<br /><br />
+
+고차 컴포넌트를 사용하면, 사용자가 코드베이스 전체에 `super` 호출을 할 필요 없이, 대신 기본 클래스로부터 인자를 확장하는 클래스에 프롭(props)으로 받을 수 있습니다.<br /><br />
+
+```javascript
+const withWindowSize = (WrappedComponent) => {
+  return class WithWindowSize extends React.Component {
+    // ... 로직
+    render() {
+      return (
+        <WrappedComponent
+          {...this.props}
+          windowWidth={this.state.width}
+          windowHeight={this.state.height}
+        />
+      );
+    }
+  };
+};
+
+const MyComponent = withWindowSize(MyComponentBase);
+```
+<br /><br />
+훅 이전에는, 이것이 React에서 컴포넌트 로직 재사용에 관한 최첨단 기술이었습니다.<br /><br />
+불행히도, 이것은 부모 컴포넌트로부터 어떤 프롭을 기대해야 하는지에 대한 지식이 필요했고, TypeScript와 다른 타입 체커 사용을 어렵게 했으며, 궁극적으로 React 자체의 깨끗하고 내장된 합성 패턴이라기보다는 애드온 패턴처럼 느껴졌습니다.<br /><br />
+
+### 클래스 컴포넌트의 초기 대안<br /><br />
+
+2015년, React 0.14가 출시되었습니다.<br /><br />
+이 릴리스는 클래스 기반 컴포넌트의 대안인 **함수 컴포넌트(Function components)**를 가져왔습니다.<br /><br />
+React 팀은 클래스 컴포넌트를 "상태 컨테이너가 추가된 렌더 함수"라고 설명했습니다.<br /><br />
+만약 상태 컨테이너를 제거하고 렌더 함수만 남겨두면 어떨까요.<br /><br />
+이는 우리가 이런 코드를:<br /><br />
+
+```javascript
+var Aquarium = React.createClass({
+  render: function () {
+    var fish = getFish(this.props.species);
+    return <Tank>{fish}</Tank>;
+  },
+});
+```
+<br /><br />
+이렇게 단순화할 수 있다는 것을 의미했습니다.<br /><br />
+
+```javascript
+var Aquarium = (props) => {
+  var fish = getFish(props.species);
+  return <Tank>{fish}</Tank>;
+};
+```
+<br /><br />
+이것은 여러 면에서 더 깨끗했지만, 중대한 단점이 있었습니다.<br /><br />
+**함수 컴포넌트는 자신만의 상태를 가질 수 없었습니다.**
+이는 실제 코드베이스에서의 기능성을 제한했고, 코드 사용의 분열을 피하기 위해 많은 사람들이 모든 컴포넌트에 클래스 기반 컴포넌트를 고수하기로 결정했습니다.<br /><br />
+
+## 개발자 경험의 성숙<br /><br />
+
+React의 훅은 React 16.8에서 소개되었습니다.<br /><br />
+이와 함께, 상태 없는 함수 컴포넌트에 대한 해결책이 마련되었고, 미래의 React 기능을 위한 기반이 확립되었습니다.<br /><br />
+이전의 "스마트" 컴포넌트가 클래스와 특별한 메서드 및 속성을 사용하여 상태와 부수 효과를 관리했던 반면:<br /><br />
+
+```javascript
+class WindowSize extends React.Component {
+  state = { /* ... */ };
+  handleResize = () => { /* ... */ };
+  componentDidMount() { /* ... */ }
+  componentWillUnmount() { /* ... */ }
+  render() { /* ... */ }
+}
+```
+<br /><br />
+훅을 사용하면, 여러분의 모든 컴포넌트 - "스마트"하든 "덤(dumb)"하든 - 가 함수와 특별히 임포트된 함수들로 작성될 수 있었습니다.<br /><br />
+
+```javascript
+function WindowSize() {
+  const [size, setSize] = React.useState({ /* ... */ });
+  useEffect(() => {
+    // ...
+  }, []);
+  return ( /* ... */ );
+}
+```
+<br /><br />
+이 API의 변화는 여러 이점을 가져왔으며, 그중 가장 큰 것은 **합성(composition)**의 개념으로 돌아가는 것이었습니다.<br /><br />
+
+### 로직 계층에서 컴포넌트의 강점 채택하기<br /><br />
+
+클래스 컴포넌트에서는 합성의 관례가 고차 컴포넌트였지만, 훅에는... 🥁<br /><br />
+**다른 훅(Other hooks)**이 있습니다.<br /><br />
+
+이것이 당연하게 들릴 수도 있지만, 바로 이 당연함이 현재와 미래의 훅의 초능력을 가능하게 합니다.<br /><br />
+커스텀 `useWindowSize` 훅을 살펴봅시다.<br /><br />
+
+```javascript
+function useWindowSize() {
+  const [size, setSize] = React.useState({ /* ... */ });
+  useEffect(() => {
+    // ...
+  }, []);
+  return { height, width };
+}
+```
+<br /><br />
+이 커스텀 훅은 우리가 원하는 만큼 많은 함수 컴포넌트에서 재사용될 수 있습니다.<br /><br />
+
+```javascript
+function MyComponent() {
+  const { height, width } = useWindowSize();
+  return ( /* ... */ );
+}
+```
+<br /><br />
+
+### 입출력 핸들링의 일관성 유지하기<br /><br />
+
+부수 효과(side effects)에 대해 몇 시간이고 이야기할 수 있습니다.<br /><br />
+높은 수준에서 효과를 간단히 요약하자면:<br /><br />
+이러한 사고 과정을 따라가면, React의 `useEffect` 훅이 어떻게 더 나은 부수 효과 정리 패턴을 따르도록 하는지 알 수 있습니다.<br /><br />
+클래스가 부수 효과를 어떻게 처리했는지 살펴봅시다.<br /><br />
+
+```javascript
+class Listener extends React.Component {
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+  // 마운트와 언마운트 사이에 많은 줄이 있을 수 있습니다.
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+  // ...
+}
+```
+<br /><br />
+이것을 `useEffect`를 사용하여 부수 효과를 등록하고 정리하는 방법과 비교해 봅시다.<br /><br />
+
+```javascript
+function Listener() {
+  useEffect(() => {
+    const handleResize = () => { /* ... */ };
+    window.addEventListener("resize", handleResize);
+    // 효과와 같은 스코프에서 정리
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  // ...
+}
+```
+<br /><br />
+이것이 바로 React가 구식 클래스 컴포넌트 생명주기를 함수 컴포넌트에 1:1로 매핑하는 것을 도입하지 않은 주된 이유입니다; 그들은 효과 관리 및 정리의 우수한 핸들링을 가능하게 했습니다.<br /><br />
+
+## React의 일관성 문제 해결하기<br /><br />
+
+React 18이 출시되었을 때, 많은 사람들은 앱의 여러 부분이 갑자기, 그리고 오직 개발 모드에서만 망가지는 것을 보고 놀랐습니다.<br /><br />
+실제로 일어난 일은 React가 대부분의 React 앱 템플릿에 포함된 개발 전용 헬퍼인 `<StrictMode>` 컴포넌트에 의도적으로 변경을 도입했다는 것입니다.<br /><br />
+이전에는 `<StrictMode>`가 주로 사용되지 않는 API나 생명주기가 사용될 때 개발자에게 경고하는 데 사용되었습니다.<br /><br />
+이제 `<StrictMode>`는 다음으로 가장 잘 알려져 있습니다.<br /><br />
+
+```javascript
+function App() {
+  useEffect(() => {
+    // StrictMode가 있는 개발 모드에서는 두 번, 프로덕션에서는 한 번 실행됨
+    console.log("Mounted");
+  }, []);
+  return <>{/* ... */}</>;
+}
+```
+<br /><br />
+왜 이런 변경이 있었을까요?<br /><br />
+간단한 대답은 React 팀이 메모리 누수와 버그를 피하기 위해 여러분이 컴포넌트에서 부수 효과를 정리하고 있는지 확인하고 싶었기 때문입니다.<br /><br />
+하지만 더 긴 대답은 그들이 컴포넌트 렌더링 동작을 **멱등성(idempotent)**있게 유지하고 싶었기 때문입니다.<br /><br />
+멱등성을 설명하기 위해, 비유를 사용한 다음 실제 내용으로 들어가 보겠습니다.<br /><br />
+공장 라인에서 일하고 있다고 상상해 보세요.<br /><br />
+여러분의 임무는 버튼을 눌러 컨베이어 벨트 위에 있는 슈트에서 빈 상자를 떨어뜨려 포장 기계로 옮기는 것입니다.<br /><br />
+하지만 상사가 경고했습니다.<br /><br />
+첫 번째 상자가 완전히 포장될 때까지 두 번째 버튼을 누르지 말라고요.<br /><br />
+만약 그렇게 하면, 두 번째 상자가 컨베이어 벨트를 막히게 할 것입니다.<br /><br />
+멱등성 있는 버튼은 다르게 작동할 것입니다.<br /><br />
+버튼을 몇 번 누르든 상관없이, 이전 상자가 기계를 통과한 후에만 상자가 공장 라인에 들어가도록 트리거할 것입니다.<br /><br />
+이 비유가 React 렌더링 및 `useEffect`와 무슨 관련이 있을까요.<br /><br />
+음, 멱등성이 없는 컴포넌트의 이러한 문제적 행동이 바로 `<StrictMode>`가 이 동작을 강제하도록 변경된 이유입니다.<br /><br />
+그리고 이것은 React 18 이후에 갑자기 추가된 아이디어가 아니었습니다; 멱등성은 React에게 너무나 중요해서, 페이스북 팀의 두 번째 React 발표에서 핵심 디자인 결정으로 언급되기도 했습니다.<br /><br />
+
+### 일관성을 위한 규칙 강제하기<br /><br />
+그렇다고 해서 자신만의 커스텀 훅을 만드는 것이 마음대로 할 수 있다는 의미는 아닙니다.<br /><br />
+모든 훅은 일관된 규칙을 따릅니다.<br /><br />
+훅이 커스텀이든 React에서 임포트한 것이든, 훅이 언제 도입되었든, `useState`로 시작했든 `useActionState` 훅으로 훨씬 나중에 도입되었든, 이 규칙들은 지켜져야 합니다.<br /><br />
+이러한 규칙들이 왜 제정되었는지 탐구해 봅시다.<br /><br />
+
+## VDOM의 잠재력을 최대한 활용하기<br /><br />
+지금까지의 이야기에서, 우리는 "React 18"과 그것이 가져온 변화까지 다루었습니다.<br /><br />
+하지만 앞으로 나아가기 전에, 우리는 뒤를 돌아봐야 합니다.<br /><br />
+2016년으로 시간을 되돌려 봅시다.<br /><br />
+ReactNext 2016에서 앤드류 클라크(Andrew Clark)는 "React의 다음은 무엇인가(What's Next for React)"라는 제목의 발표를 했습니다.<br /><br />
+그 안에서 그는 팀이 "Fiber"라는 실험을 진행해왔다고 공유합니다.<br /><br />
+앤드류의 경고에도 불구하고, 2017년 React 16의 출시와 함께 그것이 React의 새로운 안정적인 엔진으로 출시된 것을 볼 수 있습니다.<br /><br />
+Fiber가 가능하게 한 광범위한 아이디어는 React가 다음을 할 수 있게 했다는 것입니다.<br /><br />
+-   작업을 일시 중지하고 나중에 다시 시작할 수 있습니다.
+-   다른 유형의 작업에 우선순위를 할당할 수 있습니다.
+-   이전에 완료된 작업을 재사용할 수 있습니다.
+-   더 이상 필요하지 않은 경우 작업을 중단할 수 있습니다.
+
+이러한 능력들은 훅이 오늘날과 같은 한계 내에서 작동하도록 요구했지만, 수많은 기능을 열어주고 미래를 위한 무대를 마련했습니다.<br /><br />
+
+### 에러 핸들링 해결하기<br /><br />
+Fiber가 React 16 릴리스에서 가능하게 한 첫 번째 기능은 에러 핸들링이었습니다.<br /><br />
+VDOM의 특성상, 컴포넌트가 에러를 던질 때마다 전체 React 트리가 다운되었기 때문입니다.<br /><br />
+하지만 컴포넌트는 계층적으로 배치되어 있기 때문에, 잠재적으로 에러를 던질 수 있는 컴포넌트와 나머지 애플리케이션 상태 사이에 경계를 설정할 수 있습니다.<br /><br />
+에러 경계를 사용하면, 에러 이벤트는 가장 가까운 에러 경계까지만 버블링될 수 있습니다.<br /><br />
+이는 앱 자체가 다운되는 것을 보호합니다.<br /><br />
+
+### 번들 분할 해결하기<br /><br />
+하지만 에러 핸들링 업데이트만이 React 16.6에서 소개된 것은 아니었습니다; 여기서 React 팀은 우리에게 컴포넌트의 **지연 로딩(lazy loading)** 개념을 소개했습니다.<br /><br />
+
+```javascript
+import React, { lazy, Suspense } from "react";
+
+const LargeBundleComponent = lazy(() => import("./LargeBundleComponent"));
+
+function MyComponent() {
+  return <LargeBundleComponent />;
+}
+```
+<br /><br />
+지연 로딩 컴포넌트는 React가 임포트된 컴포넌트에만 관련된 번들된 코드를 트리 쉐이킹(tree-shake away)하여, 지연 래핑된 컴포넌트 코드가 컴포넌트가 렌더링될 때까지 브라우저로 임포트되지 않도록 합니다.<br /><br />
+
+### 로딩 상태 해결하기<br /><br />
+잠깐, 만약 컴포넌트가 네트워크를 통해 로드되고 있다면, 그것은 지연 시간이 있다는 것을 의미합니다.<br /><br />
+컴포넌트가 로드되는 동안 사용자는 무엇을 보게 될까요.<br /><br />
+이것이 바로 **Suspense 경계**가 등장하는 지점입니다.<br /><br />
+JSConf Iceland 2018에서 소개된 Suspense는 위에서 언급한 지연 컴포넌트와 같은 고지연 시나리오 동안 UI에서 로딩 상태를 처리할 수 있게 해주었습니다.<br /><br />
+
+```javascript
+import React, { lazy, Suspense } from "react";
+
+const LargeBundleComponent = lazy(() => import("./LargeBundleComponent"));
+
+function MyComponent() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LargeBundleComponent />
+    </Suspense>
+  );
+}
+```
+<br /><br />
+`ErrorBoundary` 컴포넌트 API가 위로 보내진 에러를 처리할 수 있었던 것처럼, `Suspense` 컴포넌트 API는 위로 보내진 로딩 메커니즘을 처리했습니다.<br /><br />
+
+## 동시성 탐구<br /><br />
+React의 Fiber 재작성은 여러 기능을 가능하게 했지만, React 18이 되어서야 우리는 새로운 렌더링 동작과 더 직접적으로 상호 작용할 수 있는 새로운 API들을 보게 되었습니다.<br /><br />
+이 새로운 API들은 "동시성 기능(concurrent features)"이라고 불렸으며, 다음 API들을 포함했습니다.<br /><br />
+`startTransition`을 살펴보고 그것이 어디로 우리를 이끄는지 봅시다.<br /><br />
+사용자 입력 텍스트를 미러링하고 싶은 큰 요소 목록이 있다고 가정해 봅시다.<br /><br />
+직관적으로, 우리는 제어된 입력 상태를 이 `SlowList` 요소에 전달할 수 있습니다.<br /><br />
+하지만 이렇게 하면, 사용자가 입력할 때 목록이 재렌더링되면서 입력 상자에 지연이 발생할 것입니다.<br /><br />
+이 문제를 해결하기 위해, 우리는 React에게 목록 업데이트를 입력 요소의 변경에 우선하여 지연시키도록 말할 방법이 필요했습니다.<br /><br />
+운 좋게도, 이것이 바로 Fiber가 가능하게 하도록 작성된 것입니다.<br /><br />
+우리는 `useTransition` API를 사용하여 이 문제를 해결하기 위해 Fiber와 상호 작용할 수 있습니다.<br /><br />
+
+```javascript
+const ConcurrentDemo = () => {
+  const [inputText, setInputText] = useState("");
+  const [filterTerm, setFilterTerm] = useState("");
+  const [isPending, startTransition] = useTransition();
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setInputText(value); // 긴급한 업데이트
+    startTransition(() => {
+      setFilterTerm(value); // 긴급하지 않은 업데이트
+    });
+  };
+  // ...
+};
+```
+<br /><br />
+이 변경은 이제 더 부드러운 텍스트 업데이트 경험을 제공합니다.<br /><br />
+
+## 큰 그림: 일급 데이터 페칭<br /><br />
+Fiber는 의심할 여지 없이 React의 미래에 큰 축복이었습니다.<br /><br />
+하지만 React 19 이전의 모든 것은 더 큰 무언가를 향해 나아가고 있는 것처럼 느껴졌습니다; React 팀이 그 모든 시간 동안 준비해 온 모든 경험을 활용할 어떤 방법 말이죠.<br /><br />
+제가 염두에 두고 있는 것은 **데이터 페칭**입니다.<br /><br />
+React 팀은 데이터 공유의 골칫거리를 피하기 위해 컴포넌트에서 "상태를 끌어올리라(lift state)"고 오랫동안 안내해 왔습니다.<br /><br />
+이 "끌어올려진 상태"가 바로 React 19에서 그들의 데이터 페칭 API가 결국 작동하는 방식입니다; 새로운 `use` API와 기존의 `Suspense` API를 사용해서요.<br /><br />
+
+```javascript
+function Child({ promise }) {
+  const data = use(promise);
+  return <p>{data}</p>;
+}
+
+function App() {
+  const promise = useMemo(() => fakeFetch(), []);
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <Child promise={promise} />
+    </Suspense>
+  );
+}
+```
+<br /><br />
+`use`의 내부 작동 방식을 잠시 살펴보겠습니다.<br /><br />
+`use`에 전달된 프라미스가 로딩을 마치지 않았다면, `use`는 예외를 던져 컴포넌트의 실행을 일시 중단합니다.<br /><br />
+프라미스가 마침내 해결되면, React는 컴포넌트의 렌더링을 다시 실행합니다.<br /><br />
+`use`가 오늘날과 같이 작동할 수 있는 것은 Fiber 재작성의 전제 조건인 능력들 없이는 불가능했을 것입니다.<br /><br />
+데이터 페칭을 기다리기 위해 노드의 서브트리를 "일시 중단"하는 능력은 Fiber의 첫날부터 명시된 목표와 거의 동일합니다.<br /><br />
+
+### React 접근 방식의 이점<br /><br />
+하지만 비공식적인 데이터 페칭 메커니즘은 React에 오랫동안 존재했습니다! `use`를 다르게 만드는 것은 무엇일까요.<br /><br />
+`use`는 최신 기술이지만, 두 가지 주요 이점이 있습니다.<br /><br />
+-   **페칭 로직을 끌어올리도록 강제하여,** 폭포수(waterfall) 데이터 페칭을 피하는 데 도움이 됩니다.
+-   **여러 로딩 상태를 통합하는 것을** 훨씬 더 사소하게 만듭니다.
+
+`useFetcher`를 사용하여 데이터 페칭을 끌어올릴 수도 있습니다.<br /><br />
+하지만 이제 로딩 상태가 `useFetcher` API의 구현에 더 밀접하게 묶여 있다는 새로운 문제가 발생합니다.<br /><br />
+`use` API를 사용하면, 사용자가 `Suspense` 컴포넌트 사용을 `use` API 위 어디로든 옮길 수 있게 하고 나머지는 React 자체가 처리하도록 함으로써 이 문제가 해결됩니다.<br /><br />
+
+### 오래된 것과 새로운 것의 결합: 에러 핸들링과 데이터 페칭<br /><br />
+종종 놓치는 것은 화면을 업데이트하는 것(React의 맥락에서는 "렌더링"이라고 불림) 자체가 부수 효과의 한 형태라는 것입니다.<br /><br />
+이것은 사실입니다! 사실, 우리가 이전에 사용했던 동일한 메커니즘(에러 경계 컴포넌트)이 데이터 페칭 에러에도 재사용될 수 있습니다.<br /><br />
+`ErrorBoundary` 컴포넌트는 `use` API에 전달된 모든 거부된 프라미스의 데이터를 잡아낼 것입니다.<br /><br />
+
+## 서버로의 "이동"<br /><br />
+서버 사이드 렌더링은 웹이 존재하는 한 계속되어 왔습니다.<br /><br />
+사실, React는 두 번째 공개 릴리스인 0.4 버전부터 서버 사이드 렌더링 기능을 갖추고 있었습니다.<br /><br />
+이를 감안할 때, React의 서버 지원조차도 React의 역사와 이전에 구축된 기능 세트에 깊이 뿌리박고 있음을 탐구해 봅시다.<br /><br />
+
+### "두 개의 컴퓨터" 문제 해결하기<br /><br />
+React의 0.4 릴리스부터 당시 실험적이었던 "React 서버 컴포넌트" 발표까지, React의 서버 사이드 렌더링은 한 가지 문제를 야기했습니다.<br /><br />
+React는 서버의 모든 컴포넌트를 클라이언트에 도달하면 다시 렌더링했습니다.<br /><br />
+Next가 2023년에 React 서버 컴포넌트를 채택하고 나서야(그리고 나중에 React 19에서 RSC가 안정화되면서) 이 문제에 대한 명확한 해결책을 갖게 되었습니다.<br /><br />
+RSC는 React가 클라이언트와 서버 코드에 대해 다른 실행 경로를 갖도록 했습니다.<br /><br />
+이 실행 경로는 클라이언트가 서버가 보낸 것에서 추가 작업이 필요하지 않은 노드에 대한 조정 과정을 지능적으로 건너뛸 수 있게 했습니다.<br /><br />
+이것이 작동하려면, React의 많은 구성 요소가 함께 모여야 했습니다.<br /><br />
+-   브라우저의 문서와 미러링된 표현을 표시하면서 런타임에 구애받지 않는 VDOM의 능력
+-   클라이언트와 서버 간의 의도하지 않은 동작을 피하기 위한 React의 멱등성 보장
+-   이미 완료된 노드에 대한 작업을 중단하는 Fiber의 능력
+-   VDOM 내에서 경계를 설정하는 능력; 에러, 로딩 상태, 또는 클라이언트/서버 구분에 대한 것이든
+
+### 서버 데이터 로드하기<br /><br />
+React 팀이 미묘한 기술적 이유로 클라이언트에서 `await` 사용을 궁극적으로 결정하지 않았지만, 백엔드에서 같은 것을 막을 것은 없습니다.<br /><br />
+따라서 서버 컴포넌트에서 데이터를 로드하는 데 필요한 것은 이것뿐입니다.<br /><br />
+
+```javascript
+async function UserProfile({ userId }) {
+  const data = await getUserFromDb(userId);
+  return <UserProfileClient data={data} />;
+}
+```
+<br /><br />
+컴포넌트에서 `await`를 사용할 수 있는 이 능력은 React의 과거 결정들에 의해서만 가능했습니다.<br /><br />
+
+### 서버로 데이터 보내기<br /><br />
+비동기 컴포넌트는 서버에서 클라이언트로 데이터가 가는 문제를 해결했지만, 한 방향으로만 해결했습니다.<br /><br />
+우리는 여전히 서버로 데이터를 보내는 방법이 필요했습니다; 이것은 "서버 액션(server actions)"의 형태로 나타났습니다.<br /><br />
+서버 액션을 정의하기 위해, 우리는 "use server" 지시문과 바닐라 HTML `<form>` 요소에 새로운 React `action` 속성을 결합했습니다.<br /><br />
+내부적으로, 이것은 브라우저 자체의 내장된 `action` API에 의존했습니다.<br /><br />
+
+### 양방향 서버 상태 처리하기<br /><br />
+서버에서 데이터를 보내고 받을 수 있게 된 것은 멋지지만, 이것은 새로운 문제를 야기합니다; 액션의 결과를 업데이트하기 위해 페이지를 강제로 새로 고치고 있습니다.<br /><br />
+그래서 우리는 React의 `useActionState` 훅을 사용하여 서버로부터 반응적인 값을 얻음으로써 이 문제를 해결합니다.<br /><br />
+
+## 기본 SSR을 넘어서<br /><br />
+React와 서버 사이에는 보여줄 다른 기능들이 많이 있지만, 대신 React의 핵심 일부가 아닌 기능, 즉 Next.js의 부분적 사전 렌더링(Partial Pre-rendering, PPR) API에 대해 이야기하고 싶습니다.<br /><br />
+Next.js의 PPR은 주어진 경로에서 정적 콘텐츠를 감지하고, 그 결과를 캐시한 다음, 후속 호출에서 동적 콘텐츠의 계산과 병렬로 전달합니다.<br /><br />
+제가 왜 React 전용 기사에서 Next 특정 기능에 대해 이야기하고 있을까요.<br /><br />
+음, 이것은 React가 클라이언트와 서버 경계를 표시하기로 한 결정이 처음부터 얼마나 잘 작동했는지를 증명하는 것입니다; 이 기능은 어떤 코드가 정적이고 어떤 코드가 동적인지에 대한 코드의 구분이 없었다면 작동하지 않았을 것입니다.<br /><br />
+
+## React의 미래<br /><br />
+이 기사가 발표될 때까지 안정적으로 출시된 모든 것을 다루었지만, React의 미래에 대해 이야기하고 싶은 것이 더 있습니다.<br /><br />
+
+### 화면 밖 상태를 VDOM에 보존하기<br /><br />
+아직 실험적이지만, `<Activity>` API는 VDOM에 기대어 다른 React API 없이는 어렵거나 불가능한 가치를 제공하는 또 다른 기능입니다.<br /><br />
+-   `<Activity>` 컴포넌트의 자식으로 상태가 있는 컴포넌트를 전달합니다.
+-   `<Activity>`의 `mode` 속성을 사용하여 'visible' 또는 'hidden'으로 표시합니다.
+-   React는 자식이 'hidden'일 때 관련 DOM 노드를 제거하면서 VDOM에 자식의 상태를 유지합니다.
+
+### 코드 자동 최적화<br /><br />
+아마도 여러분은 이미 알고 있을 것입니다; React는 메모이제이션 및 기타 기술을 사용하여 코드를 최적화하는 컴파일러를 갖게 됩니다.<br /><br />
+이 컴파일은 코드가 React 훅의 규칙을 엄격하게 따르고, `<StrictMode>`와 잘 작동하며, ESLint 규칙에 설명된 다른 React 규칙을 광범위하게 따르도록 요구합니다.<br /><br />
+React 컴파일러가 Facebook이 착수한 첫 번째 JavaScript 컴파일러 프로젝트는 아니었습니다.<br /><br />
+2017년만큼 오래전부터 Facebook은 "Prepack"이라는 일반화된 JavaScript 컴파일러 프로젝트를 진행하고 있었습니다.<br /><br />
+한 인터뷰에서 전 React 핵심 팀 멤버인 도미닉 개너웨이(Dominic Gannaway)는 React 컴파일러에 대한 조사의 역사가 훅보다 앞선다고 설명했습니다.<br /><br />
+네, 맞습니다.<br /><br />
+훅의 규칙은 당시의 코드를 위해서만 만들어진 것이 아니라, 현재의 React 컴파일러와 같은 기능을 가능하게 하기 위한 팀의 거대한 미래 생각이었습니다.<br /><br />
+
+## 결론<br /><br />
+수년에 걸친 React의 발전에 대해 배우면서, 명확한 패턴이 나타납니다.<br /><br />
+React의 이야기는 시간이 지남에 따라 여러 방식으로 성숙해 온 핵심 철학 위에 구축된 이야기입니다.<br /><br />
+React 팀의 행동은 새롭고 오래된 기능에 대한 변함없는 지원을 통해 실용적으로 적용된 장기적인 사고 과정을 나타낼 뿐만 아니라, React의 비전은 적어도 저에게는 그들이 라이브러리 사용에 대한 전체적인 관점을 항상 유지해 왔다는 것으로 보입니다.<br /><br />
+가상 DOM, 훅, 심지어 RSC에 대해 이야기하든, React가 이러한 이상을 고수해 왔다는 것은 분명합니다.<br /><br />
+다른 말로 하면, **어떤 React 기능도 진공 상태에서 존재하지 않습니다.**
+이러한 일관성과 개선에 대한 헌신이 바로 React 팀이 우리의 최선의 이익을 염두에 두고 있다는 것을 분명히 보여줍니다.<br /><br />
