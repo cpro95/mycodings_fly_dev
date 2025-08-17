@@ -41,17 +41,27 @@ async function compileMdxImpl<FrontmatterType extends Record<string, unknown>>({
       mdxOptions: (options) => ({
         remarkPlugins: [
           ...(options.remarkPlugins ?? []),
-          rehypeSlug,
-          [rehypeAutolinkHeadings, { behavior: "wrap" }],
-          remarkGfm,
+          remarkGfm, // remark 플러그인만 여기에 둡니다.
         ],
-        rehypePlugins: [...(options.rehypePlugins ?? []), rehypeHighlight],
+        rehypePlugins: [
+          ...(options.rehypePlugins ?? []),
+          rehypeSlug, // 👈 이쪽으로 이동
+          [rehypeAutolinkHeadings, { behavior: "wrap" }], // 👈 이쪽으로 이동
+          rehypeHighlight,
+        ],
       }),
     });
 
     return { code, frontmatter: frontmatter as FrontmatterType };
   } catch (e) {
-    throw new Error(`MDX Compilation failed for ${slug}`);
+    // 1. 터미널에 상세 에러를 즉시 출력해서 개발자가 바로 볼 수 있게 합니다.
+    console.error(`\n--- MDX Compilation Error for slug: "${slug}" ---`);
+    console.error(e);
+    console.error(`--- End of MDX Compilation Error ---\n`);
+
+    // 2. 원본 에러를 포함하여 새로운 에러를 던져서,
+    //    스택 트레이스나 다른 에러 처리 시스템에서도 원인을 놓치지 않게 합니다.
+    throw new Error(`MDX Compilation failed for ${slug}`, { cause: e });
   }
 }
 
