@@ -41,9 +41,11 @@ Git의 내부를 이해하기 위해 가장 먼저 알아야 할 개념이 바�
 자, 그럼 `git init`으로 새로운 저장소를 만들고, 파일 하나를 추가하는 것부터 시작해 보죠.<br /><br />
 ```bash
 $ echo "Hello, World" > hello.txt
+```
 
 이 파일을 Git이 어떻게 인식하는지 `git hash-object`라는 명령어로 확인해 볼 수 있는데요.<br /><br />
 이 명령어는 파일 내용을 해시값으로 바꿔주는 역할을 합니다.<br /><br />
+
 ```bash
 $ git hash-object -w hello.txt
 3fa0d4b98289a95a7cd3a45c9545e622718f8d2b
