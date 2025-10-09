@@ -1,23 +1,25 @@
-# fly.toml app configuration file generated for hugo-doks-project on 2025-10-09T23:26:40+09:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
+# fly.toml configuration file for mycodings
+# This is an optimized configuration for a static Hugo site served with Caddy.
 
-app = 'hugo-doks-project'
-primary_region = 'nrt'
+app = 'mycodings'
+primary_region = 'nrt' # 예: 도쿄. 'icn'(인천) 등 가까운 리전으로 설정 가능
 
+# [build] 섹션은 비워두거나 삭제합니다.
+# 프로젝트에 Dockerfile이 있으면 Fly.io가 자동으로 이를 사용합니다.
 [build]
 
+# Caddy가 8080 포트를 사용하도록 환경 변수를 설정합니다.
 [env]
   PORT = '8080'
 
+# 최신 형식의 HTTP 서비스 정의입니다. 훨씬 간결하고 명확합니다.
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = 'stop'
-  auto_start_machines = true
-  min_machines_running = 0
-  processes = ['app']
+  auto_stop_machines = stop  # 트래픽이 없으면 머신을 자동으로 정지시켜 비용 절약
+  auto_start_machines = true # 트래픽이 발생하면 머신을 자동으로 시작
+  min_machines_running = 0   # auto_stop을 위해 0으로 설정
 
+# VM(머신) 사양 정의
 [[vm]]
-  size = 'shared-cpu-1x'
+  size = 'shared-cpu-1x' # 256MB 메모리를 포함하며 가장 저렴한 옵션
