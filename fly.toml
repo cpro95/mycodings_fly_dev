@@ -16,7 +16,7 @@ primary_region = 'nrt' # 예: 도쿄. 'icn'(인천) 등 가까운 리전으로 �
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = stop  # 트래픽이 없으면 머신을 자동으로 정지시켜 비용 절약
+  auto_stop_machines = 'stop'  # 트래픽이 없으면 머신을 자동으로 정지시켜 비용 절약
   auto_start_machines = true # 트래픽이 발생하면 머신을 자동으로 시작
   min_machines_running = 0   # auto_stop을 위해 0으로 설정
 
