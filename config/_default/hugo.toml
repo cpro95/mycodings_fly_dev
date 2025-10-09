@@ -1,6 +1,6 @@
 # params for main homepage
 title = "Home"
-baseURL = "https://hugo-doks-project.fly.dev"
+baseURL = "https://mycodings.fly.dev"
 disableAliases = true
 disableHugoGeneratorInject = true
 # disableKinds = ["taxonomy", "term"]
@@ -22,7 +22,7 @@ copyRight = "Copyright (c) All Right Reserved."
 
 [environments]
   [environments.production]
-    baseURL = 'https://hugo-doks-project.fly.dev/'
+    baseURL = 'https://mycodings.fly.dev/'
 
 [build.buildStats]
   enable = true
