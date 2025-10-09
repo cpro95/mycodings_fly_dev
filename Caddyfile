@@ -1,0 +1,12 @@
+# fly.toml의 internal_port와 일치하는 8080 포트에서 수신 대기합니다.
+:8080
+
+# 웹 사이트의 루트 디렉터리를 /srv로 지정합니다.
+# Dockerfile에서 Hugo 빌드 결과물을 /srv로 복사했습니다.
+root * /srv
+
+# 콘텐츠를 압축하여 전송 속도를 높입니다. (gzip, zstd)
+# encode gzip zstd
+
+# 정적 파일 서버를 활성화합니다.
+file_server

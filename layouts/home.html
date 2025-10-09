@@ -1,0 +1,70 @@
+{{ define "main" }}
+<section class="section container-fluid mt-n3 pb-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-12 text-center mb-5">
+      <!-- kakaoweb_가로_수평형_디스플레이_광고 -->
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-7748316956330968"
+          data-ad-slot="2971373181"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    <div class="col-lg-12 text-center">
+      <h1>{{ .Title }}</h1>
+    </div>
+    <div class="col-lg-9 col-xl-8 text-center">
+      <p class="lead">{{ .Params.lead | safeHTML }}</p>
+      <a class="btn btn-primary btn-cta rounded-pill btn-lg my-3" href="/blog" role="button">블로그 바로가기</a>
+      {{ .Content }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{ define "sidebar-prefooter" }}
+  {{ if site.Params.doks.backgroundDots -}}
+  <div class="d-flex justify-content-start">
+    <div class="bg-dots"></div>
+  </div>
+  {{ end -}}
+
+  {{/* 최근 Blog Posts 5개 */}}
+  {{ $recentPosts := first 5 (where .Site.RegularPages "Section" "blog") }}
+  {{ if $recentPosts }}
+  <section class="section section-lg section-features">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <h2 class="h2 text-left mb-4">Recent Posts</h2>
+          <ul class="list-unstyled">
+            {{ range $recentPosts }}
+            <li class="mb-3 pb-3 border-bottom">
+              <h3 class="h5 mb-2">
+                <a href="{{ .RelPermalink }}" class="text-body">{{ .Title }}</a>
+              </h3>
+              <p class="text-muted mb-1">{{ .Params.summary | default .Summary | plainify | truncate 120 }}</p>
+              <small class="text-muted">{{ .Date.Format "2006년 1월 2일" }}</small>
+            </li>
+            {{ end }}
+          </ul>
+          <!-- 멀티플렉스_광고 -->
+          <ins class="adsbygoogle"
+              style="display:block"
+              data-ad-format="autorelaxed"
+              data-ad-client="ca-pub-7748316956330968"
+              data-ad-slot="4495825428"></ins>
+          <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  {{ end }}
+{{ end }}

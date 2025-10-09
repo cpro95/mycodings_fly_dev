@@ -1,0 +1,40 @@
+{{- $url := .Destination -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+
+{{/* 외부 URL 체크 */}}
+{{- if or (hasPrefix $url "http://") (hasPrefix $url "https://") -}}
+
+  {{/* 외부 이미지는 그대로 출력 */}}
+  <figure>
+    <img src="{{ $url }}"
+         alt="{{ $alt }}"
+         {{ with $title }}title="{{ . }}"{{ end }}
+         class="img-fluid"
+         loading="lazy"
+         decoding="async" />
+    {{ with $alt }}<figcaption>{{ . }}</figcaption>{{ end }}
+  </figure>
+
+{{- else -}}
+
+  {{/* 로컬 이미지 - Page Resources에서 찾기 */}}
+  {{- $image := .Page.Resources.GetMatch $url -}}
+
+  {{- if $image -}}
+    {{/* 이미지를 찾았으면 Doks partial 사용 */}}
+    {{ partial "img" (dict
+      "page" .Page
+      "src" $image
+      "alt" $alt
+      "class" "img-fluid"
+      "loading" "lazy"
+    )}}
+  {{- else -}}
+    {{/* 못 찾았으면 기본 img 태그 */}}
+    <img src="{{ $url | relURL }}"
+         alt="{{ $alt }}"
+         {{ with $title }}title="{{ . }}"{{ end }} />
+  {{- end -}}
+
+{{- end -}}
