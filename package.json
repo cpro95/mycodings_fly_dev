@@ -14,7 +14,8 @@
     "dev": "hugo server --disableFastRender --noHTTPCache",
     "format": "prettier **/** -w -c",
     "build": "hugo --minify --gc",
-    "preview": "vite preview --outDir public"
+    "preview": "vite preview --outDir public",
+    "new:life": "node new-life.mjs"
   },
   "dependencies": {
     "@tabler/icons": "^3.34.1",
@@ -27,6 +28,8 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.5",
+    "inquirer": "^12.9.6",
+    "lodash.kebabcase": "^4.1.1",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
     "vite": "^7.0.6"
