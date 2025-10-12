@@ -1,10 +1,9 @@
 import fs from "fs-extra";
 import path from "path";
 import inquirer from "inquirer";
-import slugify from "lodash.kebabcase";
 
 async function go() {
-  console.log("\nLet's create a new blog 💿\n");
+  console.log("\nLet's create a new life contents 💿\n");
 
   const blogsPath = path.resolve(process.cwd(), "content", "blog");
 
@@ -14,114 +13,91 @@ async function go() {
 
   const blogs = fs
     .readdirSync(blogsPath)
-    .map((blog) => blog.replace(/(\.mdx?)?$/, ""));
+    .map((blog) => blog.replace(/\.md$/, ""));
 
-  const title = (
-    await inquirer.prompt<{ name: string }>([
-      {
-        type: "input",
-        name: "name",
-        message: "What is the title of the blog?",
-        validate: (input) => {
-          if (!input) {
-            return "Enter a valid name for the blog.";
-          }
-          const slug = slugify(input);
-          if (blogs.includes(slug)) {
-            return `Blog named ${input} alread exist, enter another blog name.`;
-          }
-          return true;
-        },
-      },
-    ])
-  ).name;
-
-  const slug = slugify(title);
-
-  const { keywords, description, published, folder } = await inquirer.prompt<{
-    description: string;
-    published: boolean;
-    folder: string;
-    keywords: string;
-  }>([
+  const { slug, title, summary, tags, draft } = await inquirer.prompt([
     {
       type: "input",
-      name: "keywords",
-      message: "Enter the blog keywords (comma separated)",
-      filter: (input: string) => input.trim(),
-      validate: (input: string) => {
-        if (input.trim().length === 0) {
-          return "Enter a keyword";
+      name: "slug",
+      message: "What is the slug for the blog?",
+      validate: (input) => {
+        if (!input) {
+          return "Enter a valid slug for the blog.";
+        }
+        if (blogs.includes(input)) {
+          return `Blog with slug "${input}" already exists, enter another slug.`;
         }
         return true;
       },
     },
     {
       type: "input",
-      name: "description",
-      message: "Enter the blog description",
-      filter: (input: string) => input.trim(),
-      validate: (input: string) => {
+      name: "title",
+      message: "What is the title of the blog?",
+      validate: (input) => {
+        if (!input) {
+          return "Enter a valid title for the blog.";
+        }
+        return true;
+      },
+    },
+    {
+      type: "input",
+      name: "summary",
+      message: "Enter the blog summary",
+      filter: (input) => input.trim(),
+      validate: (input) => {
         if (input.trim().length === 0) {
-          return "Enter a description for the blog";
+          return "Enter a summary for the blog";
+        }
+        return true;
+      },
+    },
+    {
+      type: "input",
+      name: "tags",
+      message: "Enter the blog tags (comma separated)",
+      filter: (input) => input.trim(),
+      validate: (input) => {
+        if (input.trim().length === 0) {
+          return "Enter a tag";
         }
         return true;
       },
     },
     {
       type: "list",
-      name: "published",
+      name: "draft",
       message: "Is the blog ready to be published?",
       choices: [
-        { name: "Publish", value: true },
-        { name: "Draft", value: false },
-      ],
-    },
-    {
-      type: "list",
-      name: "folder",
-      message: "Will the MDX contain any custom components?",
-      choices: [
-        { name: "No", value: false },
-        { name: "Yes", value: true },
+        { name: "Publish", value: false },
+        { name: "Draft", value: true },
       ],
     },
   ]);
 
   const data = `---
 slug: ${slug}
-title: ${title}
+title: "${title}"
+summary: "${summary}"
 date: ${new Date().toISOString()}
-description: ${description}
-meta:
-  keywords:
-${keywords
-  .split(/, ?/)
-  .map((keyword) => `    - ${keyword}`)
-  .join("\n")}
-published: ${published}
+draft: ${draft}
+weight: 50
+tags: [${tags
+    .split(/, ?/)
+    .map((tag) => `"${tag.trim()}"`)
+    .join(", ")}]
+contributors: []
 ---
 
-# ${title}
 `;
 
-  let relativePath = "";
-
-  if (folder) {
-    let filePath = path.resolve(blogsPath, slug);
-    fs.mkdirSync(filePath);
-
-    filePath = path.resolve(filePath, "index.mdx");
-    relativePath = path.relative(process.cwd(), filePath);
-    fs.writeFileSync(filePath, data);
-  } else {
-    const filePath = path.resolve(blogsPath, `${slug}.mdx`);
-    relativePath = path.relative(process.cwd(), filePath);
-    fs.writeFileSync(filePath, data);
-  }
+  const filePath = path.resolve(blogsPath, `${slug}.md`);
+  const relativePath = path.relative(process.cwd(), filePath);
+  fs.writeFileSync(filePath, data);
 
   console.log(
-    `\nBlog created 🚀\n\`cd\` into ${relativePath}\nOpen it in you favorite text editor, and get started!\n`
+    `\nBlog created 🚀\n\`cd\` into ${relativePath}\nOpen it in your favorite text editor, and get started!\n`
   );
 }
 

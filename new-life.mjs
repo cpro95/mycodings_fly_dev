@@ -1,7 +1,6 @@
 import fs from "fs-extra";
 import path from "path";
 import inquirer from "inquirer";
-import slugify from "lodash.kebabcase";
 
 async function go() {
   console.log("\nLet's create a new life contents 💿\n");

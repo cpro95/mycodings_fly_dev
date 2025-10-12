@@ -1,12 +1,12 @@
 {
-  "name": "mycodings-project",
+  "name": "mycodings_fly_dev",
   "version": "1.8.0",
-  "description": "Doks theme",
-  "author": "Thulite",
+  "description": "Hugo with Doks theme",
+  "author": "cpro95",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thuliteio/doks.git"
+    "url": "https://github.com/cpro95/mycodings_fly_dev.git"
   },
   "scripts": {
     "create": "hugo new",
@@ -15,7 +15,8 @@
     "format": "prettier **/** -w -c",
     "build": "hugo --minify --gc",
     "preview": "vite preview --outDir public",
-    "new:life": "node new-life.mjs"
+    "new:life": "node new-life.mjs",
+    "new:blog": "node new-blog.mjs"
   },
   "dependencies": {
     "@tabler/icons": "^3.34.1",
@@ -29,7 +30,6 @@
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.5",
     "inquirer": "^12.9.6",
-    "lodash.kebabcase": "^4.1.1",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
     "vite": "^7.0.6"
