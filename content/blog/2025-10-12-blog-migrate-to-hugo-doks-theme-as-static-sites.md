@@ -33,7 +33,7 @@ AstroJS는 빌드 시간이 너무 길게 걸립니다.
 
 Hugo 테마사이트에서 찾은게 바로 Doks Theme입니다.
 
-![Doks_Theme](https://themes.gohugo.io/themes/doks/screenshot_hu_dfafb18f83661ab.webp)
+![](https://themes.gohugo.io/themes/doks/screenshot_hu_dfafb18f83661ab.webp)
 
 [Doks Theme](https://github.com/thuliteio/doks)
 
@@ -342,13 +342,105 @@ echo "✅ 배포가 완료되었습니다!"
 
 위와 같이 최종적으로 fly deploy 명령어를 사용하면 fly.io가 Dockerfile을 만들고 가상머신을 만들어주는데요.
 
+## 실제 업로드
+
+그러면 실제 업로드를 진행해 보겠습니다.
+
+위에서 만든 deploy.sh를 실행하면 되는데요.
+
+실제 Fly.io 업로드 로그는 아래와 같은데요.
+
+```sh
+➜  mycodings_fly_dev git:(main) ./deploy.sh
+🚀 배포 프로세스를 시작합니다...
+📦 기존 배포본 자료를 삭제합니다: npm run clean
+
+> mycodings_fly_dev@1.8.0 clean
+> rimraf public
+
+📦 로컬에서 정적 사이트를 빌드합니다: npm run build
+
+> mycodings_fly_dev@1.8.0 build
+> hugo --minify --gc
+
+Start building sites …
+hugo v0.150.1+extended+withdeploy darwin/arm64 BuildDate=2025-09-25T10:26:04Z VendorInfo=brew
+
+
+                  │  EN
+─────────┼───
+ Pages            │ 3431
+ Paginator pages  │  503
+ Non-page files   │    0
+ Static files     │   23
+ Processed images │    0
+ Aliases          │ 1464
+ Cleaned          │    2
+
+Total in 4401 ms
+✈️ Fly.io로 배포를 시작합니다...
+==> Verifying app config
+Validating /Users/****/projects/mycodings_fly_dev/fly.toml
+✓ Configuration is valid
+--> Verified app config
+==> Building image
+==> Building image with Depot
+--> build:  (​)
+[+] Building 17.9s (8/8) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                                       0.8s
+ => => transferring dockerfile: 405B                                                                                                                       0.8s
+ => [internal] load metadata for docker.io/library/caddy:alpine                                                                                            1.4s
+ => [internal] load .dockerignore                                                                                                                          0.8s
+ => => transferring context: 92B                                                                                                                           0.8s
+ => [1/3] FROM docker.io/library/caddy:alpine@sha256:953131cfea8e12bfe1c631a36308e9660e4389f0c3dfb3be957044d3ac92d446                                      0.0s
+ => => resolve docker.io/library/caddy:alpine@sha256:953131cfea8e12bfe1c631a36308e9660e4389f0c3dfb3be957044d3ac92d446                                      0.0s
+ => [internal] load build context                                                                                                                          8.8s
+ => => transferring context: 61.69MB                                                                                                                       8.6s
+ => CACHED [2/3] COPY Caddyfile /etc/caddy/Caddyfile                                                                                                       0.0s
+ => [3/3] COPY public /srv                                                                                                                                 2.1s
+ => exporting to image                                                                                                                                     3.7s
+ => => exporting layers                                                                                                                                    1.5s
+ => => exporting manifest sha256:b5849d6008d393def894acbcf65a3557e0504c879a                                                          0.0s
+ => => exporting config sha256:549f774c6bae8105a641af520845bcb4e999014679d1473a                                                            0.0s
+ => => pushing layers for registry.fly.io/mycodings:deployment-01K7B7V66PVHRA76317DTEGDNB@sha256:b5849d0850302f  2.2s
+ => => pushing layer sha256:549f774c6bae8105a641af520814679d1473a                                                               2.1s
+ => => pushing layer sha256:bd819b1e29132d38fa822399eff50944cb4                                                               2.2s
+ => => pushing layer sha256:bb6d2f38004e28cf94282f1dbea47cf7630d                                                               1.3s
+ => => pushing layer sha256:364c7e43a1b55d570e324b0d711993a247                                                               2.0s
+ => => pushing layer sha256:7f209fb6279b7cb0e0d5388437a10eee2c4f2d9                                                               2.0s
+ => => pushing layer sha256:88d712088c8f7be3b1cb3ee589bb0a9812fa1                                                               0.3s
+ => => pushing layer sha256:5e3bcdac2ab3718a3c3d94968670b70f1c1                                                               2.0s
+ => => pushing layer sha256:2c1ce468d9f3d05430fe644cd3537713d27f                                                               2.0s
+ => => pushing manifest for registry.fly.io/mycodings:deployment-01K7B7V66PVHRA76317DTEGDNB@sha256:b5849d6a0a085030  0.0s
+--> Build Summary:  (​)
+--> Building image done
+image: registry.fly.io/mycodings:deployment-01K7B7V67DTEGDNB
+image size: 24 MB
+
+Watch your deployment at https://fly.io/apps/mycodings/monitoring
+
+-------
+Updating existing machines in 'mycodings' with rolling strategy
+
+-------
+ ✔ [1/2] Cleared lease for 28607298
+ ✔ [2/2] Cleared lease for 3d3e2148
+-------
+Checking DNS configuration for mycodings.fly.dev
+
+Visit your newly deployed app at https://mycodings.fly.dev/
+✅ 배포가 완료되었습니다!
+```
+
 도커 파일 이미지도 아주 작고 사이트도 아래와 같이 잘 작동됩니다.
+
+잘 보시면 캐디 이미지 사이즈가 24MB 밖에 안됩니다.
 
 기존 React Router V7 을 이용한 풀스택 사이트보다 리소스를 덜 차지하게 되니까 빠르고 보기 좋았습니다.
 
 아래는 사이트 스크린샷입니다.
 
-![home_page_screenshot](https://blogger.googleusercontent.com/img/a/AVvXsEjMI9Yjx_bz2HPFA7oE4oi7nCneE6rcdrjBdjpprQg0KRvInB__sL637sDgpcGR99BvlPJO6HjBZRgpfzpsJ4yw4VINxgsKNWEJKHirvJ4DUNiIHp7gUDZV8k5_XhllUHUXx1ShupidxyBx_QK8-YPF7KDsA99pJkACV4zPxHtmdmPblHXCjeJ8k5scMmc=s16000)
+![](https://blogger.googleusercontent.com/img/a/AVvXsEjMI9Yjx_bz2HPFA7oE4oi7nCneE6rcdrjBdjpprQg0KRvInB__sL637sDgpcGR99BvlPJO6HjBZRgpfzpsJ4yw4VINxgsKNWEJKHirvJ4DUNiIHp7gUDZV8k5_XhllUHUXx1ShupidxyBx_QK8-YPF7KDsA99pJkACV4zPxHtmdmPblHXCjeJ8k5scMmc=s16000)
 
 기존 구글 애널리틱스와 구글 애드센스까지 완벽하게 옮겨 심어서 사이트는 예전과 똑같이 작동하고 있습니다.
 
