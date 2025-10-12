@@ -17,7 +17,7 @@
     "preview": "vite preview --outDir public",
     "new:life": "node new-life.mjs",
     "new:blog": "node new-blog.mjs",
-    "deploy": "deploy.sh"
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
     "@tabler/icons": "^3.34.1",
