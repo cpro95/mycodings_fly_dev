@@ -28,17 +28,16 @@ RSC를 이용하면 마치 모든 코드가 한 곳에서 실행되는 것처럼
 
 ** 목 차 **
 
-- [RSC(리액트 서버 컴포넌트) 동작 원리부터 성능 최적화까지](#rsc리액트-서버-컴포넌트-동작-원리부터-성능-최적화까지)
-  - [DOM과 클라이언트 렌더링](#dom과-클라이언트-렌더링)
-  - [트리 재조정(Reconciliation)](#트리-재조정reconciliation)
-  - ["Virtual DOM"이라는 용어가 적절할까요?](#virtual-dom이라는-용어가-적절할까요)
-  - [DOM과 서버 렌더링](#dom과-서버-렌더링)
-  - [Flight(직렬화 형식)](#flight직렬화-형식)
-    - [Isomorphic Components (동형 컴포넌트)](#isomorphic-components-동형-컴포넌트)
-  - [메타 프레임워크와 서버 렌더링](#메타-프레임워크와-서버-렌더링)
-  - [스트림, Suspense, 그리고 RSCs](#스트림-suspense-그리고-rscs)
-  - [React에 페이로드 제공하기](#react에-페이로드-제공하기)
-  - [순서가 뒤바뀐 스트리밍(Out-of-Order Streaming)](#순서가-뒤바뀐-스트리밍out-of-order-streaming)
+- [DOM과 클라이언트 렌더링](#dom과-클라이언트-렌더링)
+- [트리 재조정(Reconciliation)](#트리-재조정reconciliation)
+- ["Virtual DOM"이라는 용어가 적절할까요?](#virtual-dom이라는-용어가-적절할까요)
+- [DOM과 서버 렌더링](#dom과-서버-렌더링)
+- [Flight(직렬화 형식)](#flight직렬화-형식)
+  - [Isomorphic Components (동형 컴포넌트)](#isomorphic-components-동형-컴포넌트)
+- [메타 프레임워크와 서버 렌더링](#메타-프레임워크와-서버-렌더링)
+- [스트림, Suspense, 그리고 RSCs](#스트림-suspense-그리고-rscs)
+- [React에 페이로드 제공하기](#react에-페이로드-제공하기)
+- [순서가 뒤바뀐 스트리밍(Out-of-Order Streaming)](#순서가-뒤바뀐-스트리밍out-of-order-streaming)
 
 ---
 
@@ -437,7 +436,7 @@ async function delay(ms) {
 
 export default async function DelayedMessage() {
     await delay(5000); // 5초 지연
-    
+
     return (
         <p>This message was loaded after a 5 second delay!</p>
     );
@@ -701,5 +700,3 @@ $RC("B:0", "S:0")
 답변은 RSC 이야기에서 숨겨진 영웅인 번들러를 소개합니다.
 
 다음 시간에 계속 이어서 알아보겠습니다.
-
----

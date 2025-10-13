@@ -8,22 +8,29 @@ contributors: []
 draft: false
 ---
 
-저희 회사의 웹사이트는 GitHub Pages에 호스팅되는, '정적으로 내보낸(statically exported)' Next.js 앱입니다.<br /><br />
-저희는 여전히 Pull Request를 만들고 코드를 리뷰하는 개발 문화를 가지고 있지만, Vercel이나 Netlify를 사용할 때처럼 편리한 '미리보기 배포' 기능의 이점을 누릴 수는 없었습니다.<br /><br />
-하지만 Pull Request를 머지하기 전에 웹사이트가 어떻게 보일지 시각적으로 확인하고 싶은 욕구는 여전했죠.<br /><br />
-그래서 저는 웹사이트의 스크린샷을 찍는 GitHub Actions 워크플로우를 추가했습니다.<br /><br />
-이것은 모든 Pull Request마다 실행되는 간단한 워크플로우입니다.<br /><br />
+저희 회사의 웹사이트는 GitHub Pages에 호스팅되는, '정적으로 내보낸(statically exported)' Next.js 앱입니다.
 
-## 해결책의 핵심: 스크린샷 스크립트<br />
+저희는 여전히 Pull Request를 만들고 코드를 리뷰하는 개발 문화를 가지고 있지만, Vercel이나 Netlify를 사용할 때처럼 편리한 '미리보기 배포' 기능의 이점을 누릴 수는 없었습니다.
 
-가장 먼저 필요한 것은 Next.js 앱이 빌드된 후에 모든 페이지를 찾아내고, 'Puppeteer'를 사용해 각 페이지의 스크린샷을 찍는 스크립트입니다.<br /><br />
-Puppeteer는 헤드리스(headless) Chrome 브라우저를 제어할 수 있게 해주는 Node.js 라이브러리입니다.<br /><br />
-마치 로봇이 우리 대신 브라우저를 열고 웹사이트를 방문하여 사진을 찍어주는 것과 같죠.<br /><br />
+하지만 Pull Request를 머지하기 전에 웹사이트가 어떻게 보일지 시각적으로 확인하고 싶은 욕구는 여전했죠.
 
-### 'take-screenshots.js' 파일 분석<br />
+그래서 저는 웹사이트의 스크린샷을 찍는 GitHub Actions 워크플로우를 추가했습니다.
 
-아래는 전체 스크립트입니다.<br /><br />
-이 코드를 프로젝트의 `.github/scripts/take-screenshots.js` 경로에 저장하세요.<br /><br />
+이것은 모든 Pull Request마다 실행되는 간단한 워크플로우입니다.
+
+## 해결책의 핵심: 스크린샷 스크립트
+
+가장 먼저 필요한 것은 Next.js 앱이 빌드된 후에 모든 페이지를 찾아내고, 'Puppeteer'를 사용해 각 페이지의 스크린샷을 찍는 스크립트입니다.
+
+Puppeteer는 헤드리스(headless) Chrome 브라우저를 제어할 수 있게 해주는 Node.js 라이브러리입니다.
+
+마치 로봇이 우리 대신 브라우저를 열고 웹사이트를 방문하여 사진을 찍어주는 것과 같죠.
+
+### 'take-screenshots.js' 파일 분석
+
+아래는 전체 스크립트입니다.
+
+이 코드를 프로젝트의 `.github/scripts/take-screenshots.js` 경로에 저장하세요.
 
 ```javascript
 // .github/scripts/take-screenshots.js
@@ -198,10 +205,13 @@ async function forceImagesLoad(page) {
 })();
 ```
 
-이 스크립트에서 특히 주목할 만한 부분은 'autoScroll'과 'forceImagesLoad' 함수입니다.<br /><br />
-요즘 웹사이트는 성능을 위해 사용자가 스크롤해야만 보이는 이미지를 나중에 로드('지연 로딩, lazy loading')하는 경우가 많습니다.<br /><br />
-Puppeteer는 페이지가 열리자마자 바로 스크린샷을 찍기 때문에, 이 함수들이 없다면 스크린샷의 많은 이미지들이 보이지 않거나 깨져서 나올 것입니다.<br /><br />
-또한, 'Framer Motion' 같은 라이브러리로 애니메이션을 사용한다면, 스크립트에서처럼 애니메이션을 비활성화하거나, 컴포넌트 자체에서 뷰포트 설정을 조정해 주는 것이 좋습니다.<br /><br />
+이 스크립트에서 특히 주목할 만한 부분은 'autoScroll'과 'forceImagesLoad' 함수입니다.
+
+요즘 웹사이트는 성능을 위해 사용자가 스크롤해야만 보이는 이미지를 나중에 로드('지연 로딩, lazy loading')하는 경우가 많습니다.
+
+Puppeteer는 페이지가 열리자마자 바로 스크린샷을 찍기 때문에, 이 함수들이 없다면 스크린샷의 많은 이미지들이 보이지 않거나 깨져서 나올 것입니다.
+
+또한, 'Framer Motion' 같은 라이브러리로 애니메이션을 사용한다면, 스크립트에서처럼 애니메이션을 비활성화하거나, 컴포넌트 자체에서 뷰포트 설정을 조정해 주는 것이 좋습니다.
 
 ```jsx
 <motion.div
@@ -213,10 +223,11 @@ Puppeteer는 페이지가 열리자마자 바로 스크린샷을 찍기 때문�
 </motion.div>
 ```
 
-## 워크플로우: 모든 것을 하나로 묶기<br />
+## 워크플로우: 모든 것을 하나로 묶기
 
-이제 이 스크립트를 실행할 GitHub Actions 워크플로우를 설정할 차례입니다.<br /><br />
-프로젝트 루트의 `.github/workflows/pr.yml` 경로에 아래 코드를 작성하세요.<br /><br />
+이제 이 스크립트를 실행할 GitHub Actions 워크플로우를 설정할 차례입니다.
+
+프로젝트 루트의 `.github/workflows/pr.yml` 경로에 아래 코드를 작성하세요.
 
 ```yaml
 # .github/workflows/pr.yml
@@ -269,18 +280,28 @@ jobs:
           path: screenshots/
 ```
 
-이 워크플로우의 핵심은 'Start static server and take screenshots' 단계입니다.<br /><br />
--   `npx serve out -p 3000 &`: Next.js가 빌드한 정적 파일이 있는 `out` 폴더를 3000번 포트로 서빙하는 웹 서버를 실행합니다.<br /><br />
-    뒤에 붙은 `&`는 이 명령을 백그라운드에서 실행하라는 의미입니다.<br /><br />
--   `sleep 10`: 서버가 완전히 시작될 때까지 10초간 기다립니다.<br /><br />
--   `node ...`: 우리가 만든 스크린샷 스크립트를 실행합니다.<br /><br />
--   `kill ...`: 스크립트 실행이 끝나면, 백그라운드에서 돌고 있던 서버 프로세스를 찾아 종료시킵니다.<br /><br />
--   `actions/upload-artifact`: 마지막으로, 생성된 `screenshots` 폴더를 '아티팩트(artifact)'로 업로드합니다.<br /><br />
+이 워크플로우의 핵심은 'Start static server and take screenshots' 단계입니다.
 
-## 결과 확인하기<br />
+-   `npx serve out -p 3000 &`: Next.js가 빌드한 정적 파일이 있는 `out` 폴더를 3000번 포트로 서빙하는 웹 서버를 실행합니다.
 
-이제 `main` 브랜치로 Pull Request를 생성하면, 이 워크플로우가 자동으로 실행됩니다.<br /><br />
-작업이 완료된 후, 해당 PR의 GitHub Actions 실행 결과 페이지로 가보세요.<br /><br />
-'Artifacts' 섹션에 'preview-screenshots'라는 이름으로 업로드된 zip 파일을 찾을 수 있을 것입니다.<br /><br />
-이 파일을 다운로드하여 압축을 풀면, 변경 사항이 적용된 웹사이트의 모든 페이지 스크린샷을 직접 눈으로 확인할 수 있습니다.<br /><br />
-이제 더 이상 코드만 보고 UI 변경을 상상하지 않아도 됩니다.<br /><br />
+    뒤에 붙은 `&`는 이 명령을 백그라운드에서 실행하라는 의미입니다.
+
+-   `sleep 10`: 서버가 완전히 시작될 때까지 10초간 기다립니다.
+
+-   `node ...`: 우리가 만든 스크린샷 스크립트를 실행합니다.
+
+-   `kill ...`: 스크립트 실행이 끝나면, 백그라운드에서 돌고 있던 서버 프로세스를 찾아 종료시킵니다.
+
+-   `actions/upload-artifact`: 마지막으로, 생성된 `screenshots` 폴더를 '아티팩트(artifact)'로 업로드합니다.
+
+## 결과 확인하기
+
+이제 `main` 브랜치로 Pull Request를 생성하면, 이 워크플로우가 자동으로 실행됩니다.
+
+작업이 완료된 후, 해당 PR의 GitHub Actions 실행 결과 페이지로 가보세요.
+
+'Artifacts' 섹션에 'preview-screenshots'라는 이름으로 업로드된 zip 파일을 찾을 수 있을 것입니다.
+
+이 파일을 다운로드하여 압축을 풀면, 변경 사항이 적용된 웹사이트의 모든 페이지 스크린샷을 직접 눈으로 확인할 수 있습니다.
+
+이제 더 이상 코드만 보고 UI 변경을 상상하지 않아도 됩니다.

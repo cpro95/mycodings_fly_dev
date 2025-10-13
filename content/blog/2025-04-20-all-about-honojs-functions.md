@@ -10,12 +10,14 @@ draft: false
 
 Hono는 빠르고 가벼운 웹 프레임워크로, 다양한 JavaScript 런타임에서 작동합니다.
 
-이 글에서는 Hono에서 제공하는 주요 함수들의 사용법을 자세히 설명합니다.  
+이 글에서는 Hono에서 제공하는 주요 함수들의 사용법을 자세히 설명합니다.
 
 ---
 
 ## **1. 기본 설정**
+
 ### **Hono 앱 생성**
+
 ```ts
 import { Hono } from 'hono'
 
@@ -23,6 +25,7 @@ const app = new Hono()
 ```
 
 ### **라우팅**
+
 ```ts
 app.get('/', (c) => c.text('Hello Hono!'))
 app.post('/submit', (c) => c.text('Submitted!'))
@@ -31,6 +34,7 @@ app.delete('/remove', (c) => c.text('Deleted!'))
 ```
 
 ### **미들웨어 적용**
+
 ```ts
 app.use('*', async (c, next) => {
   console.log('Middleware executed!')
@@ -41,7 +45,9 @@ app.use('*', async (c, next) => {
 ---
 
 ## **2. 요청 처리**
+
 ### **쿼리 파라미터 & 경로 파라미터**
+
 ```ts
 app.get('/user/:id', (c) => {
   const id = c.req.param('id') // `/user/123` → `id = "123"`
@@ -60,6 +66,7 @@ app.post('/submit', async (c) => {
 ```
 
 ### **헤더 & 쿠키**
+
 ```ts
 app.get('/headers', (c) => {
   const userAgent = c.req.header('User-Agent')
@@ -80,7 +87,9 @@ app.get('/get-cookie', (c) => {
 ---
 
 ## **3. 응답 처리**
+
 ### **텍스트, JSON, HTML 응답**
+
 ```ts
 app.get('/text', (c) => c.text('Plain Text'))
 app.get('/json', (c) => c.json({ message: 'Hello JSON!' }))
@@ -88,11 +97,13 @@ app.get('/html', (c) => c.html('<h1>Hello HTML!</h1>'))
 ```
 
 ### **리디렉션**
+
 ```ts
 app.get('/old', (c) => c.redirect('/new'))
 ```
 
 ### **파일 다운로드**
+
 ```ts
 app.get('/download', (c) => {
   return new Response('File content', {
@@ -102,6 +113,7 @@ app.get('/download', (c) => {
 ```
 
 ### **스트리밍 응답**
+
 ```ts
 import { streamText } from 'hono/streaming'
 
@@ -118,7 +130,9 @@ app.get('/stream', (c) => {
 ---
 
 ## **4. 미들웨어**
+
 ### **기본 인증 (Basic Auth)**
+
 ```ts
 import { basicAuth } from 'hono/basic-auth'
 
@@ -134,6 +148,7 @@ app.get('/admin', (c) => c.text('You are authorized!'))
 ```
 
 ### **CORS 설정**
+
 ```ts
 import { cors } from 'hono/cors'
 
@@ -141,6 +156,7 @@ app.use('/api/*', cors())
 ```
 
 ### **JWT 인증**
+
 ```ts
 import { jwt } from 'hono/jwt'
 
@@ -153,6 +169,7 @@ app.get('/secure/data', (c) => {
 ```
 
 ### **정적 파일 제공**
+
 ```ts
 import { serveStatic } from 'hono/bun' // Bun 전용
 // import { serveStatic } from 'hono/cloudflare-workers' // Cloudflare Workers 전용
@@ -163,12 +180,15 @@ app.get('/static/*', serveStatic({ root: './public' }))
 ---
 
 ## **5. 에러 처리**
+
 ### **404 처리**
+
 ```ts
 app.notFound((c) => c.text('Not Found!', 404))
 ```
 
 ### **전역 에러 핸들링**
+
 ```ts
 app.onError((err, c) => {
   console.error(err)
@@ -177,6 +197,7 @@ app.onError((err, c) => {
 ```
 
 ### **커스텀 에러**
+
 ```ts
 app.get('/error', (c) => {
   throw new Error('Something went wrong!')
@@ -186,7 +207,9 @@ app.get('/error', (c) => {
 ---
 
 ## **6. 환경 변수 & 바인딩**
+
 ### **Cloudflare Workers 환경 변수**
+
 ```ts
 type Bindings = {
   DB: D1Database
@@ -205,7 +228,9 @@ app.get('/env', (c) => {
 ---
 
 ## **7. 배포**
+
 ### **Cloudflare Workers**
+
 ```ts
 export default app
 ```
@@ -219,6 +244,7 @@ Bun.serve({
 ```
 
 ### **Node.js**
+
 ```ts
 import { serve } from '@hono/node-server'
 
@@ -230,10 +256,9 @@ serve(app, (info) => {
 ---
 
 ## **마무리**
+
 Hono는 빠르고 가벼운 웹 프레임워크로, 다양한 기능을 제공합니다.
 
-이 가이드를 통해 주요 함수들을 익히고, 효율적으로 사용해 보세요!  
+이 가이드를 통해 주요 함수들을 익히고, 효율적으로 사용해 보세요!
 
 더 자세한 내용은 공식 문서 ([hono.dev](https://hono.dev))를 참고하세요.
-
----

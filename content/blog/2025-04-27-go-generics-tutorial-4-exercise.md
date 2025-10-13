@@ -75,7 +75,7 @@ func main() {
 
 왜냐하면 `Setter` 인터페이스를 구현한 것은 `SettableInt` 타입 자체가 아니라 `*SettableInt` 타입이기 때문입니다.
 
-그래서 `SetValueFromString[*SettableInt](&myInt, "100")` 처럼 포인터 타입을 타입 인수로 명시적으로 넘겨주면 컴파일은 통과합니다. 
+그래서 `SetValueFromString[*SettableInt](&myInt, "100")` 처럼 포인터 타입을 타입 인수로 명시적으로 넘겨주면 컴파일은 통과합니다.
 
 하지만 이 경우 `SetValueFromString` 함수 내부의 `value`는 `*SettableInt` 타입이 되는데, **`value` 자체가 `nil`일 가능성**을 고려해야 하는 등 추가적인 복잡성이 생길 수 있고, 의도와 다르게 동작할 수도 있습니다.
 
