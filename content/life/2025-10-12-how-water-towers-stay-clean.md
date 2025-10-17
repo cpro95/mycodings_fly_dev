@@ -9,7 +9,7 @@ tags: ["저수탑", "급수탑", "물탱크 청소", "수돗물", "염소 소독
 contributors: []
 ---
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEj5mG_JQXZosluz-gRB5k7iEyo_ExrWgt8OyQx1nDSUhzCRs8wczijykljqqxE5OX-OEnqub-YDj0npAumTmtoMDMbj2rBxNneb8eu3PVQcbeeayGzIsnCH0XubU3sciEKY27xBaG1q1V3ba9NWCTqkDPV3MHXrOEhUzZnPiW79C05kP0tA7B2r4lHo6p4=s16000)
+![거대한 저수탑 내부 청소의 비밀, 곰팡이 안 생기는 놀라운 이유](https://blogger.googleusercontent.com/img/a/AVvXsEj5mG_JQXZosluz-gRB5k7iEyo_ExrWgt8OyQx1nDSUhzCRs8wczijykljqqxE5OX-OEnqub-YDj0npAumTmtoMDMbj2rBxNneb8eu3PVQcbeeayGzIsnCH0XubU3sciEKY27xBaG1q1V3ba9NWCTqkDPV3MHXrOEhUzZnPiW79C05kP0tA7B2r4lHo6p4=s16000)
 
 미국 영화를 보다 보면 농촌에 있는, 하늘 높이 솟아있는 거대한 물탱크, 바로 '저수탑'을 한 번쯤은 보셨을 텐데요.
 

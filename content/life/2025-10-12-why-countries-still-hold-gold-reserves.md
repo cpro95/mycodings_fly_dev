@@ -9,7 +9,7 @@ tags: ["금", "금 보유량", "중앙은행", "안전 자산", "인플레이션
 contributors: []
 ---
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEgkM3BToSH_wUCbOq-R5RqwNKHOobT1AQyq9MBzQ4tqQJfWZO0lk7-IXNjJub3dqdtAOho_KD3WfWFWtN8AgVwZwVejWXHDjtP3eXla1_LiRvXmPlSVAQ2zFhiXbUUBwfKD7ONT9dZJeRLqr2FJ2AFQTbZK7qH9Mv1J1NPzB584634OWivh3GI_Hu2SY7I=s16000)
+![금은 이제 돈도 아닌데 각국 정부는 왜 쌓아둘까요? 금고 속 진짜 이유](https://blogger.googleusercontent.com/img/a/AVvXsEgkM3BToSH_wUCbOq-R5RqwNKHOobT1AQyq9MBzQ4tqQJfWZO0lk7-IXNjJub3dqdtAOho_KD3WfWFWtN8AgVwZwVejWXHDjtP3eXla1_LiRvXmPlSVAQ2zFhiXbUUBwfKD7ONT9dZJeRLqr2FJ2AFQTbZK7qH9Mv1J1NPzB584634OWivh3GI_Hu2SY7I=s16000)
 
 영화나 뉴스에서 한 번쯤은 보셨을 텐데요.
 
@@ -53,7 +53,7 @@ contributors: []
 
 그래서 국가가 금을 많이 보유하고 있다는 사실만으로도 '우리나라는 어떤 위기에도 흔들리지 않을 만큼 튼튼하다'는 신호를 전 세계에 보내는 효과를 줍니다.
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEgY-TfEtsLiK0wkjytd6-WnEzpsY3v85O0n9GArXBjMklIqu-d3dgqcOg6ORLSQrfYzSeJEYlGUiJTCiHkUCcVkbgMYsrI3iBoMljIC0B-OxyXqMsFbpdx64bY_2kYkiFsf0_mB1KdPMaO2yLKdY-4DXIBn8KYHCd0O9O1XAvvpRFKDlmBNPnSF_oWGJXk=s16000)
+![금은 이제 돈도 아닌데 각국 정부는 왜 쌓아둘까요? 금고 속 진짜 이유](https://blogger.googleusercontent.com/img/a/AVvXsEgY-TfEtsLiK0wkjytd6-WnEzpsY3v85O0n9GArXBjMklIqu-d3dgqcOg6ORLSQrfYzSeJEYlGUiJTCiHkUCcVkbgMYsrI3iBoMljIC0B-OxyXqMsFbpdx64bY_2kYkiFsf0_mB1KdPMaO2yLKdY-4DXIBn8KYHCd0O9O1XAvvpRFKDlmBNPnSF_oWGJXk=s16000)
 
 ### 만약 세상이 망한다면 금은 쓸모없을까?
 

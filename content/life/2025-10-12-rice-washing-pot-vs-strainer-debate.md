@@ -9,7 +9,7 @@ tags: ["쌀 씻는 법", "밥물 맞추기", "밥 잘하는 법", "쌀뜨물", "
 contributors: []
 ---
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEjdz1Rb63q0ODzmfMCpK2wU1147FUY-8s2T9J5-2yO4_Wq3Xh8gH8KOQZNSAlxqgvS7cgZT9J8GvzBKt2MOA-b5cbzt5pvvoYhtoMmqiacU7n_Ltlnp2lfCo2mqHoR5q1i_U4s6AGsdb0dAX15XXinSgiGDTNVFVQxHkD8QTUjlnW-9KBcjJ0oVL1ilpXo=s16000)
+![쌀 씻을 때 체 쓰면 안 되나요? 밥물 맞추는 황금비율 논쟁](https://blogger.googleusercontent.com/img/a/AVvXsEjdz1Rb63q0ODzmfMCpK2wU1147FUY-8s2T9J5-2yO4_Wq3Xh8gH8KOQZNSAlxqgvS7cgZT9J8GvzBKt2MOA-b5cbzt5pvvoYhtoMmqiacU7n_Ltlnp2lfCo2mqHoR5q1i_U4s6AGsdb0dAX15XXinSgiGDTNVFVQxHkD8QTUjlnW-9KBcjJ0oVL1ilpXo=s16000)
 
 요즘 SNS에서 밥하는 영상을 가지고 갑론을박이 벌어지는 걸 봤는데요.
 

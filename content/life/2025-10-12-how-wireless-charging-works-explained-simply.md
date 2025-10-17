@@ -9,7 +9,7 @@ tags: ["무선 충전", "무선 충전 원리", "스마트폰 충전", "자기 �
 contributors: []
 ---
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEgbZEBumx6u8JDpyh09ODpfp79xVtDNJdWWYRwdDTzfRdw35V-J3sfQr_4dD7cAAnPQcr0mmN22HmpVLBX2ftjpj88hS3Nu2i_QxEOdK9TTcfblbq1fcwXhUeBNH5xLDoZu5FtQlGUsB9JriorhF06XpzhUpnhA5Z6QXKDrIzpr9bMskGyxYSaq4GPrXL0=s16000)
+![무선 충전 원리 - 바로 이해하는 초간단 설명](https://blogger.googleusercontent.com/img/a/AVvXsEgbZEBumx6u8JDpyh09ODpfp79xVtDNJdWWYRwdDTzfRdw35V-J3sfQr_4dD7cAAnPQcr0mmN22HmpVLBX2ftjpj88hS3Nu2i_QxEOdK9TTcfblbq1fcwXhUeBNH5xLDoZu5FtQlGUsB9JriorhF06XpzhUpnhA5Z6QXKDrIzpr9bMskGyxYSaq4GPrXL0=s16000)
 
 스마트폰을 충전 패드에 올려두기만 하면 알아서 충전되는 게 참 신기하게 느껴지는데요.
 

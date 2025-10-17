@@ -9,7 +9,7 @@ tags: ["식욕 스위치", "다이어트", "비만", "오젬픽", "무기력증"
 contributors: []
 ---
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEjb0OqIhIiWHIok85efIWc9fJQNKxZ5SS2OTVxYoLBxalWPi0ylh49IKL_w03reNwXGeQ0tI-gznKJV0Mx1S9H6sPZ2qjGPKNUuybGJxEX7qzRb02LT9mXzXM7yD3rWormaeUDt_H2mZhUUqCaHH9lABZiJGQCNyrE0ZaNaOlNul-B-KKXXZIl_HQtI9co=s16000)
+![뇌 속 '식욕 스위치' 발견, 다이어트 끝? 오히려 삶의 즐거움이 사라진다는 충격적인 이유](https://blogger.googleusercontent.com/img/a/AVvXsEjb0OqIhIiWHIok85efIWc9fJQNKxZ5SS2OTVxYoLBxalWPi0ylh49IKL_w03reNwXGeQ0tI-gznKJV0Mx1S9H6sPZ2qjGPKNUuybGJxEX7qzRb02LT9mXzXM7yD3rWormaeUDt_H2mZhUUqCaHH9lABZiJGQCNyrE0ZaNaOlNul-B-KKXXZIl_HQtI9co=s16000)
 
 최근 과학계가 정말 떠들썩한 소식이 하나 있거든요.
 

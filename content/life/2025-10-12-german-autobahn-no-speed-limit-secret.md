@@ -9,7 +9,7 @@ tags: ["아우토반", "독일 고속도로", "속도 무제한", "독일 운전
 contributors: []
 ---
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEhPQoadhSU9Lqdpyeyz5EXbABIRH8gZifw3DpwQ8OVMabGEqB4IB5DLruwF6QxRFxXNzaZAp3Aimi1ViYy9bX3p2NVvGrYVecOVs9a_bZ2KvR4Bh8iJAVqnGB1-G3EbFKEcWvpfaRVIU4Sjn7doOWn9-4IdcvKRz9vGZMK4bozfe8M_TFmPc_RhYUEpFuM=s16000)
+![독일 아우토반 속도 무제한 구간, 사고율이 낮은 놀라운 비밀](https://blogger.googleusercontent.com/img/a/AVvXsEhPQoadhSU9Lqdpyeyz5EXbABIRH8gZifw3DpwQ8OVMabGEqB4IB5DLruwF6QxRFxXNzaZAp3Aimi1ViYy9bX3p2NVvGrYVecOVs9a_bZ2KvR4Bh8iJAVqnGB1-G3EbFKEcWvpfaRVIU4Sjn7doOWn9-4IdcvKRz9vGZMK4bozfe8M_TFmPc_RhYUEpFuM=s16000)
 
 독일 '아우토반(Autobahn)' 하면 속도 무제한 구간을 떠올리는 분들이 많을 텐데요.
 

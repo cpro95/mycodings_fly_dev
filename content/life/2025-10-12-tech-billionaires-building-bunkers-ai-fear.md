@@ -9,7 +9,7 @@ tags: ["AI", "인공지능", "벙커", "마크 저커버그", "실리콘밸리",
 contributors: []
 ---
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEhEeHIHoMoDXxNWhLEMKdDTUQwQSOaWHZkeUE7XaVB7voT9qLTBx7mr7FURVcbvtWv-cwtuYIRGN956ybW-n3id82ndtuguWF2V9YKvl86UcYqnW3_Wc4ZFYlfOW4Dto_hSNx0esALi6LqeHCF0jq7WmEqwHQpNc2p4QWa1hpJmy-oqNfPcUyE_dCilqPc=s16000)
+![AI 만드는 기술 갑부들이 비밀 벙커를 파는 진짜 이유](https://blogger.googleusercontent.com/img/a/AVvXsEhEeHIHoMoDXxNWhLEMKdDTUQwQSOaWHZkeUE7XaVB7voT9qLTBx7mr7FURVcbvtWv-cwtuYIRGN956ybW-n3id82ndtuguWF2V9YKvl86UcYqnW3_Wc4ZFYlfOW4Dto_hSNx0esALi6LqeHCF0jq7WmEqwHQpNc2p4QWa1hpJmy-oqNfPcUyE_dCilqPc=s16000)
 
 요즘 세상의 미래를 만드는 사람들이 정작 그 미래를 가장 두려워하는 것 같은 기이한 소식들이 들려오거든요.
 
