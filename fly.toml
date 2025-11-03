@@ -2,7 +2,7 @@
 # This is an optimized configuration for a static Hugo site served with Caddy.
 
 app = 'mycodings'
-primary_region = 'nrt' # 예: 도쿄. 'icn'(인천) 등 가까운 리전으로 설정 가능
+primary_region = 'icn' # 예: 도쿄. 'icn'(인천) 등 가까운 리전으로 설정 가능
 
 # [build] 섹션은 비워두거나 삭제합니다.
 # 프로젝트에 Dockerfile이 있으면 Fly.io가 자동으로 이를 사용합니다.

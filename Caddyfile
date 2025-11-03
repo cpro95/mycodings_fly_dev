@@ -1,17 +1,38 @@
-# fly.toml의 internal_port와 일치하는 8080 포트에서 수신 대기합니다.
-# :8080
+# Fly.io의 내부 포트(8080)
+:8080
 
-# 웹 사이트의 루트 디렉터리를 /srv로 지정합니다.
-# Dockerfile에서 Hugo 빌드 결과물을 /srv로 복사했습니다.
-# root * /srv
+# Hugo가 빌드한 정적 파일 위치
+root * /srv
 
-# 콘텐츠를 압축하여 전송 속도를 높입니다. (gzip, zstd)
-# encode gzip zstd
+# 정적 파일 서버
+file_server
 
-# 정적 파일 서버를 활성화합니다.
-# file_server
+# 압축 활성화 (gzip, zstd 모두 사용)
+encode gzip zstd
 
-# redirect to mycodingshub.github.io
-:8080 {
-    redir https://mycodingshub.github.io{uri} permanent
+# 브라우저 캐시 정책 (1년 유지, 변경 불가로 표시)
+@static {
+    path *.css *.js *.woff2 *.woff *.ttf *.svg *.png *.jpg *.jpeg *.gif *.ico *.webp *.avif *.pdf *.json
+}
+header @static Cache-Control "public, max-age=31536000, immutable"
+
+# HTML과 XML은 짧게 캐시 (변경 가능성 있으므로)
+@html {
+    path *.html *.xml
+}
+header @html Cache-Control "public, max-age=86400, stale-while-revalidate=604800"
+
+# 기타 MIME 타입 (기본 1일 캐시)
+header Cache-Control "public, max-age=86400"
+
+# ETag 지원 (변경 시 자동 304 반환)
+etag
+
+# 기본 보안 헤더 추가
+header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "DENY"
+    Referrer-Policy "strict-origin-when-cross-origin"
+    Content-Security-Policy "default-src 'self'; img-src 'self' data:;"
 }
