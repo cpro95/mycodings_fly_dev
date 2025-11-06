@@ -23,3 +23,8 @@ primary_region = 'nrt'
 # VM(머신) 사양 정의
 [[vm]]
   size = 'shared-cpu-1x' # 256MB 메모리를 포함하며 가장 저렴한 옵션
+
+# mycodings_data volumes
+[[mounts]]
+  source = "mycodings_data"  # 1번 단계에서 만든 볼륨 이름
+  destination = "/srv"        # 컨테이너 내부의 마운트 경로
