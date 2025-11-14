@@ -1,5 +1,5 @@
 ---
-slug: 2023-07-17-react-query-cachetime-staletime-refetch-poll
+slug: 2023-09-17-react-query-cachetime-staletime-refetch-poll
 title: React Query 강좌 2편. 캐시로 움직이는 useQuery 작동 원리 - cacheTime, staleTime, refetchOnMount, polling(refetchInterval)
 date: 2023-09-17 08:31:33.528000+00:00
 summary: cacheTime vs staleTime, 그리고 refetch와 polling
@@ -34,10 +34,10 @@ draft: false
 
 ** 목 차 **
 
-1. [useQuery의 cacheTime 캐시 시스템](#1-usequery의-cachetime-캐시-시스템)
-2. [isFetching 주기는 staleTime으로 지정 가능](#2-isfetching-주기는-staletime으로-지정-가능)
-3. [refetch 방법 바꾸기](#3-refetch-방법-바꾸기)
-4. [강제로 refetch 하기(Polling)](#4-강제로-refetch-하기polling)
+- [1. useQuery의 cacheTime 캐시 시스템](#1-usequery의-cachetime-캐시-시스템)
+- [2. isFetching 주기는 staleTime으로 지정 가능](#2-isfetching-주기는-staletime으로-지정-가능)
+- [3. refetch 방법 바꾸기](#3-refetch-방법-바꾸기)
+- [4. 강제로 refetch 하기(Polling)](#4-강제로-refetch-하기polling)
 ---
 
 ## 1. useQuery의 cacheTime 캐시 시스템
