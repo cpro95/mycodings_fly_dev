@@ -2,7 +2,7 @@
 slug: 2025-12-06-uuidv7-implementation-in-popular-languages
 title: "유명 언어로 직접 구현해보는 UUIDv7 개념부터 실전 코드까지"
 summary: "차세대 식별자 표준인 UUIDv7의 구조를 분석하고, 유명 프로그래밍 언어로 구현한 예제 코드를 한곳에 모았습니다."
-date: 2025-12-07T04:06:28.677Z
+date: 2025-12-06T04:06:28.677Z
 draft: false
 weight: 50
 tags: ["UUIDv7", "UUID", "데이터베이스", "기본키", "프로그래밍", "파이썬", "자바스크립트", "SQL", "개발자가이드"]

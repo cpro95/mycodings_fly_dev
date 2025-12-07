@@ -2,7 +2,7 @@
 slug: 2025-12-06-interactive-guide-to-git-operations
 title: "Git 완전 정복 개념부터 실전 명령어까지 한 번에 정리하기"
 summary: "Git이 어렵게만 느껴지시나요? 개념 이해부터 실전 명령어, 되돌리기 꿀팁까지 예제로 쉽게 풀어드립니다."
-date: 2025-12-07T03:54:52.285Z
+date: 2025-12-06T03:54:52.285Z
 draft: false
 weight: 50
 tags: ["Git", "깃", "버전관리", "git 명령어", "프로그래밍기초", "git 튜토리얼", "git 사용법"]
