@@ -3,7 +3,7 @@ slug: 2024-08-16-nextjs-lucia-auth-with-cloudflare-d-1-db
 title: Next.js에서 Lucia Auth, Cloudflare D1 DB를 이용해서 유저 로그인 구현하기
 date: 2024-08-16 10:18:26.900000+00:00
 summary: 이번 강좌에서는 Lucia Auth를 Next.js상에서 구현해 보겠습니다. Cloudflare D1 DB를 사용할 겁니다.
-tags: ["next.js", "cloudflare", "d1", "lucia", "lucia auth", "drizzle orm"]
+tags: ["next.js", "cloudflare", "d1", "lucia", "lucia auth", "drizzle", "drizzle orm"]
 contributors: []
 draft: false
 ---
@@ -193,9 +193,9 @@ npx wrangler d1 execute nextjs-lucia-auth-db --remote --file=./drizzle/0000_same
 🌀 Executing on remote database nextjs-lucia-auth-db (ebb6d9de06f75d):
 🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
 Note: if the execution fails to complete, your DB will return to its original state and you can safely retry.
-├ 🌀 Uploading ebb6d9de-a6e706f75d.c18b7e797ccbd250.sql 
+├ 🌀 Uploading ebb6d9de-a6e706f75d.c18b7e797ccbd250.sql
 │ 🌀 Uploading complete.
-│ 
+│
 🌀 Starting import...
 🌀 Processed 3 queries.
 🚣 Executed 3 queries in 0.00 seconds (4 rows read, 7 rows written)
