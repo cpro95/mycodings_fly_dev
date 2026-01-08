@@ -5,7 +5,7 @@ summary: "리액트의 훅을 벗어나 클로저와 웹 표준 API로 상태를
 date: 2026-01-05T13:19:50.211Z
 draft: false
 weight: 50
-tags: ["Remix", "React", "Component", "Hooks", "Closure", "Tutorial", "Web Standards", "State Management"]
+tags: ["Remix", "React", "Component", "Hooks", "Closure", "Tutorial", "Web Standards", "State Management", "Remix 3", "remix 3", "remix", "react"]
 contributors: []
 ---
 

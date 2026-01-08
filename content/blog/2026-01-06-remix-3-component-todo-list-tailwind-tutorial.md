@@ -5,7 +5,7 @@ summary: "훅(Hooks) 없이 클로저만으로 상태를 관리하는 @remix-run
 date: 2026-01-06T14:17:30.479Z
 draft: false
 weight: 50
-tags: ["Remix", "React", "Component", "Tailwind CSS v4", "Todo List", "Vite", "ESLint", "Hooks", "Closure", "CRUD"]
+tags: ["Remix", "React", "Component", "Tailwind CSS v4", "Todo List", "Vite", "ESLint", "Hooks", "Closure", "CRUD", "Remix 3", "remix 3", "remix", "react"]
 contributors: []
 ---
 - [**익숙한 맛(React)과 새로운 맛(Remix)의 조화**](#익숙한-맛react과-새로운-맛remix의-조화)
