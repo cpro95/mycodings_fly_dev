@@ -24,7 +24,7 @@ contributors: []
   - [**리팩토링 후의 컴포넌트**](#리팩토링-후의-컴포넌트)
   - [**장점**](#장점)
   - [**MVVM 패턴과의 대응**](#mvvm-패턴과의-대응)
-- [**'일큐(Ikyu) 레스토랑'의 아키텍처와의 접점**](#일큐ikyu-레스토랑의-아키텍처와의-접점)
+- [**프레임워크 의존성 최소화**](#프레임워크-의존성-최소화)
 - [**React에서 같은 ViewModel을 쓴다면?**](#react에서-같은-viewmodel을-쓴다면)
 - [**미래에 대한 전망**](#미래에-대한-전망)
   - [**도메인 이벤트의 확장**](#도메인-이벤트의-확장)
@@ -504,9 +504,7 @@ ViewModel은 순수한 TypeScript 클래스이므로 `vitest` 등으로 쉽게 �
 *   **ViewModel (EventTarget 상속 클래스)**: 상태 + 로직, `dispatchEvent`로 변경 알림.
 *   **Model (타입 정의 + API)**: Task, FilterType, 데이터 페칭 등.
 
-### **'일큐(Ikyu) 레스토랑'의 아키텍처와의 접점**
-
-일본의 유명한 서비스인 '일큐 레스토랑'에서 공개한 "React/Remix 의존성을 최소화하는 프론트엔드 설계"라는 글이 있는데요.
+### **프레임워크 의존성 최소화**
 
 여기서는 프레임워크 의존성을 최소화하기 위한 3계층 아키텍처를 제안하고 있습니다.
 
@@ -518,14 +516,14 @@ ViewModel은 순수한 TypeScript 클래스이므로 `vitest` 등으로 쉽게 �
 `@remix-run/component`에서는 이런 설계가 특별한 아키텍처적 노력 없이도 매우 자연스럽게 달성됩니다.
 
 
-| 관점 | React (일큐 방식) | @remix-run/component |
+| 관점 | React | @remix-run/component |
 | :--- | :--- | :--- |
 | **로직 계층** | Vanilla JS Store | **TaskViewModel (EventTarget)** |
 | **어댑터** | 커스텀 훅 | **불필요 (this.on으로 직접 구독)** |
 | **상태 관리** | useReducer + Context | **일반 변수** |
 | **보일러플레이트** | 많음 | **적음** |
 
-일큐의 아키텍처가 지향하는 '프레임워크 의존성 최소화'는 `@remix-run/component` + ViewModel 패턴으로 아주 쉽게 실현될 수 있습니다.
+'프레임워크 의존성 최소화'는 `@remix-run/component` + ViewModel 패턴으로 아주 쉽게 실현될 수 있습니다.
 
 
 ### **React에서 같은 ViewModel을 쓴다면?**
