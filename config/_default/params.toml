@@ -1,6 +1,6 @@
 # Hugo
 title = "드리프트의 myCodings"
-description = "Javascript, Typescript, React, Next.js, React Router, Go, Hugo 등 최신 웹 개발 트렌드를 같이 공부할 수 있는 블로그 입니다."
+description = "AI 시대 함께 공부하는 블로그입니다."
 images = ["cover.png"]
 author = "cpro95@gmail.com"
 
@@ -45,7 +45,7 @@ mainSections = ["blog"]
   bootstrapJavascript = false # false (default) or true
 
   # Nav
-  sectionNav = ["blog", "life"] # ["docs"] (default) or list of sections (e.g. ["docs", "guides"])
+  sectionNav = ["blog", "prompt", "life"] # ["docs"] (default) or list of sections (e.g. ["docs", "guides"])
   toTopButton = true # false (default) or true
   breadcrumbTrail = true # false (default) or true
   headlineHash = true # true (default) or false

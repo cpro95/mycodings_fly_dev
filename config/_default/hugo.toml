@@ -64,6 +64,7 @@ copyRight = "Copyright (c) All Right Reserved."
 [permalinks]
   blog = "/blog/:slug/"
   life = "/life/:slug/"
+  prompt = "/prompt/:slug"
 #  docs = "/docs/:sections[1:]/:slug/"
 #  docs = "/docs/1.0/:sections[1:]/:slug/"
 

@@ -40,6 +40,11 @@
   weight = 10
 
 [[main]]
+  name = "Prompt"
+  url = "/prompt/"
+  weight = 20
+
+[[main]]
   name = "Life"
   url = "/life/"
   weight = 30
