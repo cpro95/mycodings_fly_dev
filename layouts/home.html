@@ -32,8 +32,10 @@
   </div>
   {{ end -}}
 
-  {{/* 최근 Blog Posts 5개 */}}
-  {{ $recentPosts := first 5 (where .Site.RegularPages "Section" "blog") }}
+  {{/* 전체 섹션에서 최신 Post 5개 추출 */}}
+  {{ $recentPosts := first 5 .Site.RegularPages.ByDate.Reverse }}
+  {{/*  최근 Blog Posts 5개  */}}
+  {{/*  {{ $recentPosts := first 5 (where .Site.RegularPages "Section" "blog") }}  */}}
   {{ if $recentPosts }}
   <section class="section section-lg section-features">
     <div class="container">
