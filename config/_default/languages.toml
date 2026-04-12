@@ -8,16 +8,6 @@
     footer = "Copyright (c) All Right Reserved."
 #    alertText = '<a class="alert-link stretched-link fw-normal" href="/blog/example-post/">Doks version 1.0 just shipped!</a>'
 
-[de]
-  languageName = "German"
-  contentDir = "content/de"
-  weight = 15
-  [de.params]
-    languageISO = "DE"
-    languageTag = "de-DE"
-    footer = 'Gebaut mit <a class="text-muted" href="https://thulite.io/">Thulite</a>'
-    alertText = 'Neue Version ist da! <a class="alert-link stretched-link" href="https://getdoks.org/blog/doks-v0.5/">Doks v0.5</a>'
-
 [nl]
   languageName = "Nederlands"
   contentDir = "content/nl"

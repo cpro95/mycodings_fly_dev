@@ -29,7 +29,7 @@ mainSections = ["blog"]
   flexSearch = true # true (default) or false
   searchExclKinds = ["taxonomy", "term"] # list of page kinds to exclude from search indexing (e.g. ["home", "taxonomy", "term"] )
   searchExclTypes = ["about"] # list of content types to exclude from search indexing (e.g. ["blog", "docs", "legal", "contributors", "categories"])
-  showSearch = ["blog", "life"] # [] (all pages, default) or homepage (optionally) and list of sections (e.g. ["homepage", "blog", "guides"])
+  showSearch = ["blog", "prompt", "life"] # [] (all pages, default) or homepage (optionally) and list of sections (e.g. ["homepage", "blog", "guides"])
   indexSummary = true # true or false (default); whether to index only the `.Summary` instead of the full `.Content`; limits the respective JSON field size and thus increases loading time
 
   ## Search results
