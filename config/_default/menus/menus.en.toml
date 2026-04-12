@@ -40,7 +40,7 @@
   weight = 10
 
 [[main]]
-  name = "Prompt"
+  name = "AI Prompt"
   url = "/prompt/"
   weight = 20
 
